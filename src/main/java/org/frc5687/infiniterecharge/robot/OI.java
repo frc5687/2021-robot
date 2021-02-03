@@ -44,7 +44,7 @@ public class OI extends OutliersProxy {
         _driverAButton.whenPressed(
                 new DriveTrajectory(
                         driveTrain,
-                        driveTrain.getPose(),
+                        driveTrain.getOdometryPose(),
                         waypoints,
                         new Pose2d(0, 0, new Rotation2d(0))));
         //        _driverAButton.whenPressed(null);

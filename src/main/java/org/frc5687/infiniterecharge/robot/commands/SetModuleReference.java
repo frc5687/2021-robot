@@ -12,7 +12,6 @@ public class SetModuleReference extends OutliersCommand {
     public SetModuleReference(DriveTrain driveTrain, SwerveModuleState state) {
         _driveTrain = driveTrain;
         _state = state;
-        startPeriodic(0.05);
     }
 
     @Override

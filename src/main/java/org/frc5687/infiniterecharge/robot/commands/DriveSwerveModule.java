@@ -20,7 +20,6 @@ public class DriveSwerveModule extends OutliersCommand {
     @Override
     public void initialize() {
         super.initialize();
-        //        startPeriodic(0.005);
     }
 
     @Override
@@ -29,12 +28,7 @@ public class DriveSwerveModule extends OutliersCommand {
         double stickX = _oi.getDriveY() * MAX_MPS;
         double stickY = _oi.getDriveX() * MAX_MPS;
         double rot = _oi.getRotationX() * MAX_ANG_VEL;
-        _driveTrain.drive(stickX, stickY, rot, true);
-        //        Vector2d drive = new Vector2d(stickX, stickY);
-        //        metric("Drive Magnitude", drive.getMagnitude());
-        //        metric("Drive Angle", drive.getAngle());
-        //        _driveTrain.setBackLeftModuleVector(drive);
-        //        _driveTrain.setFrontRightModuleVector(drive);
+        _driveTrain.drive(stickX, stickY, rot, false);
     }
 
     @Override

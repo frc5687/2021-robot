@@ -4,6 +4,7 @@ package org.frc5687.infiniterecharge.robot;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import org.frc5687.infiniterecharge.robot.commands.DriveSwerveModule;
 import org.frc5687.infiniterecharge.robot.commands.OutliersCommand;
 import org.frc5687.infiniterecharge.robot.subsystems.DriveTrain;
 import org.frc5687.infiniterecharge.robot.subsystems.OutliersSubsystem;
@@ -16,10 +17,12 @@ public class RobotContainer extends OutliersContainer {
     private AHRS _imu;
     private T265Camera _slamCamera;
 
+    private Robot _robot;
     private DriveTrain _driveTrain;
 
     public RobotContainer(Robot robot, IdentityMode identityMode) {
         super(identityMode);
+        _robot = robot;
     }
 
     public void init() {
@@ -44,8 +47,10 @@ public class RobotContainer extends OutliersContainer {
         }
 
         _driveTrain = new DriveTrain(this, _imu, _slamCamera);
-        //        _oi.initializeButtons(_driveTrain);
-        //        setDefaultCommand(_driveTrain, new DriveSwerveModule(_driveTrain, _oi));
+        _oi.initializeButtons(_driveTrain);
+        setDefaultCommand(_driveTrain, new DriveSwerveModule(_driveTrain, _oi));
+
+        _robot.addPeriodic(this::controllerPeriodic, 0.005, 0.005);
         _imu.reset();
     }
 
@@ -72,7 +77,12 @@ public class RobotContainer extends OutliersContainer {
 
     @Override
     public void updateDashboard() {
-
         _driveTrain.updateDashboard();
+    }
+
+    public void controllerPeriodic() {
+        if (_driveTrain != null) {
+            _driveTrain.controllerPeriodic();
+        }
     }
 }
