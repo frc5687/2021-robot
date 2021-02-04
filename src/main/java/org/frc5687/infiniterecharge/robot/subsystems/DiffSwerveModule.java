@@ -331,6 +331,10 @@ public class DiffSwerveModule {
         return _reference.getData();
     }
 
+    public double[] getPredictedState() {
+        return _swerveControlLoop.getXHat().getData();
+    }
+
     /**
      * Sets the state of the module and sends the voltages wanted to the motors.
      *

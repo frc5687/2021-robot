@@ -186,18 +186,24 @@ public class DriveTrain extends OutliersSubsystem {
         // _backLeft.getPredictedWheelAngularVelocity());
         //        metric("Wheel Reference Angular Velocity",
         // _backLeft.getReferenceWheelAngularVelocity());
-        metric("FR/angle", _frontRight.getModuleAngle());
-        metric("FR/vel", _frontRight.getWheelVelocity());
-        SmartDashboard.putNumberArray("reference", _frontLeft.getReference());
+        //        metric("FR/angle", _frontRight.getModuleAngle());
+        //        metric("FR/vel", _frontRight.getWheelVelocity());
+        SmartDashboard.putNumberArray(
+                "DriveTrain/FR/state predict", _frontRight.getPredictedState());
 
-        metric("FL/angle", _frontLeft.getModuleAngle());
-        metric("FL/vel", _frontLeft.getWheelVelocity());
+        //        metric("FL/angle", _frontLeft.getModuleAngle());
+        //        metric("FL/vel", _frontLeft.getWheelVelocity());
+        SmartDashboard.putNumberArray(
+                "DriveTrain/FL/state predict", _frontLeft.getPredictedState());
 
-        metric("BR/angle", _backRight.getModuleAngle());
-        metric("BR/vel", _backRight.getWheelVelocity());
+        //        metric("BR/angle", _backRight.getModuleAngle());
+        //        metric("BR/vel", _backRight.getWheelVelocity());
+        SmartDashboard.putNumberArray(
+                "DriveTrain/BR/state predict", _backRight.getPredictedState());
 
-        metric("BL/angle", _backLeft.getModuleAngle());
-        metric("BL/vel", _backLeft.getWheelVelocity());
+        //        metric("BL/angle", _backLeft.getModuleAngle());
+        //        metric("BL/vel", _backLeft.getWheelVelocity());
+        SmartDashboard.putNumberArray("DriveTrain/BL/state predict", _backLeft.getPredictedState());
     }
 
     public void setFrontRightModuleState(SwerveModuleState state) {

@@ -49,9 +49,9 @@ public class Constants {
                 VecBuilder.fill(0.5, 0.5, Units.degreesToRadians(20));
 
         public static final double DEADBAND = 0.1;
-        //        public static final double MAX_MPS = 5.1816;
-        public static final double MAX_MPS = 1.0;
-        public static final double MAX_ANG_VEL = Math.PI * 4.0;
+        public static final double MAX_MPS = 5.1816;
+        //        public static final double MAX_MPS = 1.0;
+        public static final double MAX_ANG_VEL = Math.PI * 2.0;
         public static final double MAX_MPSS = 1.7; // accel
 
         public static final double kP = 2.5;
@@ -76,7 +76,7 @@ public class Constants {
         // Create Parameters for DiffSwerve State Space
         public static final double INERTIA_WHEEL = 0.007;
         public static final double INERTIA_STEER = 0.007;
-        public static final double Q_AZIMUTH_ANG_VELOCITY = 0.7; // radians per sec
+        public static final double Q_AZIMUTH_ANG_VELOCITY = 0.2; // radians per sec
         public static final double Q_AZIMUTH = 0.02; // radians
         public static final double Q_WHEEL_ANG_VELOCITY = 3; // radians per sec
         public static final double MODEL_AZIMUTH_ANGLE_NOISE = 1.718873; // degrees

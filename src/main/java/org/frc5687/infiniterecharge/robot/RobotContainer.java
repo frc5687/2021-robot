@@ -2,8 +2,13 @@
 package org.frc5687.infiniterecharge.robot;
 
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import java.io.IOException;
+import java.nio.file.Path;
 import org.frc5687.infiniterecharge.robot.commands.DriveSwerveModule;
 import org.frc5687.infiniterecharge.robot.commands.OutliersCommand;
 import org.frc5687.infiniterecharge.robot.subsystems.DriveTrain;
@@ -44,6 +49,15 @@ public class RobotContainer extends OutliersContainer {
                 error(e.getMessage());
                 metric("Slam Camera Status", "Broken!");
             }
+        }
+        String trajectoryJSON = "output/BarrelRace.wpilib.json";
+        Trajectory trajectory = new Trajectory();
+        try {
+            Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+            trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+            error("Trajectory successfully opened.");
+        } catch (IOException ex) {
+            error("Unable to open trajectory: " + trajectoryJSON + ex.getMessage());
         }
 
         _driveTrain = new DriveTrain(this, _imu, _slamCamera);
