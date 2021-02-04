@@ -6,12 +6,12 @@ import static org.frc5687.infiniterecharge.robot.Constants.DriveTrain.*;
 import org.frc5687.infiniterecharge.robot.OI;
 import org.frc5687.infiniterecharge.robot.subsystems.DriveTrain;
 
-public class DriveSwerveModule extends OutliersCommand {
+public class Drive extends OutliersCommand {
 
     private DriveTrain _driveTrain;
     private OI _oi;
 
-    public DriveSwerveModule(DriveTrain driveTrain, OI oi) {
+    public Drive(DriveTrain driveTrain, OI oi) {
         _driveTrain = driveTrain;
         _oi = oi;
         addRequirements(_driveTrain);

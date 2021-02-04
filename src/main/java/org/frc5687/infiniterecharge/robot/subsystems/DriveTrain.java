@@ -120,12 +120,12 @@ public class DriveTrain extends OutliersSubsystem {
 
     @Override
     public void periodic() {
-        //        _odomerty.update(
-        //                getHeading(),
-        //                _frontLeft.getState(),
-        //                _frontRight.getState(),
-        //                _backLeft.getState(),
-        //                _backRight.getState());
+        _odomerty.update(
+                getHeading(),
+                _frontLeft.getState(),
+                _frontRight.getState(),
+                _backLeft.getState(),
+                _backRight.getState());
         //        updateOdometry();
         //        metric("estimated Pose", _poseEstimator.getEstimatedPosition().toString());
         //        metric("slam pose", getSlamPose().toString());
@@ -240,7 +240,7 @@ public class DriveTrain extends OutliersSubsystem {
                                 : new ChassisSpeeds(vx, vy, omega));
         SwerveDriveKinematics.normalizeWheelSpeeds(swerveModuleStates, MAX_MPS);
         SmartDashboard.putNumber("states", swerveModuleStates[0].speedMetersPerSecond);
-        if (Math.abs(vx) < DEADBAND && Math.abs(vy) < DEADBAND) {
+        if (Math.abs(vx) < DEADBAND && Math.abs(vy) < DEADBAND && Math.abs(omega) < DEADBAND) {
             setFrontRightModuleState(
                     new SwerveModuleState(0, new Rotation2d(_frontRight.getModuleAngle())));
             setFrontLeftModuleState(

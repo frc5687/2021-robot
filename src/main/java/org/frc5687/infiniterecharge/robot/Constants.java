@@ -48,7 +48,7 @@ public class Constants {
         public static final Matrix<N3, N1> VISION_MEASUREMENT_STD_DEVS =
                 VecBuilder.fill(0.5, 0.5, Units.degreesToRadians(20));
 
-        public static final double DEADBAND = 0.1;
+        public static final double DEADBAND = 0.08;
         public static final double MAX_MPS = 5.1816;
         //        public static final double MAX_MPS = 1.0;
         public static final double MAX_ANG_VEL = Math.PI * 2.0;

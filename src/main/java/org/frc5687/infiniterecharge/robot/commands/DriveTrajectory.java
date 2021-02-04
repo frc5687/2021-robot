@@ -11,14 +11,23 @@ import org.frc5687.infiniterecharge.robot.subsystems.DriveTrain;
 
 public class DriveTrajectory extends OutliersCommand {
 
-    private final DriveTrain _driveTrain;
-    private final Pose2d _start;
-    private final Pose2d _end;
-    private final ArrayList<Translation2d> _waypoints;
+    private DriveTrain _driveTrain;
+    private Pose2d _start;
+    private Pose2d _end;
+    private ArrayList<Translation2d> _waypoints;
     private double _startTime;
     private double _time;
+    private final boolean _realtime;
     private Trajectory _trajectory;
     private Timer _timer;
+
+    public DriveTrajectory(DriveTrain driveTrain, Trajectory trajectory) {
+        addRequirements(driveTrain);
+        _driveTrain = driveTrain;
+        _trajectory = trajectory;
+        _realtime = false;
+        _timer = new Timer();
+    }
 
     public DriveTrajectory(
             DriveTrain driveTrain, Pose2d start, ArrayList<Translation2d> waypoints, Pose2d end) {
@@ -27,14 +36,17 @@ public class DriveTrajectory extends OutliersCommand {
         _start = start;
         _waypoints = waypoints;
         _end = end;
+        _realtime = true;
         _timer = new Timer();
     }
 
     @Override
     public void initialize() {
-        _trajectory =
-                TrajectoryGenerator.generateTrajectory(
-                        _start, _waypoints, _end, _driveTrain.getConfig());
+        if (_realtime) {
+            _trajectory =
+                    TrajectoryGenerator.generateTrajectory(
+                            _start, _waypoints, _end, _driveTrain.getConfig());
+        }
         _time = _trajectory.getTotalTimeSeconds();
         _timer.reset();
         _timer.start();
