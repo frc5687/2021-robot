@@ -40,6 +40,7 @@ public class OI extends OutliersProxy {
 
     public void initializeButtons(DriveTrain driveTrain, Trajectory trajectory) {
         var waypoints = new ArrayList<Translation2d>();
+        var angleTest = new ArrayList<Translation2d>();
         waypoints.add(new Translation2d(1, -1));
         //                waypoints.add(new Translation2d(2, 0));
         _driverAButton.whenPressed(
@@ -49,8 +50,16 @@ public class OI extends OutliersProxy {
                         waypoints,
                         new Pose2d(0, 0, new Rotation2d(0))));
         _driverBButton.whenPressed(new DriveTrajectory(driveTrain, trajectory));
+        _driverXButton.whenPressed(
+                new DriveTrajectory(
+                        driveTrain,
+                        driveTrain.getOdometryPose(),
+                        angleTest,
+                        new Pose2d(
+                                driveTrain.getOdometryPose().getX(),
+                                driveTrain.getOdometryPose().getY(),
+                                new Rotation2d(Math.PI / 2))));
         //        _driverBButton.whenPressed(null);
-        //        _driverXButton.whenPressed(null);
     }
 
     public double getDriveY() {

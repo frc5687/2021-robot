@@ -109,7 +109,7 @@ public class DriveTrain extends OutliersSubsystem {
         }
         enableMetrics();
         logMetrics("Module Angle", "Reference Module Angle");
-//                _odomerty.resetPosition(getPose(), getHeading());
+        //        _odomerty.resetPosition(getPose(), getHeading());
     }
 
     // use for modules as controller is running at 200Hz.
@@ -177,7 +177,6 @@ public class DriveTrain extends OutliersSubsystem {
         metric("Module Angle", _backLeft.getModuleAngle());
         //        metric("Predicted Angle", _backLeft.getPredictedAzimuthAngle());
         metric("Reference Module Angle", _backLeft.getReferenceModuleAngle());
-        metric("Heading", getHeading().getDegrees());
         //
         //        metric("Wanted Left Voltage", _backLeft.getLeftNextVoltage());
         //        metric("Wanted Right Voltage", _backLeft.getRightNextVoltage());
@@ -232,6 +231,7 @@ public class DriveTrain extends OutliersSubsystem {
 
     // yaw is negative to follow wpi coordinate system.
     public Rotation2d getHeading() {
+        metric("heading", -getYaw());
         return Rotation2d.fromDegrees(-getYaw());
     }
 
@@ -242,6 +242,7 @@ public class DriveTrain extends OutliersSubsystem {
                                 ? ChassisSpeeds.fromFieldRelativeSpeeds(vx, vy, omega, getHeading())
                                 : new ChassisSpeeds(vx, vy, omega));
         SwerveDriveKinematics.normalizeWheelSpeeds(swerveModuleStates, MAX_MPS);
+        SmartDashboard.putNumber("states", swerveModuleStates[0].speedMetersPerSecond);
         if (Math.abs(vx) < DEADBAND && Math.abs(vy) < DEADBAND && Math.abs(omega) < DEADBAND) {
             setFrontRightModuleState(
                     new SwerveModuleState(0, new Rotation2d(_frontRight.getModuleAngle())));
