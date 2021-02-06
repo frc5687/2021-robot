@@ -25,10 +25,13 @@ public class Drive extends OutliersCommand {
     @Override
     public void execute() {
         super.execute();
-        double stickX = _oi.getDriveY() * MAX_MPS;
-        double stickY = _oi.getDriveX() * MAX_MPS;
-        double rot = _oi.getRotationX() * MAX_ANG_VEL;
-        _driveTrain.drive(stickX, stickY, rot, false);
+        // this is correct because of coordinate system.
+        double vx = _oi.getDriveY() * MAX_MPS;
+        double vy = -_oi.getDriveX() * MAX_MPS;
+        metric("vx", vx);
+        metric("vy", vy);
+        double rot = -_oi.getRotationX() * MAX_ANG_VEL;
+        _driveTrain.drive(vx, vy, rot, true);
     }
 
     @Override
