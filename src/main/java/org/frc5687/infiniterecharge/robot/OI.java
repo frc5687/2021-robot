@@ -84,6 +84,10 @@ public class OI extends OutliersProxy {
         return POV.fromWPILIbAngle(0, _driverGamepad.getPOV()).getDirectionValue();
     }
 
+    public boolean holdAngle() {
+        return _driverRightStickButton.get();
+    }
+
     protected double getSpeedFromAxis(Joystick gamepad, int axisNumber) {
         return gamepad.getRawAxis(axisNumber);
     }

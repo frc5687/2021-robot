@@ -4,6 +4,6 @@
   "maxVelocity": 5.1816,
   "maxAcceleration": 1.7,
   "wheelBase": 0.6223,
-  "gameName": "Infinite Recharge",
+  "gameName": "Barrel Racing Path",
   "outputDir": "../src/main/deploy"
 }

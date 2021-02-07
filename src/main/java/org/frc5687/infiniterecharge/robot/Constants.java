@@ -34,8 +34,6 @@ public class Constants {
                 new Translation2d(-WIDTH / 2.0, LENGTH / 2.0);
         public static final Translation2d BACK_RIGHT_POSITION =
                 new Translation2d(-WIDTH / 2.0, -LENGTH / 2.0);
-        public static final boolean RIGHT_INVERTED = false;
-        public static final boolean LEFT_INVERTED = false;
 
         // units are meters and radians.
         // System pose [x, y, theta] certainty TODO: Tune for real bot.
@@ -49,10 +47,17 @@ public class Constants {
                 VecBuilder.fill(0.5, 0.5, Units.degreesToRadians(20));
 
         public static final double DEADBAND = 0.08;
+        public static final double SENSITIVITY_VX = 0.9;
+        public static final double SENSITIVITY_VY = 0.9;
+        public static final double SENSITIVITY_OMEGA = 0.9;
         public static final double MAX_MPS = 5.1816;
         //        public static final double MAX_MPS = 1.0;
         public static final double MAX_ANG_VEL = Math.PI * 2.0;
         public static final double MAX_MPSS = 1.7; // accel
+
+        public static final double ANGLE_kP = 2.5;
+        public static final double ANGLE_kI = 0.0;
+        public static final double ANGLE_kD = 0.0;
 
         public static final double kP = 2.5;
         public static final double kI = 0.0;
@@ -69,7 +74,6 @@ public class Constants {
         public static final double GEAR_RATIO_STEER = 11.5;
         public static final double FALCON_RATE = 600.0;
         public static final double WHEEL_RADIUS = 0.0508; // Meters
-        public static final double MAX_MPS = 5.1816;
         public static final double TICKS_TO_ROTATIONS = 2048.0;
         public static final double VOLTS_TO_ROTATIONS = 3.3;
 

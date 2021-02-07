@@ -15,14 +15,15 @@ import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.trajectory.constraint.SwerveDriveKinematicsConstraint;
 import java.util.concurrent.atomic.AtomicReference;
+import org.frc5687.infiniterecharge.robot.OI;
 import org.frc5687.infiniterecharge.robot.RobotMap;
 import org.frc5687.infiniterecharge.robot.util.GloWorm;
+import org.frc5687.infiniterecharge.robot.util.Helpers;
 import org.frc5687.infiniterecharge.robot.util.OutliersContainer;
 import org.frc5687.lib.T265Camera;
 
@@ -37,16 +38,22 @@ public class DriveTrain extends OutliersSubsystem {
     private SwerveDriveOdometry _odomerty;
 
     private boolean hasTarget = false;
+    private boolean _holdAngle = false;
+    private boolean _prevHoldAngle = false;
+    private double _PIDAngle;
 
     private AHRS _imu;
+    private OI _oi;
     private T265Camera _slamCamera;
     private GloWorm _vision;
 
     private HolonomicDriveController _controller;
+    private ProfiledPIDController _angleController;
 
-    public DriveTrain(OutliersContainer container, AHRS imu, T265Camera slamCamera) {
+    public DriveTrain(OutliersContainer container, OI oi, AHRS imu, T265Camera slamCamera) {
         super(container);
         try {
+            _oi = oi;
             _imu = imu;
             _slamCamera = slamCamera;
             _vision = new GloWorm("gloworm"); // TODO: change name of camera
@@ -104,12 +111,20 @@ public class DriveTrain extends OutliersSubsystem {
                                     kD,
                                     new TrapezoidProfile.Constraints(
                                             PROFILE_CONSTRAINT_VEL, PROFILE_CONSTRAINT_ACCEL)));
+            _angleController =
+                    new ProfiledPIDController(
+                            ANGLE_kP,
+                            ANGLE_kI,
+                            ANGLE_kD,
+                            new TrapezoidProfile.Constraints(
+                                    PROFILE_CONSTRAINT_VEL, PROFILE_CONSTRAINT_ACCEL));
+            _angleController.enableContinuousInput(-Math.PI / 2.0, Math.PI / 2.0);
         } catch (Exception e) {
             error(e.getMessage());
         }
         enableMetrics();
         logMetrics("Module Angle", "Reference Module Angle");
-//                _odomerty.resetPosition(getPose(), getHeading());
+        //                _odomerty.resetPosition(getPose(), getHeading());
     }
 
     // use for modules as controller is running at 200Hz.
@@ -236,12 +251,12 @@ public class DriveTrain extends OutliersSubsystem {
     }
 
     public void drive(double vx, double vy, double omega, boolean fieldRelative) {
-        SwerveModuleState[] swerveModuleStates =
-                _kinematics.toSwerveModuleStates(
-                        fieldRelative
-                                ? ChassisSpeeds.fromFieldRelativeSpeeds(vx, vy, omega, getHeading())
-                                : new ChassisSpeeds(vx, vy, omega));
-        SwerveDriveKinematics.normalizeWheelSpeeds(swerveModuleStates, MAX_MPS);
+        vx = Helpers.applySensitivityFactor(vx, SENSITIVITY_VX);
+        vy = Helpers.applySensitivityFactor(vy, SENSITIVITY_VY);
+        omega = Helpers.applySensitivityFactor(omega, SENSITIVITY_OMEGA);
+
+        _holdAngle = _oi.holdAngle();
+
         if (Math.abs(vx) < DEADBAND && Math.abs(vy) < DEADBAND && Math.abs(omega) < DEADBAND) {
             setFrontRightModuleState(
                     new SwerveModuleState(0, new Rotation2d(_frontRight.getModuleAngle())));
@@ -251,12 +266,39 @@ public class DriveTrain extends OutliersSubsystem {
                     new SwerveModuleState(0, new Rotation2d(_backRight.getModuleAngle())));
             setBackLeftModuleState(
                     new SwerveModuleState(0, new Rotation2d(_backLeft.getModuleAngle())));
+        } else if (_holdAngle) {
+            if (!_prevHoldAngle) {
+                _PIDAngle = getHeading().getRadians();
+                _angleController.reset(getHeading().getRadians());
+                _prevHoldAngle = _holdAngle;
+            }
+
+            SwerveModuleState[] swerveModuleStates =
+                    _kinematics.toSwerveModuleStates(
+                            new ChassisSpeeds(
+                                    vx,
+                                    vy,
+                                    _angleController.calculate(
+                                            getHeading().getRadians(), _PIDAngle)));
+            SwerveDriveKinematics.normalizeWheelSpeeds(swerveModuleStates, MAX_MPS);
+            setFrontRightModuleState(swerveModuleStates[1]);
+            setFrontLeftModuleState(swerveModuleStates[0]);
+            setBackLeftModuleState(swerveModuleStates[2]);
+            setBackRightModuleState(swerveModuleStates[3]);
         } else {
+            SwerveModuleState[] swerveModuleStates =
+                    _kinematics.toSwerveModuleStates(
+                            fieldRelative
+                                    ? ChassisSpeeds.fromFieldRelativeSpeeds(
+                                            vx, vy, omega, getHeading())
+                                    : new ChassisSpeeds(vx, vy, omega));
+            SwerveDriveKinematics.normalizeWheelSpeeds(swerveModuleStates, MAX_MPS);
             setFrontRightModuleState(swerveModuleStates[1]);
             setFrontLeftModuleState(swerveModuleStates[0]);
             setBackLeftModuleState(swerveModuleStates[2]);
             setBackRightModuleState(swerveModuleStates[3]);
         }
+        _prevHoldAngle = _holdAngle;
     }
 
     public SwerveDriveKinematicsConstraint getKinematicConstraint() {
