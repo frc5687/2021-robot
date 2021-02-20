@@ -23,7 +23,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.frc5687.infiniterecharge.robot.OI;
 import org.frc5687.infiniterecharge.robot.RobotMap;
 import org.frc5687.infiniterecharge.robot.util.GloWorm;
-import org.frc5687.infiniterecharge.robot.util.Helpers;
 import org.frc5687.infiniterecharge.robot.util.OutliersContainer;
 import org.frc5687.lib.T265Camera;
 
@@ -251,13 +250,9 @@ public class DriveTrain extends OutliersSubsystem {
     }
 
     public void drive(double vx, double vy, double omega, boolean fieldRelative) {
-        vx = Helpers.applySensitivityFactor(vx, SENSITIVITY_VX);
-        vy = Helpers.applySensitivityFactor(vy, SENSITIVITY_VY);
-        omega = Helpers.applySensitivityFactor(omega, SENSITIVITY_OMEGA);
-
         _holdAngle = _oi.holdAngle();
-
         if (Math.abs(vx) < DEADBAND && Math.abs(vy) < DEADBAND && Math.abs(omega) < DEADBAND) {
+            error("Standing Still");
             setFrontRightModuleState(
                     new SwerveModuleState(0, new Rotation2d(_frontRight.getModuleAngle())));
             setFrontLeftModuleState(
@@ -266,26 +261,32 @@ public class DriveTrain extends OutliersSubsystem {
                     new SwerveModuleState(0, new Rotation2d(_backRight.getModuleAngle())));
             setBackLeftModuleState(
                     new SwerveModuleState(0, new Rotation2d(_backLeft.getModuleAngle())));
+            _prevHoldAngle = _oi.holdAngle();
         } else if (_holdAngle) {
+            error("Holding Angle");
             if (!_prevHoldAngle) {
                 _PIDAngle = getHeading().getRadians();
-                _angleController.reset(getHeading().getRadians());
+                metric("Set Angle", _PIDAngle);
+                _angleController.reset(_PIDAngle);
                 _prevHoldAngle = _holdAngle;
             }
 
             SwerveModuleState[] swerveModuleStates =
                     _kinematics.toSwerveModuleStates(
-                            new ChassisSpeeds(
+                            ChassisSpeeds.fromFieldRelativeSpeeds(
                                     vx,
                                     vy,
                                     _angleController.calculate(
-                                            getHeading().getRadians(), _PIDAngle)));
+                                            getHeading().getRadians(), _PIDAngle),
+                                    new Rotation2d(_PIDAngle)));
             SwerveDriveKinematics.normalizeWheelSpeeds(swerveModuleStates, MAX_MPS);
             setFrontRightModuleState(swerveModuleStates[1]);
             setFrontLeftModuleState(swerveModuleStates[0]);
             setBackLeftModuleState(swerveModuleStates[2]);
             setBackRightModuleState(swerveModuleStates[3]);
+            _prevHoldAngle = _holdAngle;
         } else {
+            error("No angle");
             SwerveModuleState[] swerveModuleStates =
                     _kinematics.toSwerveModuleStates(
                             fieldRelative
@@ -297,6 +298,7 @@ public class DriveTrain extends OutliersSubsystem {
             setFrontLeftModuleState(swerveModuleStates[0]);
             setBackLeftModuleState(swerveModuleStates[2]);
             setBackRightModuleState(swerveModuleStates[3]);
+            _prevHoldAngle = _holdAngle;
         }
         _prevHoldAngle = _holdAngle;
     }

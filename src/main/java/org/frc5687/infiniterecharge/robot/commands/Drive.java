@@ -5,6 +5,7 @@ import static org.frc5687.infiniterecharge.robot.Constants.DriveTrain.*;
 
 import org.frc5687.infiniterecharge.robot.OI;
 import org.frc5687.infiniterecharge.robot.subsystems.DriveTrain;
+import org.frc5687.infiniterecharge.robot.util.Helpers;
 
 public class Drive extends OutliersCommand {
 
@@ -26,11 +27,13 @@ public class Drive extends OutliersCommand {
     public void execute() {
         super.execute();
         // this is correct because of coordinate system.
-        double vx = _oi.getDriveY() * MAX_MPS;
-        double vy = -_oi.getDriveX() * MAX_MPS;
+        double vx = Helpers.applySensitivityFactor(_oi.getDriveY(), SENSITIVITY_VX) * MAX_MPS;
+        double vy = Helpers.applySensitivityFactor(-_oi.getDriveX(), SENSITIVITY_VY) * MAX_MPS;
         metric("vx", vx);
         metric("vy", vy);
-        double rot = -_oi.getRotationX() * MAX_ANG_VEL;
+        double rot =
+                Helpers.applySensitivityFactor(-_oi.getRotationX(), SENSITIVITY_OMEGA)
+                        * MAX_ANG_VEL;
         _driveTrain.drive(vx, vy, rot, true);
     }
 
