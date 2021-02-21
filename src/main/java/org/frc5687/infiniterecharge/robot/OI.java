@@ -19,6 +19,8 @@ import org.frc5687.infiniterecharge.robot.util.POV;
 
 public class OI extends OutliersProxy {
     protected Gamepad _driverGamepad;
+    protected Joystick _leftJoystick;
+    protected Joystick _rightJoystick;
     protected Button _driverRightStickButton;
 
     private Button _driverAButton;
@@ -28,6 +30,9 @@ public class OI extends OutliersProxy {
 
     public OI() {
         _driverGamepad = new Gamepad(0);
+
+        _leftJoystick = new Joystick(1);
+        _rightJoystick = new Joystick(2);
 
         _driverRightStickButton =
                 new JoystickButton(_driverGamepad, Gamepad.Buttons.RIGHT_STICK.getNumber());
@@ -63,19 +68,22 @@ public class OI extends OutliersProxy {
     }
 
     public double getDriveY() {
-        double speed = -getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_Y.getNumber());
+        double speed = -getSpeedFromAxis(_leftJoystick, _leftJoystick.getYChannel());
+        //        double speed = -getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_Y.getNumber());
         speed = applyDeadband(speed, Constants.DriveTrain.DEADBAND);
         return speed;
     }
 
     public double getDriveX() {
-        double speed = getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_X.getNumber());
+        double speed = getSpeedFromAxis(_leftJoystick, _leftJoystick.getXChannel());
+        //        double speed = getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_X.getNumber());
         speed = applyDeadband(speed, Constants.DriveTrain.DEADBAND);
         return speed;
     }
 
     public double getRotationX() {
-        double speed = getSpeedFromAxis(_driverGamepad, Gamepad.Axes.RIGHT_X.getNumber());
+        double speed = getSpeedFromAxis(_rightJoystick, _rightJoystick.getXChannel());
+        //        double speed = getSpeedFromAxis(_driverGamepad, Gamepad.Axes.RIGHT_X.getNumber());
         speed = applyDeadband(speed, Constants.DriveTrain.DEADBAND);
         return speed;
     }
