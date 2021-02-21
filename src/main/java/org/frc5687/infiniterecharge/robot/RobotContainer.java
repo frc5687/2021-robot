@@ -55,6 +55,7 @@ public class RobotContainer extends OutliersContainer {
         String trajectoryJSON = "output/BarrelRace.wpilib.json";
         Trajectory trajectory = new Trajectory();
         Trajectory trajectoryNew = new Trajectory();
+        _driveTrain = new DriveTrain(this, _oi, _imu, _slamCamera);
         try {
             Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
             trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
@@ -66,8 +67,7 @@ public class RobotContainer extends OutliersContainer {
         } catch (IOException ex) {
             error("Unable to open trajectory: " + trajectoryJSON + ex.getMessage());
         }
-
-        _driveTrain = new DriveTrain(this, _oi, _imu, _slamCamera);
+        error("TrajectoryNew staring pose is " + trajectoryNew.getInitialPose().toString());
         _oi.initializeButtons(_driveTrain, trajectoryNew);
         setDefaultCommand(_driveTrain, new Drive(_driveTrain, _oi));
 

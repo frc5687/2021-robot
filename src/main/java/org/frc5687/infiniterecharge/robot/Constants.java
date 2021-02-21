@@ -46,23 +46,23 @@ public class Constants {
         public static final Matrix<N3, N1> VISION_MEASUREMENT_STD_DEVS =
                 VecBuilder.fill(0.5, 0.5, Units.degreesToRadians(20));
 
-        public static final double DEADBAND = 0.08;
+        public static final double DEADBAND = 0.04;
         public static final double SENSITIVITY_VX = 0.9;
         public static final double SENSITIVITY_VY = 0.9;
         public static final double SENSITIVITY_OMEGA = 0.9;
         public static final double MAX_MPS = 5.1816;
         //        public static final double MAX_MPS = 1.0;
-        public static final double MAX_ANG_VEL = Math.PI * 2.0;
+        public static final double MAX_ANG_VEL = Math.PI * 4.0;
         public static final double MAX_MPSS = 1.7; // accel
 
         public static final double ANGLE_kP = 2.5;
         public static final double ANGLE_kI = 0.0;
         public static final double ANGLE_kD = 0.0;
 
-        public static final double kP = 2.5;
+        public static final double kP = 1.5;
         public static final double kI = 0.0;
         public static final double kD = 0.0;
-        public static final double PROFILE_CONSTRAINT_VEL = 2.0 * Math.PI;
+        public static final double PROFILE_CONSTRAINT_VEL = 3.0 * Math.PI;
         public static final double PROFILE_CONSTRAINT_ACCEL = Math.PI;
     }
 

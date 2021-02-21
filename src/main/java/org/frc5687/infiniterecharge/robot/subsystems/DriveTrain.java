@@ -204,7 +204,7 @@ public class DriveTrain extends OutliersSubsystem {
         //        metric("Wheel Reference Angular Velocity",
         // _backLeft.getReferenceWheelAngularVelocity());
         //        metric("FR/angle", _frontRight.getModuleAngle());
-        //        metric("FR/vel", _frontRight.getWheelVelocity());
+        metric("FR/vel", _frontRight.getWheelVelocity());
         //        SmartDashboard.putNumberArray(
         //                "DriveTrain/FR/state predict", _frontRight.getPredictedState());
 
@@ -222,6 +222,7 @@ public class DriveTrain extends OutliersSubsystem {
         //        metric("BL/vel", _backLeft.getWheelVelocity());
         //        SmartDashboard.putNumberArray("DriveTrain/BL/state predict",
         // _backLeft.getPredictedState());
+        metric("Prev Angle", _prevHoldAngle);
     }
 
     public void setFrontRightModuleState(SwerveModuleState state) {
@@ -249,10 +250,15 @@ public class DriveTrain extends OutliersSubsystem {
         return Rotation2d.fromDegrees(-getYaw());
     }
 
-    public void drive(double vx, double vy, double omega, boolean fieldRelative) {
-        _holdAngle = _oi.holdAngle();
+    public void drive(
+            double vx, double vy, double omega, boolean fieldRelative, boolean releaseAngle) {
+        //        if (!releaseAngle && _prevHoldAngle) {
+        //            _PIDAngle = getHeading().getRadians();
+        //            metric("Set Angle", _PIDAngle);
+        //            _angleController.reset(_PIDAngle);
+        //            _prevHoldAngle = _holdAngle;
+        //        }
         if (Math.abs(vx) < DEADBAND && Math.abs(vy) < DEADBAND && Math.abs(omega) < DEADBAND) {
-            error("Standing Still");
             setFrontRightModuleState(
                     new SwerveModuleState(0, new Rotation2d(_frontRight.getModuleAngle())));
             setFrontLeftModuleState(
@@ -261,16 +267,24 @@ public class DriveTrain extends OutliersSubsystem {
                     new SwerveModuleState(0, new Rotation2d(_backRight.getModuleAngle())));
             setBackLeftModuleState(
                     new SwerveModuleState(0, new Rotation2d(_backLeft.getModuleAngle())));
-            _prevHoldAngle = _oi.holdAngle();
-        } else if (_holdAngle) {
-            error("Holding Angle");
-            if (!_prevHoldAngle) {
-                _PIDAngle = getHeading().getRadians();
-                metric("Set Angle", _PIDAngle);
-                _angleController.reset(_PIDAngle);
-                _prevHoldAngle = _holdAngle;
-            }
-
+            _PIDAngle = getHeading().getRadians();
+            _angleController.reset(_PIDAngle);
+        } else if (releaseAngle || Math.abs(omega) > 0) {
+            SwerveModuleState[] swerveModuleStates =
+                    _kinematics.toSwerveModuleStates(
+                            fieldRelative
+                                    ? ChassisSpeeds.fromFieldRelativeSpeeds(
+                                            vx, vy, omega, getHeading())
+                                    : new ChassisSpeeds(vx, vy, omega));
+            SwerveDriveKinematics.normalizeWheelSpeeds(swerveModuleStates, MAX_MPS);
+            setFrontRightModuleState(swerveModuleStates[1]);
+            setFrontLeftModuleState(swerveModuleStates[0]);
+            setBackLeftModuleState(swerveModuleStates[2]);
+            setBackRightModuleState(swerveModuleStates[3]);
+            _PIDAngle = getHeading().getRadians();
+            _angleController.reset(_PIDAngle);
+            //            error("Holding Angle");
+        } else {
             SwerveModuleState[] swerveModuleStates =
                     _kinematics.toSwerveModuleStates(
                             ChassisSpeeds.fromFieldRelativeSpeeds(
@@ -284,23 +298,8 @@ public class DriveTrain extends OutliersSubsystem {
             setFrontLeftModuleState(swerveModuleStates[0]);
             setBackLeftModuleState(swerveModuleStates[2]);
             setBackRightModuleState(swerveModuleStates[3]);
-            _prevHoldAngle = _holdAngle;
-        } else {
-            error("No angle");
-            SwerveModuleState[] swerveModuleStates =
-                    _kinematics.toSwerveModuleStates(
-                            fieldRelative
-                                    ? ChassisSpeeds.fromFieldRelativeSpeeds(
-                                            vx, vy, omega, getHeading())
-                                    : new ChassisSpeeds(vx, vy, omega));
-            SwerveDriveKinematics.normalizeWheelSpeeds(swerveModuleStates, MAX_MPS);
-            setFrontRightModuleState(swerveModuleStates[1]);
-            setFrontLeftModuleState(swerveModuleStates[0]);
-            setBackLeftModuleState(swerveModuleStates[2]);
-            setBackRightModuleState(swerveModuleStates[3]);
-            _prevHoldAngle = _holdAngle;
         }
-        _prevHoldAngle = _holdAngle;
+        _prevHoldAngle = releaseAngle;
     }
 
     public SwerveDriveKinematicsConstraint getKinematicConstraint() {

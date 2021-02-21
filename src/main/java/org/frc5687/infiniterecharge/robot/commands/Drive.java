@@ -34,7 +34,7 @@ public class Drive extends OutliersCommand {
         double rot =
                 Helpers.applySensitivityFactor(-_oi.getRotationX(), SENSITIVITY_OMEGA)
                         * MAX_ANG_VEL;
-        _driveTrain.drive(vx, vy, rot, true);
+        _driveTrain.drive(vx, vy, rot, true, _oi.holdAngle());
     }
 
     @Override
