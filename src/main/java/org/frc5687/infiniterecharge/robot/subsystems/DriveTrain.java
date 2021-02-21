@@ -5,6 +5,7 @@ import static org.frc5687.infiniterecharge.robot.Constants.DriveTrain.*;
 import static org.frc5687.infiniterecharge.robot.RobotMap.CAN.TALONFX.*;
 
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.HolonomicDriveController;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
@@ -162,14 +163,13 @@ public class DriveTrain extends OutliersSubsystem {
                 _frontRight.getState(),
                 _backLeft.getState(),
                 _backRight.getState());
-        //        if (_vision.hasTarget()) {
-        //            //            _poseEstimator.setVisionMeasurementStdDevs(
-        //            //                    VISION_MEASUREMENT_STD_DEVS); // TODO change when have
-        // camera and
-        //            // slam
-        //            //            _poseEstimator.addVisionMeasurement(
-        //            //                    _vision.getTargetPose(), System.currentTimeMillis() -
-        //            // _vision.getLatency());
+        if (_vision.hasTarget()) {
+            //            _poseEstimator.setVisionMeasurementStdDevs(
+            //                    VISION_MEASUREMENT_STD_DEVS); // TODO change when have
+            _poseEstimator.addVisionMeasurement(
+                    _vision.getTargetPose(),
+                    Timer.getFPGATimestamp() - (_vision.getLatency() / 1000.0));
+        }
         //        } else if (_slamCamera != null) {
         //            //            _poseEstimator.setVisionMeasurementStdDevs(
         //            //                    VISION_MEASUREMENT_STD_DEVS); // TODO change when have
@@ -252,12 +252,6 @@ public class DriveTrain extends OutliersSubsystem {
 
     public void drive(
             double vx, double vy, double omega, boolean fieldRelative, boolean releaseAngle) {
-        //        if (!releaseAngle && _prevHoldAngle) {
-        //            _PIDAngle = getHeading().getRadians();
-        //            metric("Set Angle", _PIDAngle);
-        //            _angleController.reset(_PIDAngle);
-        //            _prevHoldAngle = _holdAngle;
-        //        }
         if (Math.abs(vx) < DEADBAND && Math.abs(vy) < DEADBAND && Math.abs(omega) < DEADBAND) {
             setFrontRightModuleState(
                     new SwerveModuleState(0, new Rotation2d(_frontRight.getModuleAngle())));
