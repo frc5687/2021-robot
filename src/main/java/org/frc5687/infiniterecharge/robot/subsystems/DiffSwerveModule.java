@@ -8,7 +8,6 @@ import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.AnalogEncoder;
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.controller.ControllerUtil;
 import edu.wpi.first.wpilibj.controller.LinearQuadraticRegulator;
 import edu.wpi.first.wpilibj.estimator.KalmanFilter;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
@@ -156,10 +155,8 @@ public class DiffSwerveModule {
      */
     private Matrix<N3, N1> wrapAngle(
             Matrix<N3, N1> reference, Matrix<N3, N1> xHat, double minAngle, double maxAngle) {
-
-        _positionError =
-                ControllerUtil.getModulusError(
-                        reference.get(0, 0), getModuleAngle(), minAngle, maxAngle);
+        double angleError = reference.get(0, 0) - getModuleAngle();
+        _positionError = MathUtil.inputModulus(angleError, minAngle, maxAngle);
         Matrix<N3, N1> error = reference.minus(xHat);
         double angVelError = reference.get(1, 0) - getAzimuthAngularVelocity();
         return VecBuilder.fill(_positionError, angVelError, error.get(2, 0));

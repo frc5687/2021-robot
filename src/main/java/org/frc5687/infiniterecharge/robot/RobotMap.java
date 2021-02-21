@@ -12,6 +12,13 @@ public class RobotMap {
      * SparkMax with Id 0 and a TalonSRX with Id 0.
      */
     public static class CAN {
+
+        public static class SPARKMAX {
+            public static final int SPINDEXER = 1;
+            public static final int FEEDER = 2;
+            public static final int INTAKE = 3;
+        }
+
         public static class TALONFX {
             public static final int FR_RIGHT_FALCON = 1;
             public static final int FR_LEFT_FALCON = 2;
@@ -34,7 +41,10 @@ public class RobotMap {
      * There should be an entry here for each PCM port, preferrably in numerical order. Note that
      * for PCM only one device can connect to each port, so the numbers should be unique.
      */
-    public static class PCM {}
+    public static class PCM {
+        public static final int INTAKE_HIGH = 0;
+        public static final int INTAKE_LOW = 7;
+    }
 
     /**
      * There should be an entry here for each PDP breaker, preferrably in numerical order. Note that
