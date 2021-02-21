@@ -14,7 +14,7 @@ public class GloWorm {
     private final PhotonCamera _camera;
     private final NetworkTable _table;
     private final NetworkTableEntry _pose;
-    private final double[] _defaultVal = {0,0,0};
+    private final double[] _defaultVal = {0, 0, 0};
 
     public GloWorm(String camName) {
         _camera = new PhotonCamera(camName);

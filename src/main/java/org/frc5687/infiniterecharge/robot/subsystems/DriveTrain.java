@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
@@ -154,6 +155,7 @@ public class DriveTrain extends OutliersSubsystem {
         //                _backLeft.getState(),
         //                _backRight.getState());
         //        _poseEstimator.addVisionMeasurement(getSlamPose(), Timer.getFPGATimestamp());
+
     }
 
     public void updateOdometry() {
@@ -167,7 +169,13 @@ public class DriveTrain extends OutliersSubsystem {
             //            _poseEstimator.setVisionMeasurementStdDevs(
             //                    VISION_MEASUREMENT_STD_DEVS); // TODO change when have
             _poseEstimator.addVisionMeasurement(
-                    _vision.getTargetPose(),
+                    new Pose2d(new Translation2d(0, 0), new Rotation2d(0))
+                            .transformBy(
+                                    (new Pose2d(TARGET_POS, new Rotation2d(0))
+                                            .minus(_vision.getTargetPose()))),
+                    //
+                    // _vision.getTargetPose().transformBy(CAM_TO_ROBOT).minus(new
+                    // Pose2d(TARGET_POS, new Rotation2d(0))),
                     Timer.getFPGATimestamp() - (_vision.getLatency() / 1000.0));
         }
         //        } else if (_slamCamera != null) {
@@ -192,6 +200,9 @@ public class DriveTrain extends OutliersSubsystem {
         //        metric("Predicted Angle", _backLeft.getPredictedAzimuthAngle());
         metric("Reference Module Angle", _backLeft.getReferenceModuleAngle());
         metric("Heading", getHeading().getDegrees());
+        metric("Estimated Pose", _poseEstimator.getEstimatedPosition().toString());
+        //        metric("has Target", _vision.hasTarget());
+        //        SmartDashboard.putString("Pose", _vision.getTargetPose().toString());
         //
         //        metric("Wanted Left Voltage", _backLeft.getLeftNextVoltage());
         //        metric("Wanted Right Voltage", _backLeft.getRightNextVoltage());
@@ -263,10 +274,7 @@ public class DriveTrain extends OutliersSubsystem {
                     new SwerveModuleState(0, new Rotation2d(_backLeft.getModuleAngle())));
             _PIDAngle = getHeading().getRadians();
             _angleController.reset(_PIDAngle);
-        } else if (Math.abs(omega) > 0) {
-            if (lockTarget && _vision.hasTarget()) {
-                _PIDAngle = Math.toRadians(_vision.getTargetYaw());
-            }
+        } else if (lockTarget || Math.abs(omega) > 0) {
             SwerveModuleState[] swerveModuleStates =
                     _kinematics.toSwerveModuleStates(
                             fieldRelative
@@ -282,6 +290,11 @@ public class DriveTrain extends OutliersSubsystem {
             _angleController.reset(_PIDAngle);
             //            error("Holding Angle");
         } else {
+            //            if (lockTarget && _vision.hasTarget()) {
+            //                _PIDAngle = getHeading().getRadians() -
+            // Math.toRadians(_vision.getTargetYaw());
+            //                _angleController.reset(_PIDAngle);
+            //            }
             SwerveModuleState[] swerveModuleStates =
                     _kinematics.toSwerveModuleStates(
                             ChassisSpeeds.fromFieldRelativeSpeeds(
@@ -296,7 +309,7 @@ public class DriveTrain extends OutliersSubsystem {
             setBackLeftModuleState(swerveModuleStates[2]);
             setBackRightModuleState(swerveModuleStates[3]);
         }
-        _prevHoldAngle = releaseAngle;
+        _prevHoldAngle = lockTarget;
     }
 
     public SwerveDriveKinematicsConstraint getKinematicConstraint() {
@@ -333,6 +346,17 @@ public class DriveTrain extends OutliersSubsystem {
                     pose.set(update.pose);
                 });
         return pose.get();
+    }
+
+    public double getVisionYaw() {
+        if (_vision.hasTarget()) {
+            return _vision.getTargetYaw();
+        }
+        return 0;
+    }
+
+    public boolean hasVisionTarget() {
+        return _vision.hasTarget();
     }
 
     public Pose2d getOdometryPose() {

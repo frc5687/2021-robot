@@ -21,6 +21,12 @@ public class Constants {
                 new Transform2d(
                         new Translation2d(0, 0),
                         new Rotation2d(0)); // TODO: Figure out real values.
+        public static final Transform2d CAM_TO_ROBOT =
+                new Transform2d(
+                        new Translation2d(Units.inchesToMeters(5), Units.inchesToMeters(15)),
+                        new Rotation2d(0));
+        public static final Translation2d TARGET_POS =
+                new Translation2d(Units.inchesToMeters(-93), Units.inchesToMeters(-111));
 
         public static final double T265_MEASUREMENT_COVARIANCE = 0.5;
 
@@ -55,7 +61,7 @@ public class Constants {
         public static final double MAX_ANG_VEL = Math.PI * 4.0;
         public static final double MAX_MPSS = 1.7; // accel
 
-        public static final double ANGLE_kP = 2.5;
+        public static final double ANGLE_kP = 3.5;
         public static final double ANGLE_kI = 0.0;
         public static final double ANGLE_kD = 0.0;
 
