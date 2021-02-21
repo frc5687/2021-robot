@@ -251,7 +251,7 @@ public class DriveTrain extends OutliersSubsystem {
     }
 
     public void drive(
-            double vx, double vy, double omega, boolean fieldRelative, boolean releaseAngle) {
+            double vx, double vy, double omega, boolean fieldRelative, boolean lockTarget) {
         if (Math.abs(vx) < DEADBAND && Math.abs(vy) < DEADBAND && Math.abs(omega) < DEADBAND) {
             setFrontRightModuleState(
                     new SwerveModuleState(0, new Rotation2d(_frontRight.getModuleAngle())));
@@ -263,7 +263,10 @@ public class DriveTrain extends OutliersSubsystem {
                     new SwerveModuleState(0, new Rotation2d(_backLeft.getModuleAngle())));
             _PIDAngle = getHeading().getRadians();
             _angleController.reset(_PIDAngle);
-        } else if (releaseAngle || Math.abs(omega) > 0) {
+        } else if (Math.abs(omega) > 0) {
+            if (lockTarget && _vision.hasTarget()) {
+                _PIDAngle = Math.toRadians(_vision.getTargetYaw());
+            }
             SwerveModuleState[] swerveModuleStates =
                     _kinematics.toSwerveModuleStates(
                             fieldRelative
