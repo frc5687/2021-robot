@@ -96,8 +96,8 @@ public class Constants {
         public static boolean FEEDER_INVERTED = false;
         public static final double SPINDEXER_IDLE_SPEED = -0.1;
         public static final double FEEDER_IDLE_SPEED = -0.05;
-        public static final double SPINDEXER_SPEED = 0.5;
-        public static final double FEEDER_SPEED = 0.5;
+        public static final double SPINDEXER_SPEED = 0.75;
+        public static final double FEEDER_SPEED = 1.0;
     }
 
     public static class Intake {

@@ -21,8 +21,8 @@ public class AutoShoot extends OutliersCommand {
     @Override
     public void execute() {
         super.execute();
-        _spindexer.setSpindexerSpeed(Constants.Spindexer.SPINDEXER_IDLE_SPEED);
-        _spindexer.setFeederSpeed(Constants.Spindexer.FEEDER_IDLE_SPEED);
+        _spindexer.setSpindexerSpeed(Constants.Spindexer.SPINDEXER_SPEED);
+        _spindexer.setFeederSpeed(Constants.Spindexer.FEEDER_SPEED);
     }
 
     @Override

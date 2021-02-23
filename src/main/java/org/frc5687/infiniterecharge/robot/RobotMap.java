@@ -14,9 +14,9 @@ public class RobotMap {
     public static class CAN {
 
         public static class SPARKMAX {
-            public static final int SPINDEXER = 1;
-            public static final int FEEDER = 2;
-            public static final int INTAKE = 3;
+            public static final int SPINDEXER = 3;
+            public static final int FEEDER = 11;
+            public static final int INTAKE = 6;
         }
 
         public static class TALONFX {
