@@ -1,12 +1,15 @@
 package org.frc5687.infiniterecharge.robot.commands;
 
+import org.frc5687.infiniterecharge.robot.OI;
 import org.frc5687.infiniterecharge.robot.subsystems.Hood;
 
 public class IdleHood extends OutliersCommand {
 
     private Hood _hood;
-    public IdleHood(Hood hood) {
+    private OI _oi;
+    public IdleHood(Hood hood, OI oi) {
         _hood = hood;
+        _oi = oi;
         addRequirements(_hood);
     }
 
@@ -18,6 +21,7 @@ public class IdleHood extends OutliersCommand {
     @Override
     public void execute() {
         super.execute();
+        _hood.setSpeed(_oi.getDriveY());
     }
 
     @Override

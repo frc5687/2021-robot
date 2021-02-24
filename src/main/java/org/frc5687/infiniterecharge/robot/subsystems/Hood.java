@@ -51,13 +51,13 @@ public class Hood extends OutliersSubsystem {
 
     @Override
     public void periodic() {
-        if(isHallTriggered()) {
-            if (_hood.get() < 0) {
-                setSpeed(0);
-            }
-            _angle = MIN_ANGLE;
-            _hoodEncoder.setPosition(_angle * POSITION_TO_ANGLE); //TODO: Find Conversion
-        }
+//        if(isHallTriggered()) {
+//            if (_hood.get() < 0) {
+//                setSpeed(0);
+//            }
+//            _angle = MIN_ANGLE;
+//            _hoodEncoder.setPosition(_angle * POSITION_TO_ANGLE); //TODO: Find Conversion
+//        }
 
     }
 

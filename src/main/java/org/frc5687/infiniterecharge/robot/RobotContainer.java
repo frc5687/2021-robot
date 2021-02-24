@@ -78,7 +78,7 @@ public class RobotContainer extends OutliersContainer {
         //        setDefaultCommand(_driveTrain, new Drive(_driveTrain, _oi));
         setDefaultCommand(_intake, new IdleIntake(_intake));
         setDefaultCommand(_spindexer, new IdleSpindexer(_spindexer));
-        setDefaultCommand(_hood, new IdleHood(_hood));
+        setDefaultCommand(_hood, new IdleHood(_hood, _oi));
 
         _robot.addPeriodic(this::controllerPeriodic, 0.005, 0.005);
         _imu.reset();
