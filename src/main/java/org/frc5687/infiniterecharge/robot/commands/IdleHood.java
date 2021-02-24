@@ -1,3 +1,4 @@
+/* (C)2021 */
 package org.frc5687.infiniterecharge.robot.commands;
 
 import org.frc5687.infiniterecharge.robot.OI;
@@ -7,6 +8,7 @@ public class IdleHood extends OutliersCommand {
 
     private Hood _hood;
     private OI _oi;
+
     public IdleHood(Hood hood, OI oi) {
         _hood = hood;
         _oi = oi;

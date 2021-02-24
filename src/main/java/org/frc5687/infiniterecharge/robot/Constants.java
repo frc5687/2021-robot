@@ -122,11 +122,11 @@ public class Constants {
         public static final double MAX_VEL = Units.radiansPerSecondToRotationsPerMinute(200);
         public static final double MAX_ACCEL = Units.radiansPerSecondToRotationsPerMinute(150);
 
-        public static final double TOLERANCE = 0.1; //rads
+        public static final double TOLERANCE = 0.1; // rads
 
         public static final double MIN_ANGLE = Math.PI / 4.0;
         public static final double MAX_ANGLE = Math.PI / 2.0;
 
-        public static final double POSITION_TO_ANGLE = 1.0; //TODO
+        public static final double POSITION_TO_ANGLE = 1.0; // TODO
     }
 }
