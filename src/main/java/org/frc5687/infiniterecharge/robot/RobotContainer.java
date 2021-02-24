@@ -12,10 +12,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import java.io.IOException;
 import java.nio.file.Path;
 import org.frc5687.infiniterecharge.robot.commands.*;
-import org.frc5687.infiniterecharge.robot.subsystems.DriveTrain;
-import org.frc5687.infiniterecharge.robot.subsystems.Intake;
-import org.frc5687.infiniterecharge.robot.subsystems.OutliersSubsystem;
-import org.frc5687.infiniterecharge.robot.subsystems.Spindexer;
+import org.frc5687.infiniterecharge.robot.subsystems.*;
 import org.frc5687.infiniterecharge.robot.util.OutliersContainer;
 import org.frc5687.lib.T265Camera;
 
@@ -29,6 +26,7 @@ public class RobotContainer extends OutliersContainer {
     private DriveTrain _driveTrain;
     private Intake _intake;
     private Spindexer _spindexer;
+    private Hood _hood;
 
     public RobotContainer(Robot robot, IdentityMode identityMode) {
         super(identityMode);
@@ -44,6 +42,7 @@ public class RobotContainer extends OutliersContainer {
         _driveTrain = new DriveTrain(this, _oi, _imu, _slamCamera);
         _intake = new Intake(this);
         _spindexer = new Spindexer(this);
+        _hood = new Hood(this);
 
         while (++counter <= 1 && _slamCamera == null) {
             try {
@@ -79,6 +78,7 @@ public class RobotContainer extends OutliersContainer {
         //        setDefaultCommand(_driveTrain, new Drive(_driveTrain, _oi));
         setDefaultCommand(_intake, new IdleIntake(_intake));
         setDefaultCommand(_spindexer, new IdleSpindexer(_spindexer));
+        setDefaultCommand(_hood, new IdleHood(_hood));
 
         _robot.addPeriodic(this::controllerPeriodic, 0.005, 0.005);
         _imu.reset();

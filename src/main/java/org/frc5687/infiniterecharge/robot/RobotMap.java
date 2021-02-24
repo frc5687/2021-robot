@@ -17,6 +17,7 @@ public class RobotMap {
             public static final int SPINDEXER = 3;
             public static final int FEEDER = 11;
             public static final int INTAKE = 6;
+            public static final int HOOD = 1;
         }
 
         public static class TALONFX {
@@ -67,5 +68,7 @@ public class RobotMap {
      * There should be an entry here for each DIO port, preferrably in numerical order. Note that
      * for DIO only one device can connect to each port, so the numbers should be unique.
      */
-    public static class DIO {}
+    public static class DIO {
+        public static final int HOOD_HALL = 0;
+    }
 }
