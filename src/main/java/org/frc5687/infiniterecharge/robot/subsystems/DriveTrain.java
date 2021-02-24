@@ -17,6 +17,8 @@ import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
@@ -50,6 +52,7 @@ public class DriveTrain extends OutliersSubsystem {
 
     private HolonomicDriveController _controller;
     private ProfiledPIDController _angleController;
+    private Field2d _field;
 
     public DriveTrain(OutliersContainer container, OI oi, AHRS imu, T265Camera slamCamera) {
         super(container);
@@ -123,8 +126,10 @@ public class DriveTrain extends OutliersSubsystem {
         } catch (Exception e) {
             error(e.getMessage());
         }
-        enableMetrics();
-        logMetrics("Module Angle", "Reference Module Angle");
+        _field = new Field2d();
+        SmartDashboard.putData("Field", _field);
+//        enableMetrics();
+//        logMetrics("Module Angle", "Reference Module Angle");
         //                _odomerty.resetPosition(getPose(), getHeading());
     }
 
@@ -144,6 +149,7 @@ public class DriveTrain extends OutliersSubsystem {
                 _frontRight.getState(),
                 _backLeft.getState(),
                 _backRight.getState());
+        _field.setRobotPose(_poseEstimator.getEstimatedPosition());
         //        updateOdometry();
         //        metric("estimated Pose", _poseEstimator.getEstimatedPosition().toString());
         //        metric("slam pose", getSlamPose().toString());

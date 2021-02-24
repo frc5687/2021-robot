@@ -26,7 +26,7 @@ public class Constants {
                         new Translation2d(Units.inchesToMeters(5), Units.inchesToMeters(15)),
                         new Rotation2d(0));
         public static final Translation2d TARGET_POS =
-                new Translation2d(Units.inchesToMeters(-93), Units.inchesToMeters(-111));
+                new Translation2d(Units.inchesToMeters(93), Units.inchesToMeters(111));
 
         public static final double T265_MEASUREMENT_COVARIANCE = 0.5;
 
