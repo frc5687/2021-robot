@@ -1,6 +1,7 @@
 /* (C)2021 */
 package org.frc5687.infiniterecharge.robot.subsystems;
 
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import org.frc5687.infiniterecharge.robot.Constants;
@@ -9,7 +10,10 @@ import org.frc5687.infiniterecharge.robot.util.OutliersContainer;
 
 public class Spindexer extends OutliersSubsystem {
     private CANSparkMax _spindexer;
+    private CANEncoder _spindexerEncoder;
+
     private CANSparkMax _feeder;
+    private CANEncoder _feederEncoder;
 
     public Spindexer(OutliersContainer container) {
         super(container);
@@ -18,9 +22,12 @@ public class Spindexer extends OutliersSubsystem {
                     new CANSparkMax(
                             RobotMap.CAN.SPARKMAX.SPINDEXER,
                             CANSparkMaxLowLevel.MotorType.kBrushless);
+            _spindexerEncoder = _spindexer.getEncoder();
+
             _feeder =
                     new CANSparkMax(
                             RobotMap.CAN.SPARKMAX.FEEDER, CANSparkMaxLowLevel.MotorType.kBrushless);
+            _feederEncoder = _feeder.getEncoder();
 
             _spindexer.setInverted(Constants.Spindexer.SPINDEXER_INVERTED);
             _feeder.setInverted(Constants.Spindexer.FEEDER_INVERTED);
@@ -50,16 +57,16 @@ public class Spindexer extends OutliersSubsystem {
      * @return Angular Velocity in RPM
      */
     public double getSpindexerVelocity() {
-        return _spindexer.getEncoder().getVelocity();
+        return _spindexerEncoder.getVelocity();
     }
 
     public double getFeederVelocity() {
-        return _feeder.getEncoder().getVelocity();
+        return _feederEncoder.getVelocity();
     }
 
     // Not implemented yet
     public double getSpindexerAngle() {
-        return _spindexer.getEncoder().getPosition();
+        return _spindexerEncoder.getPosition();
     }
 
     @Override
