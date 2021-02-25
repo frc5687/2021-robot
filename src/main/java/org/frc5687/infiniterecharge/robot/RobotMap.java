@@ -29,6 +29,8 @@ public class RobotMap {
             public static final int BR_LEFT_FALCON = 6;
             public static final int BL_RIGHT_FALCON = 7;
             public static final int BL_LEFT_FALCON = 8;
+            public static final int LEFT_SHOOTER = 9;
+            public static final int RIGHT_SHOOTER = 10;
         }
     }
 
@@ -43,8 +45,8 @@ public class RobotMap {
      * for PCM only one device can connect to each port, so the numbers should be unique.
      */
     public static class PCM {
-        public static final int INTAKE_HIGH = 0;
-        public static final int INTAKE_LOW = 7;
+        public static final int INTAKE_HIGH = 7;
+        public static final int INTAKE_LOW = 0;
     }
 
     /**

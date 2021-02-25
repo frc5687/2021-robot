@@ -102,10 +102,12 @@ public class Constants {
 
     public static class Intake {
         public static final double INTAKE_SPEED = 0.75;
-        public static boolean INVERTED = false;
+        public static boolean INVERTED = true;
     }
 
     public static class Hood {
+        public static final boolean INVERTED = true;
+
         public static final double GEAR_RATIO = 1.0 / 10.0;
         public static final double DISTANCE_PER_ROTATION = 0.002; // meters
 
@@ -128,5 +130,21 @@ public class Constants {
         public static final double MAX_ANGLE = Math.PI / 2.0;
 
         public static final double POSITION_TO_ANGLE = 1.0; // TODO
+    }
+
+    public static class Shooter {
+        public static final boolean LEFT_INVERTED = false;
+        public static final boolean RIGHT_INVERTED = false;
+
+        public static final double kP = 0.4;
+        public static final double kI = 0.0025;
+        public static final double kD = 0.6;
+        public static final double kFF = 0.05;
+        public static final int kIz = 150;
+
+        public static final double GEAR_RATIO = 1.25;
+        public static final double MAX_RPM = 6380 * GEAR_RATIO;
+        public static final double TICKS_TO_ROTATIONS = 2048.0;
+
     }
 }

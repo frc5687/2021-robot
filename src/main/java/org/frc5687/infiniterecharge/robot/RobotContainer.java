@@ -27,6 +27,7 @@ public class RobotContainer extends OutliersContainer {
     private Intake _intake;
     private Spindexer _spindexer;
     private Hood _hood;
+    private Shooter _shooter;
 
     public RobotContainer(Robot robot, IdentityMode identityMode) {
         super(identityMode);
@@ -43,6 +44,7 @@ public class RobotContainer extends OutliersContainer {
         _intake = new Intake(this);
         _spindexer = new Spindexer(this);
         _hood = new Hood(this);
+        _shooter = new Shooter(this);
 
         while (++counter <= 1 && _slamCamera == null) {
             try {
@@ -79,6 +81,7 @@ public class RobotContainer extends OutliersContainer {
         setDefaultCommand(_intake, new IdleIntake(_intake));
         setDefaultCommand(_spindexer, new IdleSpindexer(_spindexer));
         setDefaultCommand(_hood, new IdleHood(_hood, _oi));
+        setDefaultCommand(_shooter, new IdleShooter(_shooter));
 
         _robot.addPeriodic(this::controllerPeriodic, 0.005, 0.005);
         _imu.reset();

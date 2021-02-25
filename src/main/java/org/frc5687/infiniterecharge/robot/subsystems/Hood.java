@@ -25,6 +25,7 @@ public class Hood extends OutliersSubsystem {
                     new CANSparkMax(
                             RobotMap.CAN.SPARKMAX.HOOD, CANSparkMaxLowLevel.MotorType.kBrushless);
             _hood.restoreFactoryDefaults();
+            _hood.setInverted(INVERTED);
 
             _hoodEncoder = _hood.getEncoder();
             _hoodController = _hood.getPIDController();
