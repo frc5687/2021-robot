@@ -23,7 +23,7 @@ public class IdleHood extends OutliersCommand {
     @Override
     public void execute() {
         super.execute();
-        _hood.setSpeed(_oi.getDriveY());
+        //        _hood.setSpeed(_oi.getDriveY());
     }
 
     @Override

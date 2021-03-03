@@ -28,6 +28,7 @@ public class DiffSwerveModule {
     private final AnalogEncoder _lampreyEncoder;
     private final Translation2d _positionVector;
     private final LinearSystemLoop<N3, N2, N2> _swerveControlLoop;
+    //    private StatorCurrentLimitConfiguration _currentCfg;
     private Matrix<N3, N1> _reference; // same thing as a set point.
     private Matrix<N3, N1> _prevReference;
     private Matrix<N2, N1> _u;
@@ -39,6 +40,7 @@ public class DiffSwerveModule {
             int leftMotorID,
             int rightMotorID,
             AnalogInput encoderNum) {
+        //        _currentCfg = new StatorCurrentLimitConfiguration(true, 10, 10, 0);
         _lampreyEncoder = new AnalogEncoder(encoderNum);
         _lampreyEncoder.setDistancePerRotation(
                 2.0 * Math.PI / Constants.DifferentialSwerveModule.VOLTS_TO_ROTATIONS);
@@ -121,10 +123,10 @@ public class DiffSwerveModule {
                 new LinearSystemLoop<>(
                         swerveModuleModel, swerveController, swerveObserver, 12.0, kDt);
 
-        _rightFalcon.setStatusFramePeriod(StatusFrame.Status_1_General, 5, TIMEOUT);
-        _leftFalcon.setStatusFramePeriod(StatusFrame.Status_1_General, 5, TIMEOUT);
-        _rightFalcon.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, TIMEOUT);
-        _leftFalcon.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, TIMEOUT);
+        _rightFalcon.setStatusFramePeriod(StatusFrame.Status_1_General, 20, TIMEOUT);
+        _leftFalcon.setStatusFramePeriod(StatusFrame.Status_1_General, 20, TIMEOUT);
+        _rightFalcon.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 20, TIMEOUT);
+        _leftFalcon.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 20, TIMEOUT);
         _rightFalcon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, TIMEOUT);
         _leftFalcon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, TIMEOUT);
         _rightFalcon.configForwardSoftLimitEnable(false);
@@ -135,8 +137,14 @@ public class DiffSwerveModule {
         _rightFalcon.configVoltageCompSaturation(12.0, TIMEOUT);
         _leftFalcon.enableVoltageCompensation(true);
         _rightFalcon.enableVoltageCompensation(true);
-        _leftFalcon.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_1Ms, TIMEOUT);
-        _rightFalcon.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_1Ms, TIMEOUT);
+        _leftFalcon.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_5Ms, TIMEOUT);
+        _rightFalcon.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_5Ms, TIMEOUT);
+        _leftFalcon.configOpenloopRamp(0.25, TIMEOUT);
+        _rightFalcon.configOpenloopRamp(0.25, TIMEOUT);
+        _leftFalcon.configClosedloopRamp(0.25, TIMEOUT);
+        _rightFalcon.configClosedloopRamp(0.25, TIMEOUT);
+        //        _leftFalcon.configGetStatorCurrentLimit(_currentCfg, TIMEOUT);
+        //        _rightFalcon.configGetStatorCurrentLimit(_currentCfg, TIMEOUT);
         _swerveControlLoop.reset(VecBuilder.fill(0, 0, 0));
         _u = VecBuilder.fill(0, 0);
         _positionError = 0;
@@ -165,10 +173,10 @@ public class DiffSwerveModule {
     public void periodic() {
         if (Math.abs(_vel - _reference.get(2, 0)) >= 3
                 && _reference.get(2, 0) > _prevReference.get(2, 0)) {
-            _vel += _reference.get(2, 0) * 0.01;
+            _vel += _reference.get(2, 0) * 0.001;
         } else if (Math.abs(_vel - _reference.get(2, 0)) >= 3
                 && _reference.get(2, 0) < _prevReference.get(2, 0)) {
-            _vel -= _reference.get(2, 0) * 0.01;
+            _vel -= _reference.get(2, 0) * 0.001;
         } else {
             _vel = _reference.get(2, 0);
         }

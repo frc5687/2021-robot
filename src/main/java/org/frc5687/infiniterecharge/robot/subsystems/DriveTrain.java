@@ -203,25 +203,30 @@ public class DriveTrain extends OutliersSubsystem {
         // _backLeft.getPredictedWheelAngularVelocity());
         //        metric("Wheel Reference Angular Velocity",
         // _backLeft.getReferenceWheelAngularVelocity());
-        //        metric("FR/angle", _frontRight.getModuleAngle());
+        metric("FR/angle", _frontRight.getModuleAngle());
         metric("FR/vel", _frontRight.getWheelVelocity());
-        //        SmartDashboard.putNumberArray(
-        //                "DriveTrain/FR/state predict", _frontRight.getPredictedState());
+        //                SmartDashboard.putNumberArray(
+        //                        "DriveTrain/FR/state predict", _frontRight.getPredictedState());
+        metric("FR/Wanted Angle", _frontRight.getReferenceModuleAngle());
 
-        //        metric("FL/angle", _frontLeft.getModuleAngle());
+        metric("FL/angle", _frontLeft.getModuleAngle());
         //        metric("FL/vel", _frontLeft.getWheelVelocity());
         //        SmartDashboard.putNumberArray(
         //                "DriveTrain/FL/state predict", _frontLeft.getPredictedState());
+        metric("FL/Wanted Angle", _frontLeft.getReferenceModuleAngle());
 
-        //        metric("BR/angle", _backRight.getModuleAngle());
+        metric("BR/angle", _backRight.getModuleAngle());
         //        metric("BR/vel", _backRight.getWheelVelocity());
         //        SmartDashboard.putNumberArray(
         //                "DriveTrain/BR/state predict", _backRight.getPredictedState());
+        metric("BR/Wanted Angle", _backRight.getReferenceModuleAngle());
 
-        //        metric("BL/angle", _backLeft.getModuleAngle());
+        metric("BL/angle", _backLeft.getModuleAngle());
         //        metric("BL/vel", _backLeft.getWheelVelocity());
         //        SmartDashboard.putNumberArray("DriveTrain/BL/state predict",
         // _backLeft.getPredictedState());
+        metric("BL/Wanted Angle", _backLeft.getReferenceModuleAngle());
+
         metric("Prev Angle", _prevHoldAngle);
     }
 
@@ -270,6 +275,7 @@ public class DriveTrain extends OutliersSubsystem {
             _PIDAngle = getHeading().getRadians();
             _angleController.reset(_PIDAngle);
         } else if (releaseAngle || Math.abs(omega) > 0) {
+            //            error("spinning");
             SwerveModuleState[] swerveModuleStates =
                     _kinematics.toSwerveModuleStates(
                             fieldRelative
@@ -285,6 +291,7 @@ public class DriveTrain extends OutliersSubsystem {
             _angleController.reset(_PIDAngle);
             //            error("Holding Angle");
         } else {
+            //            error("PID Control, heading");
             SwerveModuleState[] swerveModuleStates =
                     _kinematics.toSwerveModuleStates(
                             ChassisSpeeds.fromFieldRelativeSpeeds(

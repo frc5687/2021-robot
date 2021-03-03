@@ -52,14 +52,14 @@ public class Constants {
         public static final double SENSITIVITY_OMEGA = 0.9;
         public static final double MAX_MPS = 5.1816;
         //        public static final double MAX_MPS = 1.0;
-        public static final double MAX_ANG_VEL = Math.PI * 4.0;
+        public static final double MAX_ANG_VEL = Math.PI * 3.0;
         public static final double MAX_MPSS = 1.7; // accel
 
         public static final double ANGLE_kP = 2.5;
         public static final double ANGLE_kI = 0.0;
         public static final double ANGLE_kD = 0.0;
 
-        public static final double kP = 1.5;
+        public static final double kP = 9.5;
         public static final double kI = 0.0;
         public static final double kD = 0.0;
         public static final double PROFILE_CONSTRAINT_VEL = 3.0 * Math.PI;
@@ -69,6 +69,7 @@ public class Constants {
     public static class DifferentialSwerveModule {
 
         public static final double kDt = 0.005;
+
         public static final int TIMEOUT = 200;
         public static final double GEAR_RATIO_WHEEL = 6.46875;
         public static final double GEAR_RATIO_STEER = 11.5;
@@ -95,7 +96,7 @@ public class Constants {
         public static boolean SPINDEXER_INVERTED = false;
         public static boolean FEEDER_INVERTED = false;
         public static final double SPINDEXER_IDLE_SPEED = -0.1;
-        public static final double FEEDER_IDLE_SPEED = -0.05;
+        public static final double FEEDER_IDLE_SPEED = -0.25;
         public static final double SPINDEXER_SPEED = 0.75;
         public static final double FEEDER_SPEED = 1.0;
     }
@@ -133,7 +134,7 @@ public class Constants {
     }
 
     public static class Shooter {
-        public static final boolean LEFT_INVERTED = false;
+        public static final boolean LEFT_INVERTED = true;
         public static final boolean RIGHT_INVERTED = false;
 
         public static final double kP = 0.4;
@@ -145,6 +146,5 @@ public class Constants {
         public static final double GEAR_RATIO = 1.25;
         public static final double MAX_RPM = 6380 * GEAR_RATIO;
         public static final double TICKS_TO_ROTATIONS = 2048.0;
-
     }
 }

@@ -61,8 +61,7 @@ public class RobotContainer extends OutliersContainer {
             }
         }
 
-        String trajectoryJSON = "output/BarrelRace.wpilib.json";
-        new Trajectory();
+        String trajectoryJSON = "output/Slalom.wpilib.json";
         Trajectory trajectoryNew = new Trajectory();
         try {
             Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
@@ -77,11 +76,11 @@ public class RobotContainer extends OutliersContainer {
         }
         error("TrajectoryNew staring pose is " + trajectoryNew.getInitialPose().toString());
         _oi.initializeButtons(_driveTrain, _intake, _spindexer, trajectoryNew);
-        //        setDefaultCommand(_driveTrain, new Drive(_driveTrain, _oi));
+        setDefaultCommand(_driveTrain, new Drive(_driveTrain, _oi));
         setDefaultCommand(_intake, new IdleIntake(_intake));
         setDefaultCommand(_spindexer, new IdleSpindexer(_spindexer));
         setDefaultCommand(_hood, new IdleHood(_hood, _oi));
-        setDefaultCommand(_shooter, new IdleShooter(_shooter));
+        setDefaultCommand(_shooter, new IdleShooter(_shooter, _oi));
 
         _robot.addPeriodic(this::controllerPeriodic, 0.005, 0.005);
         _imu.reset();

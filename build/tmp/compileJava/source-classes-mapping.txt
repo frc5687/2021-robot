@@ -34,16 +34,18 @@ org/frc5687/infiniterecharge/robot/commands/AutoShoot.java
  org.frc5687.infiniterecharge.robot.commands.AutoShoot
 org/frc5687/infiniterecharge/robot/commands/AutoIntake.java
  org.frc5687.infiniterecharge.robot.commands.AutoIntake
-org/frc5687/infiniterecharge/robot/commands/Drive.java
- org.frc5687.infiniterecharge.robot.commands.Drive
+org/frc5687/infiniterecharge/robot/commands/IdleShooter.java
+ org.frc5687.infiniterecharge.robot.commands.IdleShooter
+org/frc5687/infiniterecharge/robot/commands/IdleIntake.java
+ org.frc5687.infiniterecharge.robot.commands.IdleIntake
+org/frc5687/infiniterecharge/robot/subsystems/Shooter.java
+ org.frc5687.infiniterecharge.robot.subsystems.Shooter
 org/frc5687/infiniterecharge/robot/util/ILoggingSource.java
  org.frc5687.infiniterecharge.robot.util.ILoggingSource
 org/frc5687/infiniterecharge/robot/commands/IdleHood.java
  org.frc5687.infiniterecharge.robot.commands.IdleHood
-org/frc5687/infiniterecharge/robot/util/Gamepad.java
- org.frc5687.infiniterecharge.robot.util.Gamepad
- org.frc5687.infiniterecharge.robot.util.Gamepad$Axes
- org.frc5687.infiniterecharge.robot.util.Gamepad$Buttons
+org/frc5687/infiniterecharge/robot/RobotContainer.java
+ org.frc5687.infiniterecharge.robot.RobotContainer
 org/frc5687/infiniterecharge/robot/util/POV.java
  org.frc5687.infiniterecharge.robot.util.POV
 org/frc5687/infiniterecharge/robot/Constants.java
@@ -52,6 +54,7 @@ org/frc5687/infiniterecharge/robot/Constants.java
  org.frc5687.infiniterecharge.robot.Constants$DriveTrain
  org.frc5687.infiniterecharge.robot.Constants$Hood
  org.frc5687.infiniterecharge.robot.Constants$Intake
+ org.frc5687.infiniterecharge.robot.Constants$Shooter
  org.frc5687.infiniterecharge.robot.Constants$Spindexer
 org/frc5687/infiniterecharge/robot/util/OutliersProxy.java
  org.frc5687.infiniterecharge.robot.util.OutliersProxy
@@ -70,6 +73,8 @@ org/frc5687/infiniterecharge/robot/commands/AutoHoodSetpoint.java
  org.frc5687.infiniterecharge.robot.commands.AutoHoodSetpoint
 org/frc5687/infiniterecharge/robot/subsystems/DiffSwerveModule.java
  org.frc5687.infiniterecharge.robot.subsystems.DiffSwerveModule
+org/frc5687/infiniterecharge/robot/util/AxisButton.java
+ org.frc5687.infiniterecharge.robot.util.AxisButton
 org/frc5687/infiniterecharge/robot/util/Helpers.java
  org.frc5687.infiniterecharge.robot.util.Helpers
 org/frc5687/infiniterecharge/robot/util/HallEffect.java
@@ -81,7 +86,9 @@ org/frc5687/infiniterecharge/robot/Main.java
 org/frc5687/infiniterecharge/robot/util/OutliersContainer.java
  org.frc5687.infiniterecharge.robot.util.OutliersContainer
  org.frc5687.infiniterecharge.robot.util.OutliersContainer$IdentityMode
-org/frc5687/infiniterecharge/robot/commands/IdleIntake.java
- org.frc5687.infiniterecharge.robot.commands.IdleIntake
-org/frc5687/infiniterecharge/robot/RobotContainer.java
- org.frc5687.infiniterecharge.robot.RobotContainer
+org/frc5687/infiniterecharge/robot/util/Gamepad.java
+ org.frc5687.infiniterecharge.robot.util.Gamepad
+ org.frc5687.infiniterecharge.robot.util.Gamepad$Axes
+ org.frc5687.infiniterecharge.robot.util.Gamepad$Buttons
+org/frc5687/infiniterecharge/robot/commands/Drive.java
+ org.frc5687.infiniterecharge.robot.commands.Drive
