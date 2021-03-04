@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
@@ -143,6 +144,7 @@ public class DriveTrain extends OutliersSubsystem {
                 _backLeft.getState(),
                 _backRight.getState());
         //        updateOdometry();
+
         //        metric("estimated Pose", _poseEstimator.getEstimatedPosition().toString());
         //        metric("slam pose", getSlamPose().toString());
         //        SmartDashboard.putString("pose", _odomerty.getPoseMeters().toString());
@@ -188,6 +190,7 @@ public class DriveTrain extends OutliersSubsystem {
         //        metric("Position Error", _backLeft.getPositionError());
         //        metric("Right RPM", _backLeft.getRightFalconRPM());
         //        metric("Left RPM", _backLeft.getLeftFalconRPM());
+        SmartDashboard.putNumberArray("Reference", _frontLeft.getReference());
         metric("Module Angle", _backLeft.getModuleAngle());
         //        metric("Predicted Angle", _backLeft.getPredictedAzimuthAngle());
         metric("Reference Module Angle", _backLeft.getReferenceModuleAngle());
@@ -210,19 +213,19 @@ public class DriveTrain extends OutliersSubsystem {
         metric("FR/Wanted Angle", _frontRight.getReferenceModuleAngle());
 
         metric("FL/angle", _frontLeft.getModuleAngle());
-        //        metric("FL/vel", _frontLeft.getWheelVelocity());
+        metric("FL/vel", _frontLeft.getWheelVelocity());
         //        SmartDashboard.putNumberArray(
         //                "DriveTrain/FL/state predict", _frontLeft.getPredictedState());
         metric("FL/Wanted Angle", _frontLeft.getReferenceModuleAngle());
 
         metric("BR/angle", _backRight.getModuleAngle());
-        //        metric("BR/vel", _backRight.getWheelVelocity());
+        metric("BR/vel", _backRight.getWheelVelocity());
         //        SmartDashboard.putNumberArray(
         //                "DriveTrain/BR/state predict", _backRight.getPredictedState());
         metric("BR/Wanted Angle", _backRight.getReferenceModuleAngle());
 
         metric("BL/angle", _backLeft.getModuleAngle());
-        //        metric("BL/vel", _backLeft.getWheelVelocity());
+        metric("BL/vel", _backLeft.getWheelVelocity());
         //        SmartDashboard.putNumberArray("DriveTrain/BL/state predict",
         // _backLeft.getPredictedState());
         metric("BL/Wanted Angle", _backLeft.getReferenceModuleAngle());

@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.estimator.KalmanFilter;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.system.LinearSystem;
 import edu.wpi.first.wpilibj.system.LinearSystemLoop;
 import edu.wpi.first.wpilibj.system.plant.DCMotor;
@@ -33,6 +34,7 @@ public class DiffSwerveModule {
     private Matrix<N3, N1> _prevReference;
     private Matrix<N2, N1> _u;
     private double _vel;
+    private double _prevVel;
     private double _positionError;
 
     public DiffSwerveModule(
@@ -149,6 +151,7 @@ public class DiffSwerveModule {
         _u = VecBuilder.fill(0, 0);
         _positionError = 0;
         _vel = 0;
+        _prevVel = _vel;
     }
 
     /**
@@ -171,15 +174,20 @@ public class DiffSwerveModule {
     }
 
     public void periodic() {
-        if (Math.abs(_vel - _reference.get(2, 0)) >= 3
-                && _reference.get(2, 0) > _prevReference.get(2, 0)) {
+        if (Math.abs(_vel - _reference.get(2, 0)) >= 1 && _vel > _prevVel) {
+            SmartDashboard.putBoolean("ramp up", true);
+            _prevVel = _vel;
             _vel += _reference.get(2, 0) * 0.001;
-        } else if (Math.abs(_vel - _reference.get(2, 0)) >= 3
-                && _reference.get(2, 0) < _prevReference.get(2, 0)) {
+        } else if (Math.abs(_vel - _reference.get(2, 0)) >= 1 && _vel < _prevVel) {
+            _prevVel = _vel;
+            SmartDashboard.putBoolean("ramp up", false);
             _vel -= _reference.get(2, 0) * 0.001;
         } else {
+            SmartDashboard.putNumber("vel", _vel);
+            _prevVel = _prevReference.get(2, 0);
             _vel = _reference.get(2, 0);
         }
+        SmartDashboard.putNumber("vel", _vel);
         _swerveControlLoop.setNextR(_reference);
 
         _swerveControlLoop.correct(VecBuilder.fill(getModuleAngle(), getWheelAngularVelocity()));
@@ -306,7 +314,7 @@ public class DiffSwerveModule {
     }
 
     public void setReference(Matrix<N3, N1> reference) {
-        _prevReference = reference;
+        _prevReference = _reference;
         _reference = reference;
     }
 
