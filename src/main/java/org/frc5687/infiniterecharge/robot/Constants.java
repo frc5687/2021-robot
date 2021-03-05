@@ -50,8 +50,7 @@ public class Constants {
         public static final double SENSITIVITY_VX = 0.9;
         public static final double SENSITIVITY_VY = 0.9;
         public static final double SENSITIVITY_OMEGA = 0.9;
-        //        public static final double MAX_MPS = 5.1816;
-        public static final double MAX_MPS = 4.8816;
+        public static final double MAX_MPS = 5.1816;
 
         //        public static final double MAX_MPS = 1.0;
         public static final double MAX_ANG_VEL = Math.PI * 3.0;
@@ -79,8 +78,8 @@ public class Constants {
         public static final double WHEEL_RADIUS = 0.0508; // Meters
         public static final double TICKS_TO_ROTATIONS = 2048.0;
         public static final double VOLTS_TO_ROTATIONS = 3.3;
-        public static final double TRAP_ANG_VELOCITY = Math.PI * 6;
-        public static final double TRAP_ANG_ACCEL = Math.PI * 4;
+        public static final double TRAP_ANG_VELOCITY = 660.0 / GEAR_RATIO_STEER;
+        public static final double TRAP_ANG_ACCEL = TRAP_ANG_VELOCITY * 0.25;
 
         // Create Parameters for DiffSwerve State Space
         public static final double INERTIA_WHEEL = 0.007;

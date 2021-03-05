@@ -15,11 +15,11 @@ import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.system.LinearSystem;
 import edu.wpi.first.wpilibj.system.LinearSystemLoop;
 import edu.wpi.first.wpilibj.system.plant.DCMotor;
-import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpiutil.math.*;
 import edu.wpi.first.wpiutil.math.numbers.*;
 import org.frc5687.infiniterecharge.robot.Constants;
+import org.frc5687.infiniterecharge.robot.util.DiffSwerveProfile;
 import org.frc5687.infiniterecharge.robot.util.Helpers;
 
 public class DiffSwerveModule {
@@ -28,12 +28,9 @@ public class DiffSwerveModule {
     private final AnalogEncoder _lampreyEncoder;
     private final Translation2d _positionVector;
     private final LinearSystemLoop<N3, N2, N2> _swerveControlLoop;
+    private final DiffSwerveProfile _profile;
     //    private StatorCurrentLimitConfiguration _currentCfg;
-    private TrapezoidProfile.Constraints _trapConstraint;
-    private TrapezoidProfile.State _goal;
-    private TrapezoidProfile.State _setpoint;
     private Matrix<N3, N1> _reference; // same thing as a set point.
-    private Matrix<N3, N1> _prevReference;
     private Matrix<N2, N1> _u;
     private double _vel;
     private double _prevVel;
@@ -48,11 +45,8 @@ public class DiffSwerveModule {
         _lampreyEncoder = new AnalogEncoder(encoderNum);
         _lampreyEncoder.setDistancePerRotation(
                 2.0 * Math.PI / Constants.DifferentialSwerveModule.VOLTS_TO_ROTATIONS);
-        _trapConstraint = new TrapezoidProfile.Constraints(TRAP_ANG_VELOCITY, TRAP_ANG_ACCEL);
-        _goal = new TrapezoidProfile.State(0, 0);
-        _setpoint = new TrapezoidProfile.State(0, 0);
+        _profile = new DiffSwerveProfile();
         _reference = Matrix.mat(Nat.N3(), Nat.N1()).fill(0, 0, 0);
-        _prevReference = Matrix.mat(Nat.N3(), Nat.N1()).fill(0, 0, 0);
         _positionVector = positionVector;
 
         _leftFalcon = new TalonFX(leftMotorID);
@@ -179,15 +173,8 @@ public class DiffSwerveModule {
     }
 
     public void periodic() {
-        _goal = new TrapezoidProfile.State(_reference.get(0, 0), 0);
-        TrapezoidProfile profile = new TrapezoidProfile(_trapConstraint, _goal, _setpoint);
-        _setpoint = profile.calculate(kDt);
-
-        //        _swerveControlLoop.setNextR(
-        //                VecBuilder.fill(_setpoint.position, _setpoint.velocity, _reference.get(2,
-        // 0)));
-
-        _swerveControlLoop.setNextR(_reference);
+        _profile.calculate(_reference, kDt);
+        _swerveControlLoop.setNextR(_profile.reference());
         _swerveControlLoop.correct(VecBuilder.fill(getModuleAngle(), getWheelAngularVelocity()));
         predict();
     }
@@ -312,7 +299,6 @@ public class DiffSwerveModule {
     }
 
     public void setReference(Matrix<N3, N1> reference) {
-        _prevReference = _reference;
         _reference = reference;
     }
 
@@ -340,6 +326,14 @@ public class DiffSwerveModule {
 
     public double getReferenceModuleAngle() {
         return _swerveControlLoop.getNextR(0);
+    }
+
+    public double getReferenceModuleAngularVelocity() {
+        return _swerveControlLoop.getNextR(1);
+    }
+
+    public double getReferenceWheelVelocity() {
+        return _swerveControlLoop.getNextR(2);
     }
 
     public SwerveModuleState getState() {

@@ -1,3 +1,5 @@
+org/frc5687/infiniterecharge/robot/util/DiffSwerveProfile.java
+ org.frc5687.infiniterecharge.robot.util.DiffSwerveProfile
 org/frc5687/infiniterecharge/robot/util/RioLogger.java
  org.frc5687.infiniterecharge.robot.util.RioLogger
  org.frc5687.infiniterecharge.robot.util.RioLogger$LogLevel
@@ -67,14 +69,12 @@ org/frc5687/infiniterecharge/robot/util/GloWorm.java
 org/frc5687/infiniterecharge/robot/subsystems/Intake.java
  org.frc5687.infiniterecharge.robot.subsystems.Intake
  org.frc5687.infiniterecharge.robot.subsystems.Intake$Position
-org/frc5687/infiniterecharge/robot/commands/Drive.java
- org.frc5687.infiniterecharge.robot.commands.Drive
+org/frc5687/infiniterecharge/robot/subsystems/DriveTrain.java
+ org.frc5687.infiniterecharge.robot.subsystems.DriveTrain
 org/frc5687/infiniterecharge/robot/commands/AutoHoodSetpoint.java
  org.frc5687.infiniterecharge.robot.commands.AutoHoodSetpoint
-org/frc5687/infiniterecharge/robot/util/Gamepad.java
- org.frc5687.infiniterecharge.robot.util.Gamepad
- org.frc5687.infiniterecharge.robot.util.Gamepad$Axes
- org.frc5687.infiniterecharge.robot.util.Gamepad$Buttons
+org/frc5687/infiniterecharge/robot/subsystems/DiffSwerveModule.java
+ org.frc5687.infiniterecharge.robot.subsystems.DiffSwerveModule
 org/frc5687/infiniterecharge/robot/util/AxisButton.java
  org.frc5687.infiniterecharge.robot.util.AxisButton
 org/frc5687/infiniterecharge/robot/util/Helpers.java
@@ -88,7 +88,9 @@ org/frc5687/infiniterecharge/robot/Main.java
 org/frc5687/infiniterecharge/robot/util/OutliersContainer.java
  org.frc5687.infiniterecharge.robot.util.OutliersContainer
  org.frc5687.infiniterecharge.robot.util.OutliersContainer$IdentityMode
-org/frc5687/infiniterecharge/robot/subsystems/DriveTrain.java
- org.frc5687.infiniterecharge.robot.subsystems.DriveTrain
-org/frc5687/infiniterecharge/robot/subsystems/DiffSwerveModule.java
- org.frc5687.infiniterecharge.robot.subsystems.DiffSwerveModule
+org/frc5687/infiniterecharge/robot/util/Gamepad.java
+ org.frc5687.infiniterecharge.robot.util.Gamepad
+ org.frc5687.infiniterecharge.robot.util.Gamepad$Axes
+ org.frc5687.infiniterecharge.robot.util.Gamepad$Buttons
+org/frc5687/infiniterecharge/robot/commands/Drive.java
+ org.frc5687.infiniterecharge.robot.commands.Drive

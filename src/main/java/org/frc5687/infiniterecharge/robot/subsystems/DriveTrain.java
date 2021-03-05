@@ -131,7 +131,10 @@ public class DriveTrain extends OutliersSubsystem {
                 "FR/LeftRPM",
                 "FR/RightRPM",
                 "FR/LeftCurrent",
-                "FR/RightCurrent");
+                "FR/RightCurrent",
+                "FR/ReferenceAngle",
+                "FR/ReferenceAngVel",
+                "FR/ReferenceWheelAngVel");
         //                _odomerty.resetPosition(getPose(), getHeading());
     }
 
@@ -198,7 +201,7 @@ public class DriveTrain extends OutliersSubsystem {
         //        metric("Position Error", _backLeft.getPositionError());
         //        metric("Right RPM", _backLeft.getRightFalconRPM());
         //        metric("Left RPM", _backLeft.getLeftFalconRPM());
-        SmartDashboard.putNumberArray("Reference", _frontLeft.getReference());
+        SmartDashboard.putNumberArray("DriveTrain/Reference", _frontRight.getReference());
         metric("Module Angle", _backLeft.getModuleAngle());
         //        metric("Predicted Angle", _backLeft.getPredictedAzimuthAngle());
         metric("Reference Module Angle", _backLeft.getReferenceModuleAngle());
@@ -215,13 +218,18 @@ public class DriveTrain extends OutliersSubsystem {
         //        metric("Wheel Reference Angular Velocity",
         // _backLeft.getReferenceWheelAngularVelocity());
         metric("FR/angle", _frontRight.getModuleAngle());
-        metric("FR/vel", _frontRight.getWheelVelocity());
+        metric("FR/vel", _frontRight.getWheelVelocity() / 0.0508);
         metric("FR/LeftVoltage", _frontRight.getLeftVoltage());
         metric("FR/RightVoltage", _frontRight.getRightVoltage());
         metric("FR/LeftRPM", _frontRight.getLeftFalconRPM());
         metric("FR/RightRPM", _frontRight.getRightFalconRPM());
         metric("FR/LeftCurrent", _frontRight.getLeftCurrent());
         metric("FR/RightCurrent", _frontRight.getRightCurrent());
+
+        metric("FR/ReferenceAngle", _frontRight.getReferenceModuleAngle());
+        metric("FR/ReferenceAngVel", _frontRight.getReferenceModuleAngularVelocity());
+        metric("FR/ReferenceWheelAngVel", _frontRight.getReferenceWheelVelocity());
+
         //                SmartDashboard.putNumberArray(
         //                        "DriveTrain/FR/state predict", _frontRight.getPredictedState());
         metric("FR/Wanted Angle", _frontRight.getReferenceModuleAngle());
