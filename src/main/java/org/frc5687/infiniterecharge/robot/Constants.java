@@ -79,19 +79,19 @@ public class Constants {
         public static final double TICKS_TO_ROTATIONS = 2048.0;
         public static final double VOLTS_TO_ROTATIONS = 3.3;
         public static final double TRAP_ANG_VELOCITY = 660.0 / GEAR_RATIO_STEER;
-        public static final double TRAP_ANG_ACCEL = TRAP_ANG_VELOCITY * 0.25;
+        public static final double TRAP_ANG_ACCEL = TRAP_ANG_VELOCITY * 0.55;
 
         // Create Parameters for DiffSwerve State Space
-        public static final double INERTIA_WHEEL = 0.007;
+        public static final double INERTIA_WHEEL = 0.05;
         public static final double INERTIA_STEER = 0.007;
-        public static final double Q_AZIMUTH_ANG_VELOCITY = 0.2; // radians per sec
+        public static final double Q_AZIMUTH_ANG_VELOCITY = 0.1; // radians per sec
         public static final double Q_AZIMUTH = 0.02; // radians
         public static final double Q_WHEEL_ANG_VELOCITY = 3; // radians per sec
         public static final double MODEL_AZIMUTH_ANGLE_NOISE = 1.718873; // degrees
-        public static final double MODEL_AZIMUTH_ANG_VELOCITY_NOISE = 400.0; // RPM
-        public static final double MODEL_WHEEL_ANG_VELOCITY_NOISE = 400.0; // RPM
+        public static final double MODEL_AZIMUTH_ANG_VELOCITY_NOISE = 500.0; // RPM
+        public static final double MODEL_WHEEL_ANG_VELOCITY_NOISE = 500.0; // RPM
         public static final double SENSOR_AZIMUTH_ANGLE_NOISE = 0.02; // degrees
-        public static final double SENSOR_WHEEL_ANG_VELOCITY_NOISE = 114.592; // degrees
+        public static final double SENSOR_WHEEL_ANG_VELOCITY_NOISE = 50.0; // degrees
         public static final double CONTROL_EFFORT = 12.0;
     }
 

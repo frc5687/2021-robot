@@ -33,7 +33,7 @@ public class DiffSwerveProfile {
         _azimuthSetpoint = profile.calculate(kDt);
         _reference =
                 VecBuilder.fill(
-                        _azimuthSetpoint.position, _azimuthSetpoint.velocity, _reference.get(2, 0));
+                        _azimuthSetpoint.position, _azimuthSetpoint.velocity, reference.get(2, 0));
     }
 
     public Matrix<N3, N1> reference() {

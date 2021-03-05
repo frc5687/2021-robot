@@ -1,7 +1,6 @@
 /* (C)2021 */
 package org.frc5687.infiniterecharge.robot.commands;
 
-import org.frc5687.infiniterecharge.robot.Constants;
 import org.frc5687.infiniterecharge.robot.subsystems.Spindexer;
 
 public class IdleSpindexer extends OutliersCommand {
@@ -20,8 +19,8 @@ public class IdleSpindexer extends OutliersCommand {
 
     @Override
     public void execute() {
-        _spindexer.setSpindexerSpeed(Constants.Spindexer.SPINDEXER_IDLE_SPEED);
-        _spindexer.setFeederSpeed(Constants.Spindexer.FEEDER_IDLE_SPEED);
+        //        _spindexer.setSpindexerSpeed(Constants.Spindexer.SPINDEXER_IDLE_SPEED);
+        //        _spindexer.setFeederSpeed(Constants.Spindexer.FEEDER_IDLE_SPEED);
     }
 
     @Override

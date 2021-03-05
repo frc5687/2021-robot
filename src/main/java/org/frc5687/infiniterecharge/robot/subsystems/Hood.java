@@ -55,7 +55,7 @@ public class Hood extends OutliersSubsystem {
     public void periodic() {
         //        metric("can errror", _hood.getLastError().toString());
         //        metric("position", _hood.getEncoder().getPosition());
-        metric("position canencoder", getPosition());
+        //        metric("position canencoder", getPosition());
         //        metric("hood angle", (getPosition() / POSITION_TO_ANGLE));
         //        metric("is hall triggered", isHallTriggered());
         //        metric("hood controller output", _hood.get());

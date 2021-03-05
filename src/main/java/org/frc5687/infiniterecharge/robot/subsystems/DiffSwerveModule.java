@@ -169,12 +169,14 @@ public class DiffSwerveModule {
         _positionError = MathUtil.inputModulus(angleError, minAngle, maxAngle);
         Matrix<N3, N1> error = reference.minus(xHat);
         double angVelError = reference.get(1, 0) - getAzimuthAngularVelocity();
+        double angVelWheelError = reference.get(2, 0) - getWheelAngularVelocity();
         return VecBuilder.fill(_positionError, angVelError, error.get(2, 0));
     }
 
     public void periodic() {
-        _profile.calculate(_reference, kDt);
-        _swerveControlLoop.setNextR(_profile.reference());
+        //        _profile.calculate(_reference, kDt);
+        //        _swerveControlLoop.setNextR(_profile.reference());
+        _swerveControlLoop.setNextR(_reference);
         _swerveControlLoop.correct(VecBuilder.fill(getModuleAngle(), getWheelAngularVelocity()));
         predict();
     }
