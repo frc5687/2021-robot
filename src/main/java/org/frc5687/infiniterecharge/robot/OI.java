@@ -4,17 +4,14 @@ package org.frc5687.infiniterecharge.robot;
 import static org.frc5687.infiniterecharge.robot.util.Helpers.applyDeadband;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import java.util.ArrayList;
 import org.frc5687.infiniterecharge.robot.commands.AutoIntake;
 import org.frc5687.infiniterecharge.robot.commands.AutoShoot;
 import org.frc5687.infiniterecharge.robot.commands.DriveTrajectory;
 import org.frc5687.infiniterecharge.robot.subsystems.DriveTrain;
+import org.frc5687.infiniterecharge.robot.subsystems.Hood;
 import org.frc5687.infiniterecharge.robot.subsystems.Intake;
 import org.frc5687.infiniterecharge.robot.subsystems.Spindexer;
 import org.frc5687.infiniterecharge.robot.util.AxisButton;
@@ -47,17 +44,13 @@ public class OI extends OutliersProxy {
     }
 
     public void initializeButtons(
-            DriveTrain driveTrain, Intake intake, Spindexer spindexer, Trajectory trajectory) {
-        var waypoints = new ArrayList<Translation2d>();
-        var angleTest = new ArrayList<Translation2d>();
-        waypoints.add(new Translation2d(1, -1));
+            DriveTrain driveTrain,
+            Intake intake,
+            Spindexer spindexer,
+            Hood hood,
+            Trajectory trajectory) {
         //                waypoints.add(new Translation2d(2, 0));
-        _driverAButton.whenPressed(
-                new DriveTrajectory(
-                        driveTrain,
-                        driveTrain.getOdometryPose(),
-                        waypoints,
-                        new Pose2d(0, 0, new Rotation2d(0))));
+        //        _driverAButton.whenPressed(new AutoHoodSetpoint(hood, 45));
         _driverRightTrigger.whileHeld(new AutoIntake(intake));
         _driverYButton.whileHeld(new AutoShoot(spindexer));
         _driverBButton.whenPressed(new DriveTrajectory(driveTrain, trajectory));

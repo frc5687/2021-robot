@@ -27,6 +27,6 @@ public class AutoIntake extends OutliersCommand {
     public void end(boolean interrupted) {
         super.end(interrupted);
         _intake.setRollerSpeed(0.0);
-        //        _intake.raiseIntake();
+        _intake.raiseIntake();
     }
 }

@@ -17,6 +17,7 @@ public class AutoHoodSetpoint extends OutliersCommand {
 
     @Override
     public void initialize() {
+        error("called setpoint");
         _hood.setHoodAngle(_angleSetpoint);
     }
 

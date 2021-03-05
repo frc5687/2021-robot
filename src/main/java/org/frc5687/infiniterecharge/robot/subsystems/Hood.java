@@ -20,43 +20,50 @@ public class Hood extends OutliersSubsystem {
 
     public Hood(OutliersContainer container) {
         super(container);
-        try {
-            _hood =
-                    new CANSparkMax(
-                            RobotMap.CAN.SPARKMAX.HOOD, CANSparkMaxLowLevel.MotorType.kBrushless);
-            _hood.setInverted(INVERTED);
+        //        try {
+        _hood =
+                new CANSparkMax(
+                        RobotMap.CAN.SPARKMAX.HOOD, CANSparkMaxLowLevel.MotorType.kBrushless);
+        _hood.setInverted(INVERTED);
 
-            _hoodEncoder = _hood.getEncoder();
-            _hoodController = _hood.getPIDController();
+        _hoodEncoder = _hood.getEncoder(EncoderType.kHallSensor, 4096);
+        _hoodController = _hood.getPIDController();
 
-            _hoodEncoder.setPositionConversionFactor(GEAR_RATIO * DISTANCE_PER_ROTATION);
-            _hoodEncoder.setVelocityConversionFactor(GEAR_RATIO);
+        _hoodEncoder.setPositionConversionFactor(GEAR_RATIO * DISTANCE_PER_ROTATION);
+        _hoodEncoder.setVelocityConversionFactor(GEAR_RATIO);
 
-            _hoodController.setP(kP);
-            _hoodController.setI(kI);
-            _hoodController.setD(kD);
-            _hoodController.setIZone(kIz);
-            _hoodController.setFF(kFF);
-            _hoodController.setOutputRange(MIN_OUTPUT, MAX_OUTPUT);
+        _hoodController.setP(kP);
+        _hoodController.setI(kI);
+        _hoodController.setD(kD);
+        _hoodController.setIZone(kIz);
+        _hoodController.setFF(kFF);
+        _hoodController.setOutputRange(MIN_OUTPUT, MAX_OUTPUT);
 
-            _hoodController.setSmartMotionMaxVelocity(MAX_VEL, 0);
-            _hoodController.setSmartMotionMinOutputVelocity(MIN_VEL, 0);
-            _hoodController.setSmartMotionMaxAccel(MAX_ACCEL, 0);
-            _hoodController.setSmartMotionAllowedClosedLoopError(TOLERANCE, 0);
+        _hoodController.setSmartMotionMaxVelocity(MAX_VEL, 0);
+        _hoodController.setSmartMotionMinOutputVelocity(MIN_VEL, 0);
+        _hoodController.setSmartMotionMaxAccel(MAX_ACCEL, 0);
+        _hoodController.setSmartMotionAllowedClosedLoopError(TOLERANCE, 0);
 
-            _hallEffect = new HallEffect(RobotMap.DIO.HOOD_HALL);
+        _hallEffect = new HallEffect(RobotMap.DIO.HOOD_HALL);
 
-        } catch (Exception e) {
-            error(e.getMessage());
-        }
+        //        } catch (Exception e) {
+        //            error(e.getMessage());
+        //        }
     }
 
     @Override
     public void periodic() {
-        metric("hood angle", (getPosition() - 0.735) * 1300);
+        //        metric("can errror", _hood.getLastError().toString());
+        //        metric("position", _hood.getEncoder().getPosition());
+        metric("position canencoder", getPosition());
+        //        metric("hood angle", (getPosition() / POSITION_TO_ANGLE));
+        //        metric("is hall triggered", isHallTriggered());
+        //        metric("hood controller output", _hood.get());
+
         //        if (isHallTriggered()) {
         //            if (_hood.get() < 0) {
-        //                setSpeed(0);
+        //                error("limiting speed");
+        //                //                setSpeed(0);
         //            }
         //            _angle = MIN_ANGLE;
         //            _hoodEncoder.setPosition(_angle * POSITION_TO_ANGLE); // TODO: Find Conversion
@@ -73,10 +80,15 @@ public class Hood extends OutliersSubsystem {
         return _hoodEncoder.getPosition();
     }
 
+    public void setEncoderAngle(double angle) {
+        _angle = angle;
+        _hoodEncoder.setPosition(_angle * POSITION_TO_ANGLE);
+    }
+
     public double getAngle() {
         _angle =
                 getPosition()
-                        * POSITION_TO_ANGLE; // TODO: find out the conversion of position to angle.
+                        / POSITION_TO_ANGLE; // TODO: find out the conversion of position to angle.
         return _angle;
     }
 
@@ -91,7 +103,7 @@ public class Hood extends OutliersSubsystem {
      * @param rads reference angle in radians.
      */
     public void setHoodAngle(double rads) {
-        _hoodController.setReference(rads, ControlType.kSmartMotion);
+        _hoodController.setReference(rads * POSITION_TO_ANGLE, ControlType.kSmartMotion);
     }
 
     public void setSpeed(double pow) {
@@ -100,5 +112,9 @@ public class Hood extends OutliersSubsystem {
 
     public boolean isHallTriggered() {
         return _hallEffect.get();
+    }
+
+    public double getOutput() {
+        return _hood.get();
     }
 }

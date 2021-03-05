@@ -17,7 +17,7 @@ public class RobotMap {
             public static final int SPINDEXER = 3;
             public static final int FEEDER = 11;
             public static final int INTAKE = 9;
-            public static final int HOOD = 2;
+            public static final int HOOD = 14;
         }
 
         public static class TALONFX {
@@ -45,8 +45,8 @@ public class RobotMap {
      * for PCM only one device can connect to each port, so the numbers should be unique.
      */
     public static class PCM {
-        public static final int INTAKE_HIGH = 6;
-        public static final int INTAKE_LOW = 1;
+        public static final int INTAKE_HIGH = 0;
+        public static final int INTAKE_LOW = 7;
     }
 
     /**

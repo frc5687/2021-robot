@@ -179,6 +179,20 @@ public class DiffSwerveModule {
     }
 
     public void periodic() {
+        //        if (Math.abs(_vel - _reference.get(2, 0)) >= 1 && _vel > _prevVel) {
+        //            SmartDashboard.putBoolean("ramp up", true);
+        //            _prevVel = _vel;
+        //            _vel += _reference.get(2, 0) * 0.001;
+        //        } else if (Math.abs(_vel - _reference.get(2, 0)) >= 1 && _vel < _prevVel) {
+        //            _prevVel = _vel;
+        //            SmartDashboard.putBoolean("ramp up", false);
+        //            _vel -= _reference.get(2, 0) * 0.001;
+        //        } else {
+        //            SmartDashboard.putNumber("vel", _vel);
+        //            _prevVel = _prevReference.get(2, 0);
+        //            _vel = _reference.get(2, 0);
+        //        }
+
         _goal = new TrapezoidProfile.State(_reference.get(0, 0), 0);
         TrapezoidProfile profile = new TrapezoidProfile(_trapConstraint, _goal, _setpoint);
         _setpoint = profile.calculate(kDt);

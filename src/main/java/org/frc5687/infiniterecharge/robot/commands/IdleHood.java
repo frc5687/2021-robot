@@ -23,7 +23,13 @@ public class IdleHood extends OutliersCommand {
     @Override
     public void execute() {
         super.execute();
-        //        _hood.setSpeed(_oi.getDriveY());
+        metric("Hood ANgle", _hood.getAngle());
+        if (_hood.isHallTriggered() && _hood.getOutput() < 0) {
+            _hood.setSpeed(0);
+            _hood.setEncoderAngle(20);
+        } else {
+            _hood.setSpeed(_oi.getDriveY());
+        }
     }
 
     @Override

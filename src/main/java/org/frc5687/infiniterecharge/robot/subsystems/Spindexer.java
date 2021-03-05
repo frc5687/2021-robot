@@ -40,7 +40,10 @@ public class Spindexer extends OutliersSubsystem {
     }
 
     @Override
-    public void periodic() {}
+    public void periodic() {
+        //        _feederEncoder.setPosition(0);
+        //        metric("feeder", _feederEncoder.getPosition());
+    }
 
     // Sets speed of motor -1 to 1.
     public void setSpindexerSpeed(double speed) {

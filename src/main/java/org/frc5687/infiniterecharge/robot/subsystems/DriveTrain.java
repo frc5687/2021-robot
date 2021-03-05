@@ -123,7 +123,15 @@ public class DriveTrain extends OutliersSubsystem {
             error(e.getMessage());
         }
         enableMetrics();
-        logMetrics("Module Angle", "Reference Module Angle");
+        logMetrics(
+                "FR/angle",
+                "FR/vel",
+                "FR/LeftVoltage",
+                "FR/RightVoltage",
+                "FR/LeftRPM",
+                "FR/RightRPM",
+                "FR/LeftCurrent",
+                "FR/RightCurrent");
         //                _odomerty.resetPosition(getPose(), getHeading());
     }
 
@@ -208,6 +216,12 @@ public class DriveTrain extends OutliersSubsystem {
         // _backLeft.getReferenceWheelAngularVelocity());
         metric("FR/angle", _frontRight.getModuleAngle());
         metric("FR/vel", _frontRight.getWheelVelocity());
+        metric("FR/LeftVoltage", _frontRight.getLeftVoltage());
+        metric("FR/RightVoltage", _frontRight.getRightVoltage());
+        metric("FR/LeftRPM", _frontRight.getLeftFalconRPM());
+        metric("FR/RightRPM", _frontRight.getRightFalconRPM());
+        metric("FR/LeftCurrent", _frontRight.getLeftCurrent());
+        metric("FR/RightCurrent", _frontRight.getRightCurrent());
         //                SmartDashboard.putNumberArray(
         //                        "DriveTrain/FR/state predict", _frontRight.getPredictedState());
         metric("FR/Wanted Angle", _frontRight.getReferenceModuleAngle());

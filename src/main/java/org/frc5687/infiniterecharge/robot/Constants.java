@@ -50,7 +50,9 @@ public class Constants {
         public static final double SENSITIVITY_VX = 0.9;
         public static final double SENSITIVITY_VY = 0.9;
         public static final double SENSITIVITY_OMEGA = 0.9;
-        public static final double MAX_MPS = 4.1816;
+        //        public static final double MAX_MPS = 5.1816;
+        public static final double MAX_MPS = 4.8816;
+
         //        public static final double MAX_MPS = 1.0;
         public static final double MAX_ANG_VEL = Math.PI * 3.0;
         public static final double MAX_MPSS = 1.7; // accel
@@ -77,6 +79,8 @@ public class Constants {
         public static final double WHEEL_RADIUS = 0.0508; // Meters
         public static final double TICKS_TO_ROTATIONS = 2048.0;
         public static final double VOLTS_TO_ROTATIONS = 3.3;
+        public static final double TRAP_ANG_VELOCITY = Math.PI * 6;
+        public static final double TRAP_ANG_ACCEL = Math.PI * 4;
 
         // Create Parameters for DiffSwerve State Space
         public static final double INERTIA_WHEEL = 0.007;
@@ -110,9 +114,9 @@ public class Constants {
         public static final boolean INVERTED = true;
 
         public static final double GEAR_RATIO = 1.0 / 10.0;
-        public static final double DISTANCE_PER_ROTATION = 0.002; // meters
+        public static final double DISTANCE_PER_ROTATION = 2; // mm
 
-        public static final double kP = 1.0;
+        public static final double kP = 0.01;
         public static final double kI = 0.0;
         public static final double kD = 0.0;
         public static final double kFF = 0.0;
@@ -127,10 +131,10 @@ public class Constants {
 
         public static final double TOLERANCE = 0.1; // rads
 
-        public static final double MIN_ANGLE = Math.PI / 4.0;
-        public static final double MAX_ANGLE = Math.PI / 2.0;
+        public static final double MIN_ANGLE = 20;
+        public static final double MAX_ANGLE = 85;
 
-        public static final double POSITION_TO_ANGLE = 1300.0; // TODO
+        public static final double POSITION_TO_ANGLE = 4.83126154; // TODO
     }
 
     public static class Shooter {
