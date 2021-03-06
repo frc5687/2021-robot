@@ -4,6 +4,7 @@ package org.frc5687.infiniterecharge.robot.commands;
 import static org.frc5687.infiniterecharge.robot.Constants.DriveTrain.*;
 
 import edu.wpi.first.wpilibj.SlewRateLimiter;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import org.frc5687.infiniterecharge.robot.OI;
 import org.frc5687.infiniterecharge.robot.subsystems.DriveTrain;
 import org.frc5687.infiniterecharge.robot.util.Helpers;
@@ -11,6 +12,7 @@ import org.frc5687.infiniterecharge.robot.util.Helpers;
 public class Drive extends OutliersCommand {
 
     private DriveTrain _driveTrain;
+    private PIDController _visionController;
     private SlewRateLimiter _vxLimiter;
     private SlewRateLimiter _vyLimiter;
     private SlewRateLimiter _rotLimiter;
@@ -18,35 +20,47 @@ public class Drive extends OutliersCommand {
 
     public Drive(DriveTrain driveTrain, OI oi) {
         _driveTrain = driveTrain;
-        _vxLimiter = new SlewRateLimiter(4);
-        _vyLimiter = new SlewRateLimiter(4);
-        _rotLimiter = new SlewRateLimiter(3);
         _oi = oi;
+        _vxLimiter = new SlewRateLimiter(5);
+        _vyLimiter = new SlewRateLimiter(5);
+        _rotLimiter = new SlewRateLimiter(5);
+        _visionController = new PIDController(0.2, 0, 0.005);
         addRequirements(_driveTrain);
     }
 
     @Override
     public void initialize() {
         super.initialize();
+        _visionController.setSetpoint(0);
+        _visionController.setTolerance(1);
     }
 
     @Override
     public void execute() {
         super.execute();
-        double vx =
-                //                _vxLimiter.calculate(
-                Helpers.applySensitivityFactor(_oi.getDriveY(), SENSITIVITY_VX) * MAX_MPS / 2;
-        double vy =
-                //                _vyLimiter.calculate(
-                Helpers.applySensitivityFactor(-_oi.getDriveX(), SENSITIVITY_VY) * MAX_MPS / 2;
         // this is correct because of coordinate system.
+
+        double vx =
+                _vxLimiter.calculate(
+                                Helpers.applySensitivityFactor(_oi.getDriveY(), SENSITIVITY_VX))
+                        * MAX_MPS
+                        / 1.5;
+        double vy =
+                _vyLimiter.calculate(
+                                Helpers.applySensitivityFactor(-_oi.getDriveX(), SENSITIVITY_VY))
+                        * MAX_MPS
+                        / 1.5;
         metric("vx", vx);
         metric("vy", vy);
+
         double rot =
-                //                _rotLimiter.calculate(
-                Helpers.applySensitivityFactor(-_oi.getRotationX(), SENSITIVITY_OMEGA)
-                        * MAX_ANG_VEL
-                        / 4;
+                (_oi.holdAngle() && _driveTrain.hasVisionTarget())
+                        ? _visionController.calculate(_driveTrain.getVisionYaw())
+                        : _rotLimiter.calculate(
+                                        Helpers.applySensitivityFactor(
+                                                -_oi.getRotationX(), SENSITIVITY_OMEGA))
+                                * MAX_ANG_VEL
+                                / 2;
         _driveTrain.drive(vx, vy, rot, true, _oi.holdAngle());
     }
 

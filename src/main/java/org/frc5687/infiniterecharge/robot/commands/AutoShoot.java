@@ -2,15 +2,18 @@
 package org.frc5687.infiniterecharge.robot.commands;
 
 import org.frc5687.infiniterecharge.robot.Constants;
+import org.frc5687.infiniterecharge.robot.subsystems.Shooter;
 import org.frc5687.infiniterecharge.robot.subsystems.Spindexer;
 
 public class AutoShoot extends OutliersCommand {
 
     private Spindexer _spindexer;
+    private Shooter _shooter;
 
-    public AutoShoot(Spindexer spindexer) {
+    public AutoShoot(Spindexer spindexer, Shooter shooter) {
         _spindexer = spindexer;
-        addRequirements(_spindexer);
+        _shooter = shooter;
+        addRequirements(_spindexer, _shooter);
     }
 
     @Override
@@ -23,6 +26,7 @@ public class AutoShoot extends OutliersCommand {
         super.execute();
         _spindexer.setSpindexerSpeed(Constants.Spindexer.SPINDEXER_SPEED);
         _spindexer.setFeederSpeed(Constants.Spindexer.FEEDER_SPEED);
+        _shooter.setShooterSpeed(.4);
     }
 
     @Override

@@ -21,6 +21,12 @@ public class Constants {
                 new Transform2d(
                         new Translation2d(0, 0),
                         new Rotation2d(0)); // TODO: Figure out real values.
+        public static final Transform2d CAM_TO_ROBOT =
+                new Transform2d(
+                        new Translation2d(Units.inchesToMeters(5), Units.inchesToMeters(15)),
+                        new Rotation2d(0));
+        public static final Translation2d TARGET_POS =
+                new Translation2d(Units.inchesToMeters(93), Units.inchesToMeters(111));
 
         public static final double T265_MEASUREMENT_COVARIANCE = 0.5;
 
@@ -46,17 +52,17 @@ public class Constants {
         public static final Matrix<N3, N1> VISION_MEASUREMENT_STD_DEVS =
                 VecBuilder.fill(0.5, 0.5, Units.degreesToRadians(20));
 
-        public static final double DEADBAND = 0.04;
+        public static final double DEADBAND = 0.1;
         public static final double SENSITIVITY_VX = 0.9;
         public static final double SENSITIVITY_VY = 0.9;
-        public static final double SENSITIVITY_OMEGA = 0.9;
+        public static final double SENSITIVITY_OMEGA = 0.3;
         public static final double MAX_MPS = 5.1816;
 
         //        public static final double MAX_MPS = 1.0;
         public static final double MAX_ANG_VEL = Math.PI * 3.0;
         public static final double MAX_MPSS = 1.7; // accel
 
-        public static final double ANGLE_kP = 2.5;
+        public static final double ANGLE_kP = 3.5;
         public static final double ANGLE_kI = 0.0;
         public static final double ANGLE_kD = 0.0;
 
@@ -105,7 +111,7 @@ public class Constants {
     }
 
     public static class Intake {
-        public static final double INTAKE_SPEED = 0.75;
+        public static final double INTAKE_SPEED = 1.0;
         public static boolean INVERTED = true;
     }
 

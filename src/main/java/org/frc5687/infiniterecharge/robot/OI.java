@@ -10,10 +10,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import org.frc5687.infiniterecharge.robot.commands.AutoIntake;
 import org.frc5687.infiniterecharge.robot.commands.AutoShoot;
 import org.frc5687.infiniterecharge.robot.commands.DriveTrajectory;
-import org.frc5687.infiniterecharge.robot.subsystems.DriveTrain;
-import org.frc5687.infiniterecharge.robot.subsystems.Hood;
-import org.frc5687.infiniterecharge.robot.subsystems.Intake;
-import org.frc5687.infiniterecharge.robot.subsystems.Spindexer;
+import org.frc5687.infiniterecharge.robot.subsystems.*;
 import org.frc5687.infiniterecharge.robot.util.AxisButton;
 import org.frc5687.infiniterecharge.robot.util.Gamepad;
 import org.frc5687.infiniterecharge.robot.util.OutliersProxy;
@@ -21,7 +18,14 @@ import org.frc5687.infiniterecharge.robot.util.POV;
 
 public class OI extends OutliersProxy {
     protected Gamepad _driverGamepad;
+    protected Joystick _leftJoystick;
+    protected Joystick _rightJoystick;
     protected Button _driverRightStickButton;
+
+    private JoystickButton _trigger;
+    private JoystickButton _thumbButton;
+    private JoystickButton _shootButton;
+    private JoystickButton _resetYawButton;
 
     private Button _driverAButton;
     private Button _driverBButton;
@@ -32,8 +36,16 @@ public class OI extends OutliersProxy {
     public OI() {
         _driverGamepad = new Gamepad(0);
 
+        _leftJoystick = new Joystick(1);
+        _rightJoystick = new Joystick(2);
+
         _driverRightStickButton =
                 new JoystickButton(_driverGamepad, Gamepad.Buttons.RIGHT_STICK.getNumber());
+
+        _trigger = new JoystickButton(_leftJoystick, 1);
+        _thumbButton = new JoystickButton(_leftJoystick, 2);
+        _shootButton = new JoystickButton(_leftJoystick, 8);
+        _resetYawButton = new JoystickButton(_leftJoystick, 10);
 
         _driverAButton = new JoystickButton(_driverGamepad, Gamepad.Buttons.A.getNumber());
         _driverBButton = new JoystickButton(_driverGamepad, Gamepad.Buttons.B.getNumber());
@@ -47,29 +59,34 @@ public class OI extends OutliersProxy {
             DriveTrain driveTrain,
             Intake intake,
             Spindexer spindexer,
+            Shooter shooter,
             Hood hood,
             Trajectory trajectory) {
         //                waypoints.add(new Translation2d(2, 0));
         //        _driverAButton.whenPressed(new AutoHoodSetpoint(hood, 45));
-        _driverRightTrigger.whileHeld(new AutoIntake(intake));
-        _driverYButton.whileHeld(new AutoShoot(spindexer));
+        _trigger.whileHeld(new AutoIntake(intake));
+        _shootButton.whileHeld(new AutoShoot(spindexer, shooter));
         _driverBButton.whenPressed(new DriveTrajectory(driveTrain, trajectory));
+        _resetYawButton.whenPressed(driveTrain::resetYaw);
     }
 
     public double getDriveY() {
-        double speed = -getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_Y.getNumber());
+        double speed = -getSpeedFromAxis(_leftJoystick, _leftJoystick.getYChannel());
+        //        double speed = -getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_Y.getNumber());
         speed = applyDeadband(speed, Constants.DriveTrain.DEADBAND);
         return speed;
     }
 
     public double getDriveX() {
-        double speed = getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_X.getNumber());
+        double speed = getSpeedFromAxis(_leftJoystick, _leftJoystick.getXChannel());
+        //        double speed = getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_X.getNumber());
         speed = applyDeadband(speed, Constants.DriveTrain.DEADBAND);
         return speed;
     }
 
     public double getRotationX() {
-        double speed = getSpeedFromAxis(_driverGamepad, Gamepad.Axes.RIGHT_X.getNumber());
+        double speed = getSpeedFromAxis(_leftJoystick, _leftJoystick.getZChannel());
+        //        double speed = getSpeedFromAxis(_driverGamepad, Gamepad.Axes.RIGHT_X.getNumber());
         speed = applyDeadband(speed, Constants.DriveTrain.DEADBAND);
         return speed;
     }
@@ -79,7 +96,7 @@ public class OI extends OutliersProxy {
     }
 
     public boolean holdAngle() {
-        return _driverRightStickButton.get();
+        return _thumbButton.get();
     }
 
     protected double getSpeedFromAxis(Joystick gamepad, int axisNumber) {

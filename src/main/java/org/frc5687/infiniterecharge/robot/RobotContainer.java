@@ -75,7 +75,7 @@ public class RobotContainer extends OutliersContainer {
             error("Unable to open trajectory: " + trajectoryJSON + ex.getMessage());
         }
         error("TrajectoryNew staring pose is " + trajectoryNew.getInitialPose().toString());
-        _oi.initializeButtons(_driveTrain, _intake, _spindexer, _hood, trajectoryNew);
+        _oi.initializeButtons(_driveTrain, _intake, _spindexer, _shooter, _hood, trajectoryNew);
         setDefaultCommand(_driveTrain, new Drive(_driveTrain, _oi));
         setDefaultCommand(_intake, new IdleIntake(_intake));
         setDefaultCommand(_spindexer, new IdleSpindexer(_spindexer));
