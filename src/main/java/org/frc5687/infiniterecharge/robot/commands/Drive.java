@@ -35,17 +35,18 @@ public class Drive extends OutliersCommand {
         super.execute();
         double vx =
                 //                _vxLimiter.calculate(
-                Helpers.applySensitivityFactor(_oi.getDriveY(), SENSITIVITY_VX) * MAX_MPS;
+                Helpers.applySensitivityFactor(_oi.getDriveY(), SENSITIVITY_VX) * MAX_MPS / 2;
         double vy =
                 //                _vyLimiter.calculate(
-                Helpers.applySensitivityFactor(-_oi.getDriveX(), SENSITIVITY_VY) * MAX_MPS;
+                Helpers.applySensitivityFactor(-_oi.getDriveX(), SENSITIVITY_VY) * MAX_MPS / 2;
         // this is correct because of coordinate system.
         metric("vx", vx);
         metric("vy", vy);
         double rot =
                 //                _rotLimiter.calculate(
                 Helpers.applySensitivityFactor(-_oi.getRotationX(), SENSITIVITY_OMEGA)
-                        * MAX_ANG_VEL;
+                        * MAX_ANG_VEL
+                        / 4;
         _driveTrain.drive(vx, vy, rot, true, _oi.holdAngle());
     }
 

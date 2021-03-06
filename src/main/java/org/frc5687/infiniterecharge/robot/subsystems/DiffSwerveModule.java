@@ -368,7 +368,7 @@ public class DiffSwerveModule {
 
     public void setIdealState(SwerveModuleState state) {
         Rotation2d angleDifference = state.angle.minus(new Rotation2d(getModuleAngle()));
-        if (Math.abs(angleDifference.getRadians()) > Math.PI / 2.0) {
+        if (Math.abs(angleDifference.getRadians()) > (Math.PI / 2.0) + 0.1) {
             setModuleState(
                     new SwerveModuleState(
                             -state.speedMetersPerSecond,
