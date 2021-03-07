@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpiutil.math.*;
 import edu.wpi.first.wpiutil.math.numbers.*;
 import org.frc5687.infiniterecharge.robot.Constants;
-import org.frc5687.infiniterecharge.robot.util.DiffSwerveProfile;
 import org.frc5687.infiniterecharge.robot.util.Helpers;
 
 public class DiffSwerveModule {
@@ -28,7 +27,6 @@ public class DiffSwerveModule {
     private final AnalogEncoder _lampreyEncoder;
     private final Translation2d _positionVector;
     private final LinearSystemLoop<N3, N2, N2> _swerveControlLoop;
-    private final DiffSwerveProfile _profile;
     //    private StatorCurrentLimitConfiguration _currentCfg;
     private Matrix<N3, N1> _reference; // same thing as a set point.
     private Matrix<N2, N1> _u;
@@ -45,7 +43,6 @@ public class DiffSwerveModule {
         _lampreyEncoder = new AnalogEncoder(encoderNum);
         _lampreyEncoder.setDistancePerRotation(
                 2.0 * Math.PI / Constants.DifferentialSwerveModule.VOLTS_TO_ROTATIONS);
-        _profile = new DiffSwerveProfile();
         _reference = Matrix.mat(Nat.N3(), Nat.N1()).fill(0, 0, 0);
         _positionVector = positionVector;
 
@@ -124,8 +121,8 @@ public class DiffSwerveModule {
                 new LinearSystemLoop<>(
                         swerveModuleModel, swerveController, swerveObserver, 12.0, kDt);
 
-        _rightFalcon.setStatusFramePeriod(StatusFrame.Status_1_General, 20, TIMEOUT);
-        _leftFalcon.setStatusFramePeriod(StatusFrame.Status_1_General, 20, TIMEOUT);
+        _rightFalcon.setStatusFramePeriod(StatusFrame.Status_1_General, 10, TIMEOUT);
+        _leftFalcon.setStatusFramePeriod(StatusFrame.Status_1_General, 10, TIMEOUT);
         _rightFalcon.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 20, TIMEOUT);
         _leftFalcon.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 20, TIMEOUT);
         _rightFalcon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, TIMEOUT);
@@ -174,8 +171,6 @@ public class DiffSwerveModule {
     }
 
     public void periodic() {
-        //        _profile.calculate(_reference, kDt);
-        //        _swerveControlLoop.setNextR(_profile.reference());
         _swerveControlLoop.setNextR(_reference);
         _swerveControlLoop.correct(VecBuilder.fill(getModuleAngle(), getWheelAngularVelocity()));
         predict();

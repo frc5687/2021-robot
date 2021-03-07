@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.geometry.Transform2d;
 import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.trajectory.constraint.SwerveDriveKinematicsConstraint;
 import java.util.concurrent.atomic.AtomicReference;
+import org.frc5687.infiniterecharge.robot.Constants;
 import org.frc5687.infiniterecharge.robot.OI;
 import org.frc5687.infiniterecharge.robot.RobotMap;
 import org.frc5687.infiniterecharge.robot.util.GloWorm;
@@ -177,7 +178,6 @@ public class DriveTrain extends OutliersSubsystem {
         //                _backLeft.getState(),
         //                _backRight.getState());
         //        _poseEstimator.addVisionMeasurement(getSlamPose(), Timer.getFPGATimestamp());
-
     }
 
     public void updateOdometry() {
@@ -191,13 +191,10 @@ public class DriveTrain extends OutliersSubsystem {
             //            _poseEstimator.setVisionMeasurementStdDevs(
             //                    VISION_MEASUREMENT_STD_DEVS); // TODO change when have
             _poseEstimator.addVisionMeasurement(
-                    new Pose2d(new Translation2d(0, 0), new Rotation2d(0))
-                            .transformBy(
-                                    (new Pose2d(TARGET_POS, new Rotation2d(0))
-                                            .minus(_vision.getTargetPose()))),
-                    //
-                    // _vision.getTargetPose().transformBy(CAM_TO_ROBOT).minus(new
-                    // Pose2d(TARGET_POS, new Rotation2d(0))),
+                    fieldToRobot(
+                            _vision.cameraToTarget(),
+                            CAMERA_TO_ROBOT,
+                            Constants.Field.TARGET_POSITION),
                     Timer.getFPGATimestamp() - (_vision.getLatency() / 1000.0));
         }
         //        } else if (_slamCamera != null) {
@@ -404,6 +401,12 @@ public class DriveTrain extends OutliersSubsystem {
             return _vision.getTargetYaw();
         }
         return 0;
+    }
+
+    protected Pose2d fieldToRobot(
+            Transform2d cameraToTarget, Transform2d cameraToRobot, Pose2d fieldToTarget) {
+        Transform2d targetToCamera = cameraToTarget.inverse();
+        return fieldToTarget.transformBy(targetToCamera).transformBy(cameraToRobot);
     }
 
     public boolean hasVisionTarget() {
