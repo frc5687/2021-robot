@@ -124,8 +124,8 @@ public class DiffSwerveModule {
                 new LinearSystemLoop<>(
                         swerveModuleModel, swerveController, swerveObserver, 12.0, kDt);
 
-        _rightFalcon.setStatusFramePeriod(StatusFrame.Status_1_General, 20, TIMEOUT);
-        _leftFalcon.setStatusFramePeriod(StatusFrame.Status_1_General, 20, TIMEOUT);
+        _rightFalcon.setStatusFramePeriod(StatusFrame.Status_1_General, 10, TIMEOUT);
+        _leftFalcon.setStatusFramePeriod(StatusFrame.Status_1_General, 10, TIMEOUT);
         _rightFalcon.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 20, TIMEOUT);
         _leftFalcon.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 20, TIMEOUT);
         _rightFalcon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, TIMEOUT);
@@ -138,8 +138,10 @@ public class DiffSwerveModule {
         _rightFalcon.configVoltageCompSaturation(12.0, TIMEOUT);
         _leftFalcon.enableVoltageCompensation(true);
         _rightFalcon.enableVoltageCompensation(true);
-        _leftFalcon.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_5Ms, TIMEOUT);
-        _rightFalcon.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_5Ms, TIMEOUT);
+        //        _leftFalcon.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_5Ms,
+        // TIMEOUT);
+        //        _rightFalcon.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_5Ms,
+        // TIMEOUT);
         _leftFalcon.configOpenloopRamp(0.25, TIMEOUT);
         _rightFalcon.configOpenloopRamp(0.25, TIMEOUT);
         _leftFalcon.configClosedloopRamp(0.25, TIMEOUT);

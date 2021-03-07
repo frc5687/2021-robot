@@ -118,28 +118,27 @@ public class Constants {
     public static class Hood {
         public static final boolean INVERTED = true;
 
-        public static final double GEAR_RATIO = 1.0 / 10.0;
         public static final double DISTANCE_PER_ROTATION = 2; // mm
 
-        public static final double kP = 0.01;
+        public static final double kP = 0.001;
         public static final double kI = 0.0;
         public static final double kD = 0.0;
-        public static final double kFF = 0.0;
+        public static final double kFF = 0.0001;
         public static final double kIz = 0.0;
 
         public static final double MIN_OUTPUT = -1.0;
         public static final double MAX_OUTPUT = 1.0;
 
         public static final double MIN_VEL = 0;
-        public static final double MAX_VEL = Units.radiansPerSecondToRotationsPerMinute(200);
-        public static final double MAX_ACCEL = Units.radiansPerSecondToRotationsPerMinute(150);
+        public static final double MAX_VEL = Units.radiansPerSecondToRotationsPerMinute(800);
+        public static final double MAX_ACCEL = Units.radiansPerSecondToRotationsPerMinute(650);
 
-        public static final double TOLERANCE = 0.1; // rads
+        public static final double TOLERANCE = 0.3; // rads
 
         public static final double MIN_ANGLE = 20;
         public static final double MAX_ANGLE = 85;
 
-        public static final double POSITION_TO_ANGLE = 4.83126154; // TODO
+        public static final double POSITION_TO_ANGLE = 1.354166666666667; // TODO
     }
 
     public static class Shooter {

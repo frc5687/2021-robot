@@ -1,12 +1,14 @@
 /* (C)2020-2021 */
 package org.frc5687.infiniterecharge.robot;
 
+import static org.frc5687.infiniterecharge.robot.Constants.DriveTrain.DEADBAND;
 import static org.frc5687.infiniterecharge.robot.util.Helpers.applyDeadband;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import org.frc5687.infiniterecharge.robot.commands.AutoHoodSetpoint;
 import org.frc5687.infiniterecharge.robot.commands.AutoIntake;
 import org.frc5687.infiniterecharge.robot.commands.AutoShoot;
 import org.frc5687.infiniterecharge.robot.commands.DriveTrajectory;
@@ -42,10 +44,10 @@ public class OI extends OutliersProxy {
         _driverRightStickButton =
                 new JoystickButton(_driverGamepad, Gamepad.Buttons.RIGHT_STICK.getNumber());
 
-        _trigger = new JoystickButton(_leftJoystick, 1);
-        _thumbButton = new JoystickButton(_leftJoystick, 2);
-        _shootButton = new JoystickButton(_leftJoystick, 8);
-        _resetYawButton = new JoystickButton(_leftJoystick, 10);
+        _trigger = new JoystickButton(_rightJoystick, 1);
+        _thumbButton = new JoystickButton(_rightJoystick, 2);
+        _shootButton = new JoystickButton(_leftJoystick, 1);
+        _resetYawButton = new JoystickButton(_rightJoystick, 4);
 
         _driverAButton = new JoystickButton(_driverGamepad, Gamepad.Buttons.A.getNumber());
         _driverBButton = new JoystickButton(_driverGamepad, Gamepad.Buttons.B.getNumber());
@@ -66,6 +68,7 @@ public class OI extends OutliersProxy {
         //        _driverAButton.whenPressed(new AutoHoodSetpoint(hood, 45));
         _trigger.whileHeld(new AutoIntake(intake));
         _shootButton.whileHeld(new AutoShoot(spindexer, shooter));
+        _driverAButton.whenPressed(new AutoHoodSetpoint(hood, 45));
         _driverBButton.whenPressed(new DriveTrajectory(driveTrain, trajectory));
         _resetYawButton.whenPressed(driveTrain::resetYaw);
     }
@@ -73,21 +76,27 @@ public class OI extends OutliersProxy {
     public double getDriveY() {
         double speed = -getSpeedFromAxis(_leftJoystick, _leftJoystick.getYChannel());
         //        double speed = -getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_Y.getNumber());
-        speed = applyDeadband(speed, Constants.DriveTrain.DEADBAND);
+        speed = applyDeadband(speed, DEADBAND);
         return speed;
     }
 
     public double getDriveX() {
         double speed = getSpeedFromAxis(_leftJoystick, _leftJoystick.getXChannel());
         //        double speed = getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_X.getNumber());
-        speed = applyDeadband(speed, Constants.DriveTrain.DEADBAND);
+        speed = applyDeadband(speed, DEADBAND);
         return speed;
     }
 
     public double getRotationX() {
-        double speed = getSpeedFromAxis(_leftJoystick, _leftJoystick.getZChannel());
+        double speed = getSpeedFromAxis(_rightJoystick, _rightJoystick.getXChannel());
         //        double speed = getSpeedFromAxis(_driverGamepad, Gamepad.Axes.RIGHT_X.getNumber());
-        speed = applyDeadband(speed, Constants.DriveTrain.DEADBAND);
+        speed = applyDeadband(speed, DEADBAND);
+        return speed;
+    }
+
+    public double getHoodSpeed() {
+        double speed = getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_Y.getNumber());
+        speed = applyDeadband(speed, DEADBAND);
         return speed;
     }
 

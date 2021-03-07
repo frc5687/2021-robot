@@ -164,7 +164,7 @@ public class DriveTrain extends OutliersSubsystem {
                 _frontRight.getState(),
                 _backLeft.getState(),
                 _backRight.getState());
-        _field.setRobotPose(_poseEstimator.getEstimatedPosition());
+        _field.setRobotPose(getOdometryPose());
         //        updateOdometry();
 
         //        metric("estimated Pose", _poseEstimator.getEstimatedPosition().toString());
@@ -276,7 +276,6 @@ public class DriveTrain extends OutliersSubsystem {
     }
 
     public void setFrontRightModuleState(SwerveModuleState state) {
-        metric("mps", state.speedMetersPerSecond);
         _frontRight.setIdealState(state);
     }
 
