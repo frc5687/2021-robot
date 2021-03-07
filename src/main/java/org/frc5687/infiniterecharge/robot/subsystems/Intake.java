@@ -15,17 +15,22 @@ public class Intake extends OutliersSubsystem {
 
     public Intake(OutliersContainer container) {
         super(container);
-        try {
-            _roller =
-                    new CANSparkMax(
-                            RobotMap.CAN.SPARKMAX.INTAKE, CANSparkMaxLowLevel.MotorType.kBrushless);
-            _solenoid = new DoubleSolenoid(RobotMap.PCM.INTAKE_HIGH, RobotMap.PCM.INTAKE_LOW);
+        //        try {
+        _roller =
+                new CANSparkMax(
+                        RobotMap.CAN.SPARKMAX.INTAKE, CANSparkMaxLowLevel.MotorType.kBrushless);
+        _solenoid = new DoubleSolenoid(RobotMap.PCM.INTAKE_HIGH, RobotMap.PCM.INTAKE_LOW);
 
-            _roller.setInverted(Constants.Intake.INVERTED);
-            _roller.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        } catch (Exception e) {
-            error(e.getMessage());
-        }
+        _roller.restoreFactoryDefaults();
+        _roller.setCANTimeout(500);
+        _roller.setInverted(Constants.Intake.INVERTED);
+        _roller.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        _roller.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus0, 20);
+        _roller.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus2, 200);
+        _roller.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1, 200);
+        //        } catch (Exception e) {
+        //            error(e.getMessage());
+        //        }
     }
 
     @Override

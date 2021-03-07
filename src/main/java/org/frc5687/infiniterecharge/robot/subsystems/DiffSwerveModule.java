@@ -135,8 +135,10 @@ public class DiffSwerveModule {
         _rightFalcon.configVoltageCompSaturation(12.0, TIMEOUT);
         _leftFalcon.enableVoltageCompensation(true);
         _rightFalcon.enableVoltageCompensation(true);
-        _leftFalcon.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_5Ms, TIMEOUT);
-        _rightFalcon.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_5Ms, TIMEOUT);
+        //        _leftFalcon.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_5Ms,
+        // TIMEOUT);
+        //        _rightFalcon.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_5Ms,
+        // TIMEOUT);
         _leftFalcon.configOpenloopRamp(0.25, TIMEOUT);
         _rightFalcon.configOpenloopRamp(0.25, TIMEOUT);
         _leftFalcon.configClosedloopRamp(0.25, TIMEOUT);

@@ -35,7 +35,10 @@ public class Shooter extends OutliersSubsystem {
             _rightShooter.config_IntegralZone(0, kIz, 50);
 
             _rightShooter.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
-            _rightShooter.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 10);
+            _rightShooter.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 20);
+            _leftShooter.setStatusFramePeriod(StatusFrame.Status_1_General, 255);
+            _leftShooter.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 255);
+
             _rightShooter.configClosedloopRamp(1);
             _rightShooter.selectProfileSlot(0, 0);
         } catch (Exception e) {

@@ -72,6 +72,6 @@ public class RobotMap {
      */
     public static class DIO {
         public static final int HOOD_HALL = 0;
-        public static
+        public static final int HOOD_HALL_TOP = 1;
     }
 }

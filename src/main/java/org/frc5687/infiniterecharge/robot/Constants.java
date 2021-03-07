@@ -1,7 +1,6 @@
 /* (C)2020-2021 */
 package org.frc5687.infiniterecharge.robot;
 
-import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Transform2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
@@ -22,10 +21,12 @@ public class Constants {
                 new Transform2d(
                         new Translation2d(0, 0),
                         new Rotation2d(0)); // TODO: Figure out real values.
-        public static final Transform2d CAMERA_TO_ROBOT =
+        public static final Transform2d CAM_TO_ROBOT =
                 new Transform2d(
-                        new Translation2d(Units.inchesToMeters(13.75), Units.inchesToMeters(5.75)),
+                        new Translation2d(Units.inchesToMeters(5), Units.inchesToMeters(15)),
                         new Rotation2d(0));
+        public static final Translation2d TARGET_POS =
+                new Translation2d(Units.inchesToMeters(93), Units.inchesToMeters(111));
 
         public static final double T265_MEASUREMENT_COVARIANCE = 0.5;
 
@@ -117,28 +118,27 @@ public class Constants {
     public static class Hood {
         public static final boolean INVERTED = true;
 
-        public static final double GEAR_RATIO = 1.0 / 10.0;
         public static final double DISTANCE_PER_ROTATION = 2; // mm
 
-        public static final double kP = 0.01;
+        public static final double kP = 0.001;
         public static final double kI = 0.0;
         public static final double kD = 0.0;
-        public static final double kFF = 0.0;
+        public static final double kFF = 0.0001;
         public static final double kIz = 0.0;
 
         public static final double MIN_OUTPUT = -1.0;
         public static final double MAX_OUTPUT = 1.0;
 
         public static final double MIN_VEL = 0;
-        public static final double MAX_VEL = Units.radiansPerSecondToRotationsPerMinute(200);
-        public static final double MAX_ACCEL = Units.radiansPerSecondToRotationsPerMinute(150);
+        public static final double MAX_VEL = Units.radiansPerSecondToRotationsPerMinute(800);
+        public static final double MAX_ACCEL = Units.radiansPerSecondToRotationsPerMinute(650);
 
-        public static final double TOLERANCE = 0.1; // rads
+        public static final double TOLERANCE = 0.3; // rads
 
         public static final double MIN_ANGLE = 20;
         public static final double MAX_ANGLE = 85;
 
-        public static final double POSITION_TO_ANGLE = 1; // TODO
+        public static final double POSITION_TO_ANGLE = 1.354166666666667; // TODO
     }
 
     public static class Shooter {
@@ -154,17 +154,5 @@ public class Constants {
         public static final double GEAR_RATIO = 1.25;
         public static final double MAX_RPM = 6380 * GEAR_RATIO;
         public static final double TICKS_TO_ROTATIONS = 2048.0;
-    }
-
-    /** field orientation is: y | | o-----x where o is bottom entire field. */
-    public static class Field {
-        public static final double FULL_FIELD_X = 16.0;
-        public static final double FULL_FIELD_Y = 8.21055;
-        public static final double HALF_FIELD_X = 8.0;
-        public static final double SECTOR_LINE_X = 3.048;
-        public static final double TARGET_Y = 2.404364;
-
-        public static final Pose2d TARGET_POSITION =
-                new Pose2d(FULL_FIELD_X, TARGET_Y, new Rotation2d(0));
     }
 }

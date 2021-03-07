@@ -15,6 +15,7 @@ public class Hood extends OutliersSubsystem {
     private CANPIDController _hoodController;
 
     private HallEffect _hallEffect;
+    private HallEffect _hallEffectTop;
 
     private double _angle;
 
@@ -24,13 +25,19 @@ public class Hood extends OutliersSubsystem {
         _hood =
                 new CANSparkMax(
                         RobotMap.CAN.SPARKMAX.HOOD, CANSparkMaxLowLevel.MotorType.kBrushless);
+        _hood.restoreFactoryDefaults();
+        _hood.setCANTimeout(500);
+        _hood.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        _hood.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus0, 20);
+        _hood.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1, 20);
+        _hood.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus2, 20);
         _hood.setInverted(INVERTED);
 
-        _hoodEncoder = _hood.getEncoder(EncoderType.kHallSensor, 4096);
+        _hoodEncoder = _hood.getAlternateEncoder(8192);
         _hoodController = _hood.getPIDController();
+        _hoodController.setFeedbackDevice(_hoodEncoder);
 
-        _hoodEncoder.setPositionConversionFactor(GEAR_RATIO * DISTANCE_PER_ROTATION);
-        _hoodEncoder.setVelocityConversionFactor(GEAR_RATIO);
+        _hoodEncoder.setPositionConversionFactor(DISTANCE_PER_ROTATION);
 
         _hoodController.setP(kP);
         _hoodController.setI(kI);
@@ -45,6 +52,7 @@ public class Hood extends OutliersSubsystem {
         _hoodController.setSmartMotionAllowedClosedLoopError(TOLERANCE, 0);
 
         _hallEffect = new HallEffect(RobotMap.DIO.HOOD_HALL);
+        _hallEffectTop = new HallEffect(RobotMap.DIO.HOOD_HALL_TOP);
 
         //        } catch (Exception e) {
         //            error(e.getMessage());
@@ -53,17 +61,21 @@ public class Hood extends OutliersSubsystem {
 
     @Override
     public void periodic() {
+        //        metric("encoder", getAngle());
         //        metric("can errror", _hood.getLastError().toString());
         //        metric("position", _hood.getEncoder().getPosition());
         //        metric("position canencoder", getPosition());
         //        metric("hood angle", (getPosition() / POSITION_TO_ANGLE));
         //        metric("is hall triggered", isHallTriggered());
-        //        metric("hood controller output", _hood.get());
+        //        metric("hood con
+        //       troller output", _hood.get());
+        //        metric("hood speed", _hood.get());
 
         //        if (isHallTriggered()) {
+        //            error("speed is " + _hood.get());
         //            if (_hood.get() < 0) {
         //                error("limiting speed");
-        //                //                setSpeed(0);
+        //                setSpeed(0);
         //            }
         //            _angle = MIN_ANGLE;
         //            _hoodEncoder.setPosition(_angle * POSITION_TO_ANGLE); // TODO: Find Conversion
@@ -82,13 +94,13 @@ public class Hood extends OutliersSubsystem {
 
     public void setEncoderAngle(double angle) {
         _angle = angle;
-        _hoodEncoder.setPosition(_angle * POSITION_TO_ANGLE);
+        _hoodEncoder.setPosition(_angle / POSITION_TO_ANGLE);
     }
 
     public double getAngle() {
         _angle =
                 getPosition()
-                        / POSITION_TO_ANGLE; // TODO: find out the conversion of position to angle.
+                        * POSITION_TO_ANGLE; // TODO: find out the conversion of position to angle.
         return _angle;
     }
 
@@ -103,7 +115,7 @@ public class Hood extends OutliersSubsystem {
      * @param rads reference angle in radians.
      */
     public void setHoodAngle(double rads) {
-        _hoodController.setReference(rads * POSITION_TO_ANGLE, ControlType.kSmartMotion);
+        _hoodController.setReference(rads / POSITION_TO_ANGLE, ControlType.kSmartMotion);
     }
 
     public void setSpeed(double pow) {
@@ -114,7 +126,11 @@ public class Hood extends OutliersSubsystem {
         return _hallEffect.get();
     }
 
+    public boolean isTopHallTriggered() {
+        return _hallEffectTop.get();
+    }
+
     public double getOutput() {
-        return _hood.get();
+        return _hood.getAppliedOutput();
     }
 }
