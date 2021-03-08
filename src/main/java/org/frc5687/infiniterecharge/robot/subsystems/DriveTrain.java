@@ -165,8 +165,8 @@ public class DriveTrain extends OutliersSubsystem {
                 _frontRight.getState(),
                 _backLeft.getState(),
                 _backRight.getState());
-        _field.setRobotPose(getOdometryPose());
-        //        updateOdometry();
+        _field.setRobotPose(_poseEstimator.getEstimatedPosition());
+        updateOdometry();
 
         //        metric("estimated Pose", _poseEstimator.getEstimatedPosition().toString());
         //        metric("slam pose", getSlamPose().toString());
@@ -405,6 +405,7 @@ public class DriveTrain extends OutliersSubsystem {
     protected Pose2d fieldToRobot(
             Transform2d cameraToTarget, Transform2d cameraToRobot, Pose2d fieldToTarget) {
         Transform2d targetToCamera = cameraToTarget.inverse();
+        metric("cameraToField", fieldToTarget.transformBy(targetToCamera).toString());
         return fieldToTarget.transformBy(targetToCamera).transformBy(cameraToRobot);
     }
 

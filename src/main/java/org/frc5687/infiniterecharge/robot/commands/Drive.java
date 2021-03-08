@@ -42,12 +42,12 @@ public class Drive extends OutliersCommand {
 
         double vx =
                 _vxLimiter.calculate(
-                                Helpers.applySensitivityFactor(_oi.getDriveY(), SENSITIVITY_VX))
+                                Helpers.applySensitivityFactor(-_oi.getDriveY(), SENSITIVITY_VX))
                         * MAX_MPS
                         / 1.5;
         double vy =
                 _vyLimiter.calculate(
-                                Helpers.applySensitivityFactor(-_oi.getDriveX(), SENSITIVITY_VY))
+                                Helpers.applySensitivityFactor(_oi.getDriveX(), SENSITIVITY_VY))
                         * MAX_MPS
                         / 1.5;
         metric("vx", vx);

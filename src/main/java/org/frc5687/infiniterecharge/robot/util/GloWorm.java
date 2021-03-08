@@ -31,8 +31,7 @@ public class GloWorm {
     // Should return pose from 3D mode. Not sure, not documented yet.
     public Transform2d cameraToTarget() {
         double[] pose = _table.getEntry("targetPose").getDoubleArray(_defaultVal);
-        return new Transform2d(
-                new Translation2d(pose[0], pose[1]), Rotation2d.fromDegrees(pose[2]));
+        return new Transform2d(new Translation2d(pose[0], pose[1]), Rotation2d.fromDegrees(0));
     }
 
     public boolean hasTarget() {
