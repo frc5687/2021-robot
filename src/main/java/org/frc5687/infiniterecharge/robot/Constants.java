@@ -1,6 +1,7 @@
 /* (C)2020-2021 */
 package org.frc5687.infiniterecharge.robot;
 
+import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Transform2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
@@ -21,6 +22,12 @@ public class Constants {
                 new Transform2d(
                         new Translation2d(0, 0),
                         new Rotation2d(0)); // TODO: Figure out real values.
+        public static final Transform2d CAMERA_TO_ROBOT =
+                new Transform2d(
+                        new Translation2d(Units.inchesToMeters(13.75), Units.inchesToMeters(5.75)),
+                        new Rotation2d(0));
+        public static final Translation2d TARGET_POS =
+                new Translation2d(Units.inchesToMeters(93), Units.inchesToMeters(111));
 
         public static final double T265_MEASUREMENT_COVARIANCE = 0.5;
 
@@ -46,29 +53,33 @@ public class Constants {
         public static final Matrix<N3, N1> VISION_MEASUREMENT_STD_DEVS =
                 VecBuilder.fill(0.5, 0.5, Units.degreesToRadians(20));
 
-        public static final double DEADBAND = 0.08;
+        public static final double DEADBAND = 0.1;
         public static final double SENSITIVITY_VX = 0.9;
         public static final double SENSITIVITY_VY = 0.9;
-        public static final double SENSITIVITY_OMEGA = 0.9;
+        public static final double SENSITIVITY_OMEGA = 0.3;
         public static final double MAX_MPS = 5.1816;
+
         //        public static final double MAX_MPS = 1.0;
-        public static final double MAX_ANG_VEL = Math.PI * 2.0;
+        public static final double MAX_ANG_VEL = Math.PI * 3.0;
         public static final double MAX_MPSS = 1.7; // accel
 
-        public static final double ANGLE_kP = 2.5;
+        public static final double ANGLE_kP = 3.5;
         public static final double ANGLE_kI = 0.0;
         public static final double ANGLE_kD = 0.0;
 
-        public static final double kP = 2.5;
+        public static final double kP = 9.5;
         public static final double kI = 0.0;
         public static final double kD = 0.0;
-        public static final double PROFILE_CONSTRAINT_VEL = 2.0 * Math.PI;
+        public static final double PROFILE_CONSTRAINT_VEL = 3.0 * Math.PI;
         public static final double PROFILE_CONSTRAINT_ACCEL = Math.PI;
     }
 
     public static class DifferentialSwerveModule {
 
         public static final double kDt = 0.005;
+
+        public static final double FALCON_FREE_SPEED =
+                Units.rotationsPerMinuteToRadiansPerSecond(6380);
         public static final int TIMEOUT = 200;
         public static final double GEAR_RATIO_WHEEL = 6.46875;
         public static final double GEAR_RATIO_STEER = 11.5;
@@ -76,18 +87,87 @@ public class Constants {
         public static final double WHEEL_RADIUS = 0.0508; // Meters
         public static final double TICKS_TO_ROTATIONS = 2048.0;
         public static final double VOLTS_TO_ROTATIONS = 3.3;
+        public static final double TRAP_ANG_VELOCITY = 60;
+        public static final double TRAP_ANG_ACCEL = 200;
+        public static final double FEED_FORWARD = 12.0 / FALCON_FREE_SPEED * GEAR_RATIO_WHEEL;
 
         // Create Parameters for DiffSwerve State Space
-        public static final double INERTIA_WHEEL = 0.007;
-        public static final double INERTIA_STEER = 0.007;
-        public static final double Q_AZIMUTH_ANG_VELOCITY = 0.2; // radians per sec
-        public static final double Q_AZIMUTH = 0.02; // radians
+        public static final double INERTIA_WHEEL = 0.005;
+        public static final double INERTIA_STEER = 0.004;
+        public static final double Q_AZIMUTH_ANG_VELOCITY = 1; // radians per sec
+        public static final double Q_AZIMUTH = .14; // radians
         public static final double Q_WHEEL_ANG_VELOCITY = 3; // radians per sec
-        public static final double MODEL_AZIMUTH_ANGLE_NOISE = 1.718873; // degrees
-        public static final double MODEL_AZIMUTH_ANG_VELOCITY_NOISE = 400.0; // RPM
-        public static final double MODEL_WHEEL_ANG_VELOCITY_NOISE = 400.0; // RPM
-        public static final double SENSOR_AZIMUTH_ANGLE_NOISE = 0.02; // degrees
-        public static final double SENSOR_WHEEL_ANG_VELOCITY_NOISE = 114.592; // degrees
-        public static final double CONTROL_EFFORT = 12.0;
+        public static final double MODEL_AZIMUTH_ANGLE_NOISE = .01; // radians
+        public static final double MODEL_AZIMUTH_ANG_VELOCITY_NOISE = 0.07; // radians per sec
+        public static final double MODEL_WHEEL_ANG_VELOCITY_NOISE = 0.07; // radians per sec
+        public static final double SENSOR_AZIMUTH_ANGLE_NOISE = 0.001; // radians
+        public static final double SENSOR_WHEEL_ANG_VELOCITY_NOISE = 0.01; // radians per sec
+        public static final double CONTROL_EFFORT = 12;
+    }
+
+    public static class Spindexer {
+        public static boolean SPINDEXER_INVERTED = false;
+
+        public static boolean FEEDER_INVERTED = false;
+        public static final double SPINDEXER_IDLE_SPEED = -0.1;
+        public static final double FEEDER_IDLE_SPEED = -0.25;
+        public static final double SPINDEXER_SPEED = 0.75;
+        public static final double FEEDER_SPEED = 1.0;
+    }
+
+    public static class Intake {
+        public static final double INTAKE_SPEED = 1.0;
+        public static boolean INVERTED = true;
+    }
+
+    public static class Hood {
+        public static final boolean INVERTED = true;
+
+        public static final double DISTANCE_PER_ROTATION = 2; // mm
+
+        public static final double kP = 0.001;
+        public static final double kI = 0.0;
+        public static final double kD = 0.0;
+        public static final double kFF = 0.0001;
+        public static final double kIz = 0.0;
+
+        public static final double MIN_OUTPUT = -1.0;
+        public static final double MAX_OUTPUT = 1.0;
+
+        public static final double MIN_VEL = 0;
+        public static final double MAX_VEL = Units.radiansPerSecondToRotationsPerMinute(800);
+        public static final double MAX_ACCEL = Units.radiansPerSecondToRotationsPerMinute(650);
+
+        public static final double TOLERANCE = 0.3; // rads
+
+        public static final double MIN_ANGLE = 20;
+        public static final double MAX_ANGLE = 85;
+
+        public static final double POSITION_TO_ANGLE = 1.354166666666667; // TODO
+    }
+
+    public static class Shooter {
+        public static final boolean LEFT_INVERTED = true;
+        public static final boolean RIGHT_INVERTED = false;
+
+        public static final double kP = 0.4;
+        public static final double kI = 0.0025;
+        public static final double kD = 0.6;
+        public static final double kFF = 0.05;
+        public static final int kIz = 150;
+
+        public static final double GEAR_RATIO = 1.25;
+        public static final double MAX_RPM = 6380 * GEAR_RATIO;
+        public static final double TICKS_TO_ROTATIONS = 2048.0;
+    }
+
+    public static class Field {
+        public static final double FULL_FIELD_X = 16.0;
+        public static final double HALF_FIELD_X = FULL_FIELD_X / 2.0;
+        public static final double FULL_FIELD_Y = 8.21055;
+        public static final double TARGET_LINE_Y = 2.404364;
+
+        public static final Pose2d TARGET_POSITION =
+                new Pose2d(FULL_FIELD_X, TARGET_LINE_Y, new Rotation2d(0));
     }
 }

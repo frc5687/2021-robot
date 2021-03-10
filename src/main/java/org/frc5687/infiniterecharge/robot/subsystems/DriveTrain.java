@@ -5,25 +5,29 @@ import static org.frc5687.infiniterecharge.robot.Constants.DriveTrain.*;
 import static org.frc5687.infiniterecharge.robot.RobotMap.CAN.TALONFX.*;
 
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.HolonomicDriveController;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Transform2d;
 import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.trajectory.constraint.SwerveDriveKinematicsConstraint;
 import java.util.concurrent.atomic.AtomicReference;
+import org.frc5687.infiniterecharge.robot.Constants;
 import org.frc5687.infiniterecharge.robot.OI;
 import org.frc5687.infiniterecharge.robot.RobotMap;
 import org.frc5687.infiniterecharge.robot.util.GloWorm;
-import org.frc5687.infiniterecharge.robot.util.Helpers;
 import org.frc5687.infiniterecharge.robot.util.OutliersContainer;
 import org.frc5687.lib.T265Camera;
 
@@ -49,6 +53,7 @@ public class DriveTrain extends OutliersSubsystem {
 
     private HolonomicDriveController _controller;
     private ProfiledPIDController _angleController;
+    private Field2d _field;
 
     public DriveTrain(OutliersContainer container, OI oi, AHRS imu, T265Camera slamCamera) {
         super(container);
@@ -122,8 +127,24 @@ public class DriveTrain extends OutliersSubsystem {
         } catch (Exception e) {
             error(e.getMessage());
         }
+
         enableMetrics();
-        logMetrics("Module Angle", "Reference Module Angle");
+        logMetrics("FR/angle", "FR/ReferenceAngle");
+        //                "FR/vel",
+        //                "FR/LeftVoltage",
+        //                "FR/RightVoltage",
+        //                "FR/LeftRPM",
+        //                "FR/RightRPM",
+        //                "FR/LeftCurrent",
+        //                "FR/RightCurrent",
+        //                "FR/ReferenceAngle",
+        //                "FR/ReferenceAngVel",
+        //                "FR/ReferenceWheelAngVel",
+        //                "FR/AngleVel");
+        _field = new Field2d();
+        SmartDashboard.putData("Field", _field);
+        //        enableMetrics();
+        //        logMetrics("Module Angle", "Reference Module Angle");
         //                _odomerty.resetPosition(getPose(), getHeading());
     }
 
@@ -137,13 +158,15 @@ public class DriveTrain extends OutliersSubsystem {
 
     @Override
     public void periodic() {
-        _odomerty.update(
-                getHeading(),
-                _frontLeft.getState(),
-                _frontRight.getState(),
-                _backLeft.getState(),
-                _backRight.getState());
+        //        _odomerty.update(
+        //                getHeading(),
+        //                _frontLeft.getState(),
+        //                _frontRight.getState(),
+        //                _backLeft.getState(),
+        //                _backRight.getState());
+        //        _field.setRobotPose(_poseEstimator.getEstimatedPosition());
         //        updateOdometry();
+
         //        metric("estimated Pose", _poseEstimator.getEstimatedPosition().toString());
         //        metric("slam pose", getSlamPose().toString());
         //        SmartDashboard.putString("pose", _odomerty.getPoseMeters().toString());
@@ -163,14 +186,16 @@ public class DriveTrain extends OutliersSubsystem {
                 _frontRight.getState(),
                 _backLeft.getState(),
                 _backRight.getState());
-        //        if (_vision.hasTarget()) {
-        //            //            _poseEstimator.setVisionMeasurementStdDevs(
-        //            //                    VISION_MEASUREMENT_STD_DEVS); // TODO change when have
-        // camera and
-        //            // slam
-        //            //            _poseEstimator.addVisionMeasurement(
-        //            //                    _vision.getTargetPose(), System.currentTimeMillis() -
-        //            // _vision.getLatency());
+        if (_vision.hasTarget()) {
+            //            _poseEstimator.setVisionMeasurementStdDevs(
+            //                    VISION_MEASUREMENT_STD_DEVS); // TODO change when have
+            _poseEstimator.addVisionMeasurement(
+                    fieldToRobot(
+                            _vision.cameraToTarget(),
+                            CAMERA_TO_ROBOT,
+                            Constants.Field.TARGET_POSITION),
+                    Timer.getFPGATimestamp() - (_vision.getLatency() / 1000.0));
+        }
         //        } else if (_slamCamera != null) {
         //            //            _poseEstimator.setVisionMeasurementStdDevs(
         //            //                    VISION_MEASUREMENT_STD_DEVS); // TODO change when have
@@ -189,10 +214,14 @@ public class DriveTrain extends OutliersSubsystem {
         //        metric("Position Error", _backLeft.getPositionError());
         //        metric("Right RPM", _backLeft.getRightFalconRPM());
         //        metric("Left RPM", _backLeft.getLeftFalconRPM());
-        metric("Module Angle", _backLeft.getModuleAngle());
-        //        metric("Predicted Angle", _backLeft.getPredictedAzimuthAngle());
-        metric("Reference Module Angle", _backLeft.getReferenceModuleAngle());
-        metric("Heading", getHeading().getDegrees());
+        //        SmartDashboard.putNumberArray("DriveTrain/Reference", _frontRight.getReference());
+        //        metric("Module Angle", _backLeft.getModuleAngle());
+        //        //        metric("Predicted Angle", _backLeft.getPredictedAzimuthAngle());
+        //        metric("Reference Module Angle", _backLeft.getReferenceModuleAngle());
+        //        metric("Heading", getHeading().getDegrees());
+        //        metric("Estimated Pose", _poseEstimator.getEstimatedPosition().toString());
+        //        metric("has Target", _vision.hasTarget());
+        //        SmartDashboard.putString("Pose", _vision.getTargetPose().toString());
         //
         //        metric("Wanted Left Voltage", _backLeft.getLeftNextVoltage());
         //        metric("Wanted Right Voltage", _backLeft.getRightNextVoltage());
@@ -204,25 +233,54 @@ public class DriveTrain extends OutliersSubsystem {
         // _backLeft.getPredictedWheelAngularVelocity());
         //        metric("Wheel Reference Angular Velocity",
         // _backLeft.getReferenceWheelAngularVelocity());
-        //        metric("FR/angle", _frontRight.getModuleAngle());
-        //        metric("FR/vel", _frontRight.getWheelVelocity());
-        //        SmartDashboard.putNumberArray(
-        //                "DriveTrain/FR/state predict", _frontRight.getPredictedState());
+        metric("FR/angle", _frontRight.getModuleAngle());
+        metric("FR/Predicted Angle", _frontRight.getPredictedAzimuthAngle());
+        //        metric("FR/ReferenceAngle", _frontRight.getReferenceModuleAngle());
+        //        metric("FR/Predicted Angle", _frontRight.getPredictedAzimuthAngle());
+
+        metric("FR/Setpoint Angle", _frontRight.getSetpointAngle());
+        metric("FR/Setpoint Vel", _frontRight.getSetpointVel());
+        //        metric("FR/vel", _frontRight.getWheelVelocity() / 0.0508);
+        metric("FR/AngleVel", _frontRight.getAzimuthAngularVelocity());
+        metric("FR/PredictedAngleVel", _frontRight.getPredictedAzimuthAngularVelocity());
+        metric("FR/WantedLeftVoltage", _frontRight.getLeftNextVoltage());
+        metric("FR/WantedRightVoltage", _frontRight.getRightNextVoltage());
+
+        metric("FR/LeftVoltage", _frontRight.getLeftVoltage());
+        metric("FR/RightVoltage", _frontRight.getRightVoltage());
+        //        metric("FR/LeftRPM", _frontRight.getLeftFalconRPM());
+        //        metric("FR/RightRPM", _frontRight.getRightFalconRPM());
+        //        metric("FR/LeftCurrent", _frontRight.getLeftCurrent());
+        //        metric("FR/RightCurrent", _frontRight.getRightCurrent());
+        //        //
+        //        metric("FR/ReferenceAngle", _frontRight.getReferenceModuleAngle());
+        //                metric("FR/ReferenceAngVel",
+        // _frontRight.getReferenceModuleAngularVelocity());
+        metric("FR/ReferenceWheelAngVel", _frontRight.getReferenceWheelVelocity());
+        metric("FR/PredictedAngVelWheel", _frontRight.getPredictedWheelAngularVelocity());
+        metric("FR/SensorWheelAngVel", _frontRight.getWheelAngularVelocity());
+
+        //                SmartDashboard.putNumberArray(
+        //                        "DriveTrain/FR/state predict", _frontRight.getPredictedState());
 
         //        metric("FL/angle", _frontLeft.getModuleAngle());
         //        metric("FL/vel", _frontLeft.getWheelVelocity());
-        //        SmartDashboard.putNumberArray(
-        //                "DriveTrain/FL/state predict", _frontLeft.getPredictedState());
-
+        //        //        SmartDashboard.putNumberArray(
+        //        //                "DriveTrain/FL/state predict", _frontLeft.getPredictedState());
+        //        metric("FL/Wanted Angle", _frontLeft.getReferenceModuleAngle());
+        //
         //        metric("BR/angle", _backRight.getModuleAngle());
         //        metric("BR/vel", _backRight.getWheelVelocity());
-        //        SmartDashboard.putNumberArray(
-        //                "DriveTrain/BR/state predict", _backRight.getPredictedState());
-
+        //        //        SmartDashboard.putNumberArray(
+        //        //                "DriveTrain/BR/state predict", _backRight.getPredictedState());
+        //        metric("BR/Wanted Angle", _backRight.getReferenceModuleAngle());
+        //
         //        metric("BL/angle", _backLeft.getModuleAngle());
         //        metric("BL/vel", _backLeft.getWheelVelocity());
-        //        SmartDashboard.putNumberArray("DriveTrain/BL/state predict",
-        // _backLeft.getPredictedState());
+        //        //        SmartDashboard.putNumberArray("DriveTrain/BL/state predict",
+        //        // _backLeft.getPredictedState());
+        //        metric("BL/Wanted Angle", _backLeft.getReferenceModuleAngle());
+
     }
 
     public void setFrontRightModuleState(SwerveModuleState state) {
@@ -250,13 +308,12 @@ public class DriveTrain extends OutliersSubsystem {
         return Rotation2d.fromDegrees(-getYaw());
     }
 
-    public void drive(double vx, double vy, double omega, boolean fieldRelative) {
-        vx = Helpers.applySensitivityFactor(vx, SENSITIVITY_VX);
-        vy = Helpers.applySensitivityFactor(vy, SENSITIVITY_VY);
-        omega = Helpers.applySensitivityFactor(omega, SENSITIVITY_OMEGA);
+    public void resetYaw() {
+        _imu.reset();
+    }
 
-        _holdAngle = _oi.holdAngle();
-
+    public void drive(
+            double vx, double vy, double omega, boolean fieldRelative, boolean lockTarget) {
         if (Math.abs(vx) < DEADBAND && Math.abs(vy) < DEADBAND && Math.abs(omega) < DEADBAND) {
             setFrontRightModuleState(
                     new SwerveModuleState(0, new Rotation2d(_frontRight.getModuleAngle())));
@@ -266,26 +323,15 @@ public class DriveTrain extends OutliersSubsystem {
                     new SwerveModuleState(0, new Rotation2d(_backRight.getModuleAngle())));
             setBackLeftModuleState(
                     new SwerveModuleState(0, new Rotation2d(_backLeft.getModuleAngle())));
-        } else if (_holdAngle) {
-            if (!_prevHoldAngle) {
-                _PIDAngle = getHeading().getRadians();
-                _angleController.reset(getHeading().getRadians());
-                _prevHoldAngle = _holdAngle;
-            }
+            _PIDAngle = getHeading().getRadians();
+            _angleController.reset(_PIDAngle);
+        } else if (lockTarget || Math.abs(omega) > 0) {
+            //            error("spinny");
+            //            error("getHeading is " + getHeading().getRadians());
+            //            error("spinning");
+            double averageSpeed = (vx + vy) / 2;
+            //            omega *= averageSpeed;
 
-            SwerveModuleState[] swerveModuleStates =
-                    _kinematics.toSwerveModuleStates(
-                            new ChassisSpeeds(
-                                    vx,
-                                    vy,
-                                    _angleController.calculate(
-                                            getHeading().getRadians(), _PIDAngle)));
-            SwerveDriveKinematics.normalizeWheelSpeeds(swerveModuleStates, MAX_MPS);
-            setFrontRightModuleState(swerveModuleStates[1]);
-            setFrontLeftModuleState(swerveModuleStates[0]);
-            setBackLeftModuleState(swerveModuleStates[2]);
-            setBackRightModuleState(swerveModuleStates[3]);
-        } else {
             SwerveModuleState[] swerveModuleStates =
                     _kinematics.toSwerveModuleStates(
                             fieldRelative
@@ -297,8 +343,31 @@ public class DriveTrain extends OutliersSubsystem {
             setFrontLeftModuleState(swerveModuleStates[0]);
             setBackLeftModuleState(swerveModuleStates[2]);
             setBackRightModuleState(swerveModuleStates[3]);
+            _PIDAngle = getHeading().getRadians();
+            _angleController.reset(_PIDAngle);
+            //            error("Holding Angle");
+        } else {
+            //            error("PID Control, heading");
+            //            if (lockTarget && _vision.hasTarget()) {
+            //                _PIDAngle = getHeading().getRadians() -
+            // Math.toRadians(_vision.getTargetYaw());
+            //                _angleController.reset(_PIDAngle);
+            //            }
+            SwerveModuleState[] swerveModuleStates =
+                    _kinematics.toSwerveModuleStates(
+                            ChassisSpeeds.fromFieldRelativeSpeeds(
+                                    vx,
+                                    vy,
+                                    _angleController.calculate(
+                                            getHeading().getRadians(), _PIDAngle),
+                                    new Rotation2d(_PIDAngle)));
+            SwerveDriveKinematics.normalizeWheelSpeeds(swerveModuleStates, MAX_MPS);
+            setFrontRightModuleState(swerveModuleStates[1]);
+            setFrontLeftModuleState(swerveModuleStates[0]);
+            setBackLeftModuleState(swerveModuleStates[2]);
+            setBackRightModuleState(swerveModuleStates[3]);
         }
-        _prevHoldAngle = _holdAngle;
+        _prevHoldAngle = lockTarget;
     }
 
     public SwerveDriveKinematicsConstraint getKinematicConstraint() {
@@ -335,6 +404,24 @@ public class DriveTrain extends OutliersSubsystem {
                     pose.set(update.pose);
                 });
         return pose.get();
+    }
+
+    public double getVisionYaw() {
+        if (_vision.hasTarget()) {
+            return _vision.getTargetYaw();
+        }
+        return 0;
+    }
+
+    protected Pose2d fieldToRobot(
+            Transform2d cameraToTarget, Transform2d cameraToRobot, Pose2d fieldToTarget) {
+        Transform2d targetToCamera = cameraToTarget.inverse();
+        metric("cameraToField", fieldToTarget.transformBy(targetToCamera).toString());
+        return fieldToTarget.transformBy(targetToCamera).transformBy(cameraToRobot);
+    }
+
+    public boolean hasVisionTarget() {
+        return _vision.hasTarget();
     }
 
     public Pose2d getOdometryPose() {
