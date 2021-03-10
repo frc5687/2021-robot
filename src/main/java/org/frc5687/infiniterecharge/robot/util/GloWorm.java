@@ -3,8 +3,8 @@ package org.frc5687.infiniterecharge.robot.util;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Transform2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import org.photonvision.PhotonCamera;
 
@@ -12,13 +12,11 @@ public class GloWorm {
 
     private final PhotonCamera _camera;
     private final NetworkTable _table;
-    private final double[] _pose;
+    private final double[] _defaultVal = {0, 0, 0};
 
     public GloWorm(String camName) {
-        double[] defaultVal = {0, 0, 0};
         _camera = new PhotonCamera(camName);
         _table = NetworkTableInstance.getDefault().getTable("photonvision").getSubTable(camName);
-        _pose = _table.getEntry("targetPose").getDoubleArray(defaultVal);
     }
 
     // Latency in milliseconds.
@@ -26,9 +24,14 @@ public class GloWorm {
         return _camera.getLatestResult().getLatencyMillis();
     }
 
+    public double getTargetYaw() {
+        return _camera.getLatestResult().getBestTarget().getYaw();
+    }
+
     // Should return pose from 3D mode. Not sure, not documented yet.
-    public Pose2d getTargetPose() {
-        return new Pose2d(new Translation2d(_pose[0], _pose[1]), Rotation2d.fromDegrees(_pose[2]));
+    public Transform2d cameraToTarget() {
+        double[] pose = _table.getEntry("targetPose").getDoubleArray(_defaultVal);
+        return new Transform2d(new Translation2d(pose[0], pose[1]), Rotation2d.fromDegrees(0));
     }
 
     public boolean hasTarget() {

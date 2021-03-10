@@ -57,6 +57,8 @@ public class DriveTrajectory extends OutliersCommand {
         metric("time", _time);
         metric("timer val", _timer.get());
         Trajectory.State goal = _trajectory.sample(_timer.get());
+        //        metric("Pose", _trajectory.getStates().toString());
+        //        metric("pose robot", _driveTrain.getOdometryPose().toString());
         metric("goal mps", goal.velocityMetersPerSecond);
         metric("goal", goal.timeSeconds);
         _driveTrain.trajectoryFollower(goal);
