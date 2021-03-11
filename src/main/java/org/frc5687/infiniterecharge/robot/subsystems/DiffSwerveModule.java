@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.system.LinearSystem;
 import edu.wpi.first.wpilibj.system.LinearSystemLoop;
 import edu.wpi.first.wpilibj.system.plant.DCMotor;
-import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpiutil.math.*;
 import edu.wpi.first.wpiutil.math.numbers.*;
@@ -27,15 +26,10 @@ public class DiffSwerveModule {
     private final TalonFX _leftFalcon;
     private final AnalogEncoder _lampreyEncoder;
     private final Translation2d _positionVector;
-    private final LinearSystemLoop<N3, N2, N2> _swerveControlLoop;
-    private final TrapezoidProfile.Constraints _constraint;
-    private TrapezoidProfile.State _goal;
-    private TrapezoidProfile.State _setpoint;
+    private final LinearSystemLoop<N3, N2, N3> _swerveControlLoop;
     //    private StatorCurrentLimitConfiguration _currentCfg;
     private Matrix<N3, N1> _reference; // same thing as a set point.
     private Matrix<N2, N1> _u;
-    private double _vel;
-    private double _prevVel;
     private double _positionError;
 
     public DiffSwerveModule(
@@ -49,9 +43,6 @@ public class DiffSwerveModule {
                 2.0 * Math.PI / Constants.DifferentialSwerveModule.VOLTS_TO_ROTATIONS);
         _reference = Matrix.mat(Nat.N3(), Nat.N1()).fill(0, 0, 0);
         _positionVector = positionVector;
-        _constraint = new TrapezoidProfile.Constraints(TRAP_ANG_VELOCITY, TRAP_ANG_ACCEL);
-        _goal = new TrapezoidProfile.State();
-        _setpoint = new TrapezoidProfile.State();
 
         _leftFalcon = new TalonFX(leftMotorID);
         _rightFalcon = new TalonFX(rightMotorID);
@@ -73,7 +64,7 @@ public class DiffSwerveModule {
         _rightFalcon.enableVoltageCompensation(true);
 
         // Creates a Linear System of our Differential Swerve Module.
-        LinearSystem<N3, N2, N2> swerveModuleModel =
+        LinearSystem<N3, N2, N3> swerveModuleModel =
                 createDifferentialSwerveModule(
                         DCMotor.getFalcon500(2),
                         Constants.DifferentialSwerveModule.INERTIA_STEER,
@@ -82,10 +73,10 @@ public class DiffSwerveModule {
                         Constants.DifferentialSwerveModule.GEAR_RATIO_WHEEL);
 
         // Creates a Kalman Filter as our Observer for our module. Works since system is linear.
-        KalmanFilter<N3, N2, N2> swerveObserver =
+        KalmanFilter<N3, N2, N3> swerveObserver =
                 new KalmanFilter<>(
                         Nat.N3(),
-                        Nat.N2(),
+                        Nat.N3(),
                         swerveModuleModel,
                         Matrix.mat(Nat.N3(), Nat.N1())
                                 .fill(
@@ -95,15 +86,17 @@ public class DiffSwerveModule {
                                                 .MODEL_AZIMUTH_ANG_VELOCITY_NOISE,
                                         Constants.DifferentialSwerveModule
                                                 .MODEL_WHEEL_ANG_VELOCITY_NOISE),
-                        Matrix.mat(Nat.N2(), Nat.N1())
+                        Matrix.mat(Nat.N3(), Nat.N1())
                                 .fill(
                                         Constants.DifferentialSwerveModule
                                                 .SENSOR_AZIMUTH_ANGLE_NOISE,
                                         Constants.DifferentialSwerveModule
+                                                .SENSOR_AZIMUTH_ANG_VELOCITY_NOISE,
+                                        Constants.DifferentialSwerveModule
                                                 .SENSOR_WHEEL_ANG_VELOCITY_NOISE),
                         kDt);
         // Creates an LQR controller for our Swerve Module.
-        LinearQuadraticRegulator<N3, N2, N2> swerveController =
+        LinearQuadraticRegulator<N3, N2, N3> swerveController =
                 new LinearQuadraticRegulator<>(
                         swerveModuleModel,
                         // Q Vector/Matrix Maximum error tolerance
@@ -150,8 +143,6 @@ public class DiffSwerveModule {
         _swerveControlLoop.reset(VecBuilder.fill(0, 0, 0));
         _u = VecBuilder.fill(0, 0);
         _positionError = 0;
-        _vel = 0;
-        _prevVel = _vel;
     }
 
     /**
@@ -169,36 +160,18 @@ public class DiffSwerveModule {
         double angleError = reference.get(0, 0) - getModuleAngle();
         _positionError = MathUtil.inputModulus(angleError, minAngle, maxAngle);
         Matrix<N3, N1> error = reference.minus(xHat);
-        return VecBuilder.fill(_positionError, error.get(2, 0), error.get(2, 0));
-    }
-
-    private Matrix<N3, N1> calculate() {
-        _goal = new TrapezoidProfile.State(_reference.get(0, 0), 0);
-        double goalMinDistance =
-                MathUtil.inputModulus(_goal.position - getModuleAngle(), -Math.PI, Math.PI);
-        double setpointMinDistance =
-                MathUtil.inputModulus(_setpoint.position - getModuleAngle(), -Math.PI, Math.PI);
-
-        _goal.position = goalMinDistance + getModuleAngle();
-        _setpoint.position = setpointMinDistance + getModuleAngle();
-
-        TrapezoidProfile profile = new TrapezoidProfile(_constraint, _goal, _setpoint);
-        _setpoint = profile.calculate(kDt);
-
-        return VecBuilder.fill(_setpoint.position, _setpoint.velocity, _reference.get(2, 0));
+        return VecBuilder.fill(
+                _positionError, reference.get(1, 0) - getAzimuthAngularVelocity(), error.get(2, 0));
     }
 
     public void periodic() {
-        //        _goal = new TrapezoidProfile.State(_reference.get(0, 0), 0);
-        //        TrapezoidProfile profile = new TrapezoidProfile(_constraint, _goal, _setpoint);
-        //        _setpoint = profile.calculate(kDt);
-        //        _swerveControlLoop.setNextR(calculate());
-        //        _swerveControlLoop.setNextR(
-        //                VecBuilder.fill(_setpoint.position, _setpoint.velocity, _reference.get(2,
-        // 0)));
         _swerveControlLoop.setNextR(_reference);
-        _swerveControlLoop.correct(VecBuilder.fill(getModuleAngle(), getWheelAngularVelocity()));
+        _swerveControlLoop.correct(
+                VecBuilder.fill(
+                        getModuleAngle(), getAzimuthAngularVelocity(), getWheelAngularVelocity()));
         predict();
+        setLeftFalconVoltage(getLeftNextVoltage());
+        setRightFalconVoltage(getRightNextVoltage());
     }
 
     // use custom predict() function for as absolute encoder azimuth angle and the angular velocity
@@ -230,14 +203,6 @@ public class DiffSwerveModule {
 
     public void setLeftFalcon(double speed) {
         _leftFalcon.set(ControlMode.PercentOutput, speed);
-    }
-
-    public double getSetpointAngle() {
-        return _setpoint.position;
-    }
-
-    public double getSetpointVel() {
-        return _setpoint.velocity;
     }
 
     public void setRightFalconVoltage(double voltage) {
@@ -396,8 +361,6 @@ public class DiffSwerveModule {
                         _swerveControlLoop.getXHat(1),
                         state.speedMetersPerSecond
                                 / Constants.DifferentialSwerveModule.WHEEL_RADIUS));
-        setLeftFalconVoltage(getLeftNextVoltage());
-        setRightFalconVoltage(getRightNextVoltage());
     }
 
     public void setIdealState(SwerveModuleState state) {
@@ -422,7 +385,7 @@ public class DiffSwerveModule {
      * @param Gw is the Gear Ratio of the wheel.
      * @return LinearSystem of state space model.
      */
-    private static LinearSystem<N3, N2, N2> createDifferentialSwerveModule(
+    private static LinearSystem<N3, N2, N3> createDifferentialSwerveModule(
             DCMotor motor, double Js, double Jw, double Gs, double Gw) {
         var Cs = -((Gs * motor.KtNMPerAmp) / (motor.KvRadPerSecPerVolt * motor.rOhms * Js));
         var Cw = -((Gw * motor.KtNMPerAmp) / (motor.KvRadPerSecPerVolt * motor.rOhms * Jw));
@@ -433,10 +396,11 @@ public class DiffSwerveModule {
                 Matrix.mat(Nat.N3(), Nat.N3())
                         .fill(0.0, 1.0, 0.0, 0.0, Gs * Cs, 0.0, 0.0, 0.0, Gw * Cw);
         var B = Matrix.mat(Nat.N3(), Nat.N2()).fill(0.0, 0.0, Vs, Vs, Vw, -Vw);
-        var C = Matrix.mat(Nat.N2(), Nat.N3()).fill(1.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+        var C = Matrix.mat(Nat.N3(), Nat.N3()).fill(1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0);
         var D =
-                Matrix.mat(Nat.N2(), Nat.N2())
+                Matrix.mat(Nat.N3(), Nat.N2())
                         .fill(
+                                0.0, 0.0,
                                 0.0, 0.0,
                                 0.0, 0.0);
         return new LinearSystem<>(A, B, C, D);

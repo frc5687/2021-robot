@@ -129,23 +129,19 @@ public class DriveTrain extends OutliersSubsystem {
         }
 
         enableMetrics();
-        logMetrics("FR/angle", "FR/ReferenceAngle");
-        //                "FR/vel",
-        //                "FR/LeftVoltage",
-        //                "FR/RightVoltage",
-        //                "FR/LeftRPM",
-        //                "FR/RightRPM",
-        //                "FR/LeftCurrent",
-        //                "FR/RightCurrent",
-        //                "FR/ReferenceAngle",
-        //                "FR/ReferenceAngVel",
-        //                "FR/ReferenceWheelAngVel",
-        //                "FR/AngleVel");
+        logMetrics(
+                "FR/angle",
+                "FR/Reference Angle",
+                "FR/Predicted Angle",
+                "FR/AngleVel",
+                "FR/ReferenceAngleVel",
+                "FR/PredictedAngleVel",
+                "FR/ReferenceWheelAngVel",
+                "FR/PredictedAngVelWheel",
+                "FR/WheelAngVel");
+
         _field = new Field2d();
         SmartDashboard.putData("Field", _field);
-        //        enableMetrics();
-        //        logMetrics("Module Angle", "Reference Module Angle");
-        //                _odomerty.resetPosition(getPose(), getHeading());
     }
 
     // use for modules as controller is running at 200Hz.
@@ -235,30 +231,21 @@ public class DriveTrain extends OutliersSubsystem {
         // _backLeft.getReferenceWheelAngularVelocity());
         metric("FR/angle", _frontRight.getModuleAngle());
         metric("FR/Predicted Angle", _frontRight.getPredictedAzimuthAngle());
-        //        metric("FR/ReferenceAngle", _frontRight.getReferenceModuleAngle());
-        //        metric("FR/Predicted Angle", _frontRight.getPredictedAzimuthAngle());
+        metric("FR/Reference Angle", _frontRight.getReferenceModuleAngle());
 
-        metric("FR/Setpoint Angle", _frontRight.getSetpointAngle());
-        metric("FR/Setpoint Vel", _frontRight.getSetpointVel());
-        //        metric("FR/vel", _frontRight.getWheelVelocity() / 0.0508);
         metric("FR/AngleVel", _frontRight.getAzimuthAngularVelocity());
         metric("FR/PredictedAngleVel", _frontRight.getPredictedAzimuthAngularVelocity());
-        metric("FR/WantedLeftVoltage", _frontRight.getLeftNextVoltage());
-        metric("FR/WantedRightVoltage", _frontRight.getRightNextVoltage());
+        metric("FR/ReferenceAngleVel", _frontRight.getReferenceModuleAngularVelocity());
 
-        metric("FR/LeftVoltage", _frontRight.getLeftVoltage());
-        metric("FR/RightVoltage", _frontRight.getRightVoltage());
-        //        metric("FR/LeftRPM", _frontRight.getLeftFalconRPM());
-        //        metric("FR/RightRPM", _frontRight.getRightFalconRPM());
-        //        metric("FR/LeftCurrent", _frontRight.getLeftCurrent());
-        //        metric("FR/RightCurrent", _frontRight.getRightCurrent());
-        //        //
-        //        metric("FR/ReferenceAngle", _frontRight.getReferenceModuleAngle());
-        //                metric("FR/ReferenceAngVel",
-        // _frontRight.getReferenceModuleAngularVelocity());
+        //        metric("FR/WantedLeftVoltage", _frontRight.getLeftNextVoltage());
+        //        metric("FR/WantedRightVoltage", _frontRight.getRightNextVoltage());
+
+        //        metric("FR/LeftVoltage", _frontRight.getLeftVoltage());
+        //        metric("FR/RightVoltage", _frontRight.getRightVoltage());
+
         metric("FR/ReferenceWheelAngVel", _frontRight.getReferenceWheelVelocity());
         metric("FR/PredictedAngVelWheel", _frontRight.getPredictedWheelAngularVelocity());
-        metric("FR/SensorWheelAngVel", _frontRight.getWheelAngularVelocity());
+        metric("FR/WheelAngVel", _frontRight.getWheelAngularVelocity());
 
         //                SmartDashboard.putNumberArray(
         //                        "DriveTrain/FR/state predict", _frontRight.getPredictedState());
@@ -284,19 +271,19 @@ public class DriveTrain extends OutliersSubsystem {
     }
 
     public void setFrontRightModuleState(SwerveModuleState state) {
-        _frontRight.setIdealState(state);
+        _frontRight.setModuleState(state);
     }
 
     public void setFrontLeftModuleState(SwerveModuleState state) {
-        _frontLeft.setIdealState(state);
+        _frontLeft.setModuleState(state);
     }
 
     public void setBackLeftModuleState(SwerveModuleState state) {
-        _backLeft.setIdealState(state);
+        _backLeft.setModuleState(state);
     }
 
     public void setBackRightModuleState(SwerveModuleState state) {
-        _backRight.setIdealState(state);
+        _backRight.setModuleState(state);
     }
 
     public double getYaw() {
@@ -326,9 +313,6 @@ public class DriveTrain extends OutliersSubsystem {
             _PIDAngle = getHeading().getRadians();
             _angleController.reset(_PIDAngle);
         } else if (lockTarget || Math.abs(omega) > 0) {
-            //            error("spinny");
-            //            error("getHeading is " + getHeading().getRadians());
-            //            error("spinning");
             double averageSpeed = (vx + vy) / 2;
             //            omega *= averageSpeed;
 

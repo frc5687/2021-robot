@@ -87,21 +87,20 @@ public class Constants {
         public static final double WHEEL_RADIUS = 0.0508; // Meters
         public static final double TICKS_TO_ROTATIONS = 2048.0;
         public static final double VOLTS_TO_ROTATIONS = 3.3;
-        public static final double TRAP_ANG_VELOCITY = 60;
-        public static final double TRAP_ANG_ACCEL = 200;
         public static final double FEED_FORWARD = 12.0 / FALCON_FREE_SPEED * GEAR_RATIO_WHEEL;
 
         // Create Parameters for DiffSwerve State Space
         public static final double INERTIA_WHEEL = 0.005;
         public static final double INERTIA_STEER = 0.004;
-        public static final double Q_AZIMUTH_ANG_VELOCITY = 1; // radians per sec
-        public static final double Q_AZIMUTH = .14; // radians
-        public static final double Q_WHEEL_ANG_VELOCITY = 3; // radians per sec
+        public static final double Q_AZIMUTH_ANG_VELOCITY = 1.2; // radians per sec
+        public static final double Q_AZIMUTH = .15; // radians
+        public static final double Q_WHEEL_ANG_VELOCITY = 1; // radians per sec
         public static final double MODEL_AZIMUTH_ANGLE_NOISE = .01; // radians
-        public static final double MODEL_AZIMUTH_ANG_VELOCITY_NOISE = 0.07; // radians per sec
-        public static final double MODEL_WHEEL_ANG_VELOCITY_NOISE = 0.07; // radians per sec
+        public static final double MODEL_AZIMUTH_ANG_VELOCITY_NOISE = 1.0; // radians per sec
+        public static final double MODEL_WHEEL_ANG_VELOCITY_NOISE = 1.0; // radians per sec
         public static final double SENSOR_AZIMUTH_ANGLE_NOISE = 0.001; // radians
-        public static final double SENSOR_WHEEL_ANG_VELOCITY_NOISE = 0.01; // radians per sec
+        public static final double SENSOR_AZIMUTH_ANG_VELOCITY_NOISE = 0.01; // radians per sec
+        public static final double SENSOR_WHEEL_ANG_VELOCITY_NOISE = 0.1; // radians per sec
         public static final double CONTROL_EFFORT = 12;
     }
 
@@ -161,7 +160,7 @@ public class Constants {
         public static final double TICKS_TO_ROTATIONS = 2048.0;
 
         public static final double TOLERANCE = 100.0;
-        public static final long TIMEOUT = 1500; //millis
+        public static final long TIMEOUT = 1500; // millis
     }
 
     public static class Field {

@@ -1,3 +1,4 @@
+/* (C)2021 */
 package org.frc5687.infiniterecharge.robot.commands;
 
 import org.frc5687.infiniterecharge.robot.Constants;
@@ -14,7 +15,12 @@ public class AutoShootSetpoint extends Shoot {
     private final double _setpointHood;
     private Long _endTime;
 
-    public AutoShootSetpoint(Shooter shooter, Spindexer spindexer, Hood hood, double setpointRPM, double setpointDeg) {
+    public AutoShootSetpoint(
+            Shooter shooter,
+            Spindexer spindexer,
+            Hood hood,
+            double setpointRPM,
+            double setpointDeg) {
         super(shooter, spindexer);
         _shooter = shooter;
         _hood = hood;
