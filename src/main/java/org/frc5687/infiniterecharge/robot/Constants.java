@@ -159,6 +159,9 @@ public class Constants {
         public static final double GEAR_RATIO = 1.25;
         public static final double MAX_RPM = 6380 * GEAR_RATIO;
         public static final double TICKS_TO_ROTATIONS = 2048.0;
+
+        public static final double TOLERANCE = 100.0;
+        public static final long TIMEOUT = 1500; //millis
     }
 
     public static class Field {

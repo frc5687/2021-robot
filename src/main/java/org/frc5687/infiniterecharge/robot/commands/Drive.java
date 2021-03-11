@@ -61,7 +61,7 @@ public class Drive extends OutliersCommand {
                                                 -_oi.getRotationX(), SENSITIVITY_OMEGA))
                                 * MAX_ANG_VEL
                                 / 2;
-        _driveTrain.drive(vx, vy, rot, true, _oi.holdAngle());
+        _driveTrain.drive(vx, vy, rot, false, _oi.holdAngle());
     }
 
     @Override

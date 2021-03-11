@@ -61,15 +61,15 @@ public class Hood extends OutliersSubsystem {
 
     @Override
     public void periodic() {
-        //        metric("encoder", getAngle());
-        //        metric("can errror", _hood.getLastError().toString());
-        //        metric("position", _hood.getEncoder().getPosition());
-        //        metric("position canencoder", getPosition());
-        //        metric("hood angle", (getPosition() / POSITION_TO_ANGLE));
-        //        metric("is hall triggered", isHallTriggered());
-        //        metric("hood con
-        //       troller output", _hood.get());
         //        metric("hood speed", _hood.get());
+
+        if (isHallTriggered() && _hood.getAppliedOutput() < 0) {
+            setSpeed(0);
+            setEncoderAngle(MIN_ANGLE);
+        } else if (isTopHallTriggered() && _hood.getAppliedOutput() > 0) {
+            setSpeed(0);
+            setEncoderAngle(MAX_ANGLE);
+        }
 
         //        if (isHallTriggered()) {
         //            error("speed is " + _hood.get());
@@ -87,7 +87,6 @@ public class Hood extends OutliersSubsystem {
         metric("hood angle", getPosition());
     }
 
-    /** @return Position of hood in meters. */
     public double getPosition() {
         return _hoodEncoder.getPosition();
     }
@@ -104,18 +103,12 @@ public class Hood extends OutliersSubsystem {
         return _angle;
     }
 
-    /** @return Angular velocity in RPM. */
     public double getVelocity() {
         return _hoodEncoder.getVelocity();
     }
 
-    /**
-     * Uses SparkMax SmartMotion to control the angle of the hood.
-     *
-     * @param rads reference angle in radians.
-     */
-    public void setHoodAngle(double rads) {
-        _hoodController.setReference(rads / POSITION_TO_ANGLE, ControlType.kSmartMotion);
+    public void setHoodAngle(double deg) {
+        _hoodController.setReference(deg / POSITION_TO_ANGLE, ControlType.kSmartMotion);
     }
 
     public void setSpeed(double pow) {

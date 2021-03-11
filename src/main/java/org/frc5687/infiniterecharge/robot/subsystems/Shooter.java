@@ -17,6 +17,8 @@ public class Shooter extends OutliersSubsystem {
     private TalonFX _leftShooter;
     private TalonFX _rightShooter;
 
+    private double _rpm;
+
     public Shooter(OutliersContainer container) {
         super(container);
         try {
@@ -39,11 +41,12 @@ public class Shooter extends OutliersSubsystem {
             _leftShooter.setStatusFramePeriod(StatusFrame.Status_1_General, 255);
             _leftShooter.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 255);
 
-            _rightShooter.configClosedloopRamp(1);
+            _rightShooter.configClosedloopRamp(2);
             _rightShooter.selectProfileSlot(0, 0);
         } catch (Exception e) {
             error(e.getMessage());
         }
+        _rpm = 0;
     }
 
     @Override
@@ -55,10 +58,10 @@ public class Shooter extends OutliersSubsystem {
     }
 
     public void setVelocitySpeed(double RPM) {
-        RPM = Helpers.limit(RPM, 0, MAX_RPM);
+        _rpm = Helpers.limit(RPM, 0, MAX_RPM);
         _rightShooter.set(
                 TalonFXControlMode.Velocity,
-                (RPM * Constants.Shooter.TICKS_TO_ROTATIONS / 600 / GEAR_RATIO));
+                (_rpm * Constants.Shooter.TICKS_TO_ROTATIONS / 600 / GEAR_RATIO));
     }
 
     public double getPosition() {
@@ -80,5 +83,9 @@ public class Shooter extends OutliersSubsystem {
     public void updateDashboard() {
         metric("Velocity/Ticks", getVelocity());
         metric("Velocity/RPM", getRPM());
+    }
+
+    public boolean isAtTargetVelocity() {
+        return Math.abs(_rpm - getRPM()) < TOLERANCE;
     }
 }
