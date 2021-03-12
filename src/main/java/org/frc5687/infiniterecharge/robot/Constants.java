@@ -87,7 +87,7 @@ public class Constants {
         public static final double WHEEL_RADIUS = 0.0508; // Meters
         public static final double TICKS_TO_ROTATIONS = 2048.0;
         public static final double VOLTS_TO_ROTATIONS = 3.3;
-        public static final double FEED_FORWARD = 12.0 / FALCON_FREE_SPEED * GEAR_RATIO_WHEEL;
+        public static final double FEED_FORWARD = 12.0 / (FALCON_FREE_SPEED / GEAR_RATIO_WHEEL);
 
         // Create Parameters for DiffSwerve State Space
         public static final double INERTIA_WHEEL = 0.005;

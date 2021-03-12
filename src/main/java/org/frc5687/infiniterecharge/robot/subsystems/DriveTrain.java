@@ -411,4 +411,11 @@ public class DriveTrain extends OutliersSubsystem {
     public Pose2d getOdometryPose() {
         return _odomerty.getPoseMeters();
     }
+
+    public void startModules() {
+        _frontRight.start();
+        _frontLeft.start();
+        _backLeft.start();
+        _backRight.start();
+    }
 }

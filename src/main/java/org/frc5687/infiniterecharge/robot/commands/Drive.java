@@ -31,6 +31,7 @@ public class Drive extends OutliersCommand {
     @Override
     public void initialize() {
         super.initialize();
+        _driveTrain.startModules();
         _visionController.setSetpoint(0);
         _visionController.setTolerance(1);
     }

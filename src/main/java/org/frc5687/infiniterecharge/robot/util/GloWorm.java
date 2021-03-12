@@ -3,16 +3,13 @@ package org.frc5687.infiniterecharge.robot.util;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Transform2d;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
 import org.photonvision.PhotonCamera;
 
 public class GloWorm {
 
     private final PhotonCamera _camera;
     private final NetworkTable _table;
-    private final double[] _defaultVal = {0, 0, 0};
 
     public GloWorm(String camName) {
         _camera = new PhotonCamera(camName);
@@ -30,8 +27,7 @@ public class GloWorm {
 
     // Should return pose from 3D mode. Not sure, not documented yet.
     public Transform2d cameraToTarget() {
-        double[] pose = _table.getEntry("targetPose").getDoubleArray(_defaultVal);
-        return new Transform2d(new Translation2d(pose[0], pose[1]), Rotation2d.fromDegrees(0));
+        return _camera.getLatestResult().getBestTarget().getCameraToTarget();
     }
 
     public boolean hasTarget() {

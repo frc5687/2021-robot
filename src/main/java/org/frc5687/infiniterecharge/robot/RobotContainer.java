@@ -40,10 +40,10 @@ public class RobotContainer extends OutliersContainer {
         _imu = new AHRS(SPI.Port.kMXP, (byte) 200);
         _slamCamera = null;
 
-        _intake = new Intake(this);
-        _spindexer = new Spindexer(this);
-        _hood = new Hood(this);
-        _shooter = new Shooter(this);
+        //        _intake = new Intake(this);
+        //        _spindexer = new Spindexer(this);
+        //        _hood = new Hood(this);
+        //        _shooter = new Shooter(this);
         _driveTrain = new DriveTrain(this, _oi, _imu, _slamCamera);
 
         while (++counter <= 1 && _slamCamera == null) {
@@ -75,12 +75,14 @@ public class RobotContainer extends OutliersContainer {
             error("Unable to open trajectory: " + trajectoryJSON + ex.getMessage());
         }
         error("TrajectoryNew staring pose is " + trajectoryNew.getInitialPose().toString());
-        _oi.initializeButtons(_driveTrain, _intake, _spindexer, _shooter, _hood, trajectoryNew);
+        _oi.initializeButtons(
+                _driveTrain,
+                trajectoryNew); // _intake, _spindexer, _shooter, _hood, trajectoryNew);
         setDefaultCommand(_driveTrain, new Drive(_driveTrain, _oi));
-        setDefaultCommand(_intake, new IdleIntake(_intake));
-        setDefaultCommand(_spindexer, new IdleSpindexer(_spindexer));
-        setDefaultCommand(_hood, new IdleHood(_hood, _oi));
-        setDefaultCommand(_shooter, new IdleShooter(_shooter, _oi));
+        //        setDefaultCommand(_intake, new IdleIntake(_intake));
+        //        setDefaultCommand(_spindexer, new IdleSpindexer(_spindexer));
+        //        setDefaultCommand(_hood, new IdleHood(_hood, _oi));
+        //        setDefaultCommand(_shooter, new IdleShooter(_shooter, _oi));
 
         _robot.addPeriodic(this::controllerPeriodic, 0.005, 0.005);
         _imu.reset();
