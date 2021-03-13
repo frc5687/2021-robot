@@ -60,14 +60,14 @@ public class Constants {
         public static final double MAX_MPS = 5.1816;
 
         //        public static final double MAX_MPS = 1.0;
-        public static final double MAX_ANG_VEL = Math.PI * 3.0;
+        public static final double MAX_ANG_VEL = Math.PI * 2.0;
         public static final double MAX_MPSS = 1.7; // accel
 
         public static final double ANGLE_kP = 3.5;
         public static final double ANGLE_kI = 0.0;
         public static final double ANGLE_kD = 0.0;
 
-        public static final double kP = 9.5;
+        public static final double kP = 2.5;
         public static final double kI = 0.0;
         public static final double kD = 0.0;
         public static final double PROFILE_CONSTRAINT_VEL = 3.0 * Math.PI;
@@ -92,8 +92,8 @@ public class Constants {
         // Create Parameters for DiffSwerve State Space
         public static final double INERTIA_WHEEL = 0.005;
         public static final double INERTIA_STEER = 0.004;
-        public static final double Q_AZIMUTH_ANG_VELOCITY = 1.2; // radians per sec
-        public static final double Q_AZIMUTH = .15; // radians
+        public static final double Q_AZIMUTH_ANG_VELOCITY = 1.3; // radians per sec
+        public static final double Q_AZIMUTH = .11; // radians
         public static final double Q_WHEEL_ANG_VELOCITY = 1; // radians per sec
         public static final double MODEL_AZIMUTH_ANGLE_NOISE = .01; // radians
         public static final double MODEL_AZIMUTH_ANG_VELOCITY_NOISE = 1.0; // radians per sec

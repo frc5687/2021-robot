@@ -154,18 +154,18 @@ public class DriveTrain extends OutliersSubsystem {
 
     @Override
     public void periodic() {
-        //        _odomerty.update(
-        //                getHeading(),
-        //                _frontLeft.getState(),
-        //                _frontRight.getState(),
-        //                _backLeft.getState(),
-        //                _backRight.getState());
+        _odomerty.update(
+                getHeading(),
+                _frontLeft.getState(),
+                _frontRight.getState(),
+                _backLeft.getState(),
+                _backRight.getState());
         //        _field.setRobotPose(_poseEstimator.getEstimatedPosition());
         //        updateOdometry();
 
         //        metric("estimated Pose", _poseEstimator.getEstimatedPosition().toString());
         //        metric("slam pose", getSlamPose().toString());
-        //        SmartDashboard.putString("pose", _odomerty.getPoseMeters().toString());
+        SmartDashboard.putString("pose", _odomerty.getPoseMeters().toString());
         //        _poseEstimator.update(
         //                getHeading(),
         //                _frontLeft.getState(),
@@ -208,13 +208,8 @@ public class DriveTrain extends OutliersSubsystem {
         //        metric ("Pose Estimation", _poseEstimator.getEstimatedPosition().toString());
         //        metric("Odometry pose", _odomerty.getPoseMeters().toString());
         //        metric("Position Error", _backLeft.getPositionError());
-        //        metric("Right RPM", _backLeft.getRightFalconRPM());
-        //        metric("Left RPM", _backLeft.getLeftFalconRPM());
-        //        SmartDashboard.putNumberArray("DriveTrain/Reference", _frontRight.getReference());
-        //        metric("Module Angle", _backLeft.getModuleAngle());
-        //        //        metric("Predicted Angle", _backLeft.getPredictedAzimuthAngle());
-        //        metric("Reference Module Angle", _backLeft.getReferenceModuleAngle());
-        //        metric("Heading", getHeading().getDegrees());
+        metric("Heading", getHeading().getDegrees());
+        metric("imu", getYaw());
         //        metric("Estimated Pose", _poseEstimator.getEstimatedPosition().toString());
         //        metric("has Target", _vision.hasTarget());
         //        SmartDashboard.putString("Pose", _vision.getTargetPose().toString());
@@ -229,13 +224,13 @@ public class DriveTrain extends OutliersSubsystem {
         // _backLeft.getPredictedWheelAngularVelocity());
         //        metric("Wheel Reference Angular Velocity",
         // _backLeft.getReferenceWheelAngularVelocity());
-        metric("FR/angle", _frontRight.getModuleAngle());
-        metric("FR/Predicted Angle", _frontRight.getPredictedAzimuthAngle());
-        metric("FR/Reference Angle", _frontRight.getReferenceModuleAngle());
+        //        metric("FR/angle", _frontRight.getModuleAngle());
+        //        metric("FR/Predicted Angle", _frontRight.getPredictedAzimuthAngle());
+        //        metric("FR/Reference Angle", _frontRight.getReferenceModuleAngle());
 
-        metric("FR/AngleVel", _frontRight.getAzimuthAngularVelocity());
-        metric("FR/PredictedAngleVel", _frontRight.getPredictedAzimuthAngularVelocity());
-        metric("FR/ReferenceAngleVel", _frontRight.getReferenceModuleAngularVelocity());
+        //        metric("FR/AngleVel", _frontRight.getAzimuthAngularVelocity());
+        //        metric("FR/PredictedAngleVel", _frontRight.getPredictedAzimuthAngularVelocity());
+        //        metric("FR/ReferenceAngleVel", _frontRight.getReferenceModuleAngularVelocity());
 
         //        metric("FR/WantedLeftVoltage", _frontRight.getLeftNextVoltage());
         //        metric("FR/WantedRightVoltage", _frontRight.getRightNextVoltage());
@@ -243,9 +238,9 @@ public class DriveTrain extends OutliersSubsystem {
         //        metric("FR/LeftVoltage", _frontRight.getLeftVoltage());
         //        metric("FR/RightVoltage", _frontRight.getRightVoltage());
 
-        metric("FR/ReferenceWheelAngVel", _frontRight.getReferenceWheelVelocity());
-        metric("FR/PredictedAngVelWheel", _frontRight.getPredictedWheelAngularVelocity());
-        metric("FR/WheelAngVel", _frontRight.getWheelAngularVelocity());
+        //        metric("FR/ReferenceWheelAngVel", _frontRight.getReferenceWheelVelocity());
+        //        metric("FR/PredictedAngVelWheel", _frontRight.getPredictedWheelAngularVelocity());
+        //        metric("FR/WheelAngVel", _frontRight.getWheelAngularVelocity());
 
         //                SmartDashboard.putNumberArray(
         //                        "DriveTrain/FR/state predict", _frontRight.getPredictedState());
@@ -271,19 +266,19 @@ public class DriveTrain extends OutliersSubsystem {
     }
 
     public void setFrontRightModuleState(SwerveModuleState state) {
-        _frontRight.setModuleState(state);
+        _frontRight.setIdealState(state);
     }
 
     public void setFrontLeftModuleState(SwerveModuleState state) {
-        _frontLeft.setModuleState(state);
+        _frontLeft.setIdealState(state);
     }
 
     public void setBackLeftModuleState(SwerveModuleState state) {
-        _backLeft.setModuleState(state);
+        _backLeft.setIdealState(state);
     }
 
     public void setBackRightModuleState(SwerveModuleState state) {
-        _backRight.setModuleState(state);
+        _backRight.setIdealState(state);
     }
 
     public double getYaw() {
@@ -301,6 +296,7 @@ public class DriveTrain extends OutliersSubsystem {
 
     public void drive(
             double vx, double vy, double omega, boolean fieldRelative, boolean lockTarget) {
+
         if (Math.abs(vx) < DEADBAND && Math.abs(vy) < DEADBAND && Math.abs(omega) < DEADBAND) {
             setFrontRightModuleState(
                     new SwerveModuleState(0, new Rotation2d(_frontRight.getModuleAngle())));
@@ -364,9 +360,10 @@ public class DriveTrain extends OutliersSubsystem {
                 .addConstraint(getKinematicConstraint());
     }
 
-    public void trajectoryFollower(Trajectory.State goal) {
+    public void trajectoryFollower(Trajectory.State goal, Rotation2d heading) {
         ChassisSpeeds adjustedSpeeds =
-                _controller.calculate(_odomerty.getPoseMeters(), goal, Rotation2d.fromDegrees(0.0));
+                _controller.calculate(_odomerty.getPoseMeters(), goal, heading);
+        error("wanted heading is: " + heading.getDegrees());
         SwerveModuleState[] moduleStates = _kinematics.toSwerveModuleStates(adjustedSpeeds);
         SwerveDriveKinematics.normalizeWheelSpeeds(moduleStates, MAX_MPS);
 
