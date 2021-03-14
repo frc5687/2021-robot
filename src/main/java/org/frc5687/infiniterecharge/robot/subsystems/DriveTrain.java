@@ -41,9 +41,6 @@ public class DriveTrain extends OutliersSubsystem {
     private SwerveDrivePoseEstimator _poseEstimator;
     private SwerveDriveOdometry _odomerty;
 
-    private boolean hasTarget = false;
-    private boolean _holdAngle = false;
-    private boolean _prevHoldAngle = false;
     private double _PIDAngle;
 
     private AHRS _imu;
@@ -214,7 +211,8 @@ public class DriveTrain extends OutliersSubsystem {
         //        metric("Module Angle", _backLeft.getModuleAngle());
         //        //        metric("Predicted Angle", _backLeft.getPredictedAzimuthAngle());
         //        metric("Reference Module Angle", _backLeft.getReferenceModuleAngle());
-        //        metric("Heading", getHeading().getDegrees());
+        metric("Heading", getHeading().getDegrees());
+        metric("IMU test", _imu.getAngle());
         //        metric("Estimated Pose", _poseEstimator.getEstimatedPosition().toString());
         //        metric("has Target", _vision.hasTarget());
         //        SmartDashboard.putString("Pose", _vision.getTargetPose().toString());
@@ -229,13 +227,13 @@ public class DriveTrain extends OutliersSubsystem {
         // _backLeft.getPredictedWheelAngularVelocity());
         //        metric("Wheel Reference Angular Velocity",
         // _backLeft.getReferenceWheelAngularVelocity());
-        metric("FR/angle", _frontRight.getModuleAngle());
-        metric("FR/Predicted Angle", _frontRight.getPredictedAzimuthAngle());
-        metric("FR/Reference Angle", _frontRight.getReferenceModuleAngle());
+        //        metric("FR/angle", _frontRight.getModuleAngle());
+        //        metric("FR/Predicted Angle", _frontRight.getPredictedAzimuthAngle());
+        //        metric("FR/Reference Angle", _frontRight.getReferenceModuleAngle());
 
-        metric("FR/AngleVel", _frontRight.getAzimuthAngularVelocity());
-        metric("FR/PredictedAngleVel", _frontRight.getPredictedAzimuthAngularVelocity());
-        metric("FR/ReferenceAngleVel", _frontRight.getReferenceModuleAngularVelocity());
+        //        metric("FR/AngleVel", _frontRight.getAzimuthAngularVelocity());
+        //        metric("FR/PredictedAngleVel", _frontRight.getPredictedAzimuthAngularVelocity());
+        //        metric("FR/ReferenceAngleVel", _frontRight.getReferenceModuleAngularVelocity());
 
         //        metric("FR/WantedLeftVoltage", _frontRight.getLeftNextVoltage());
         //        metric("FR/WantedRightVoltage", _frontRight.getRightNextVoltage());
@@ -243,9 +241,9 @@ public class DriveTrain extends OutliersSubsystem {
         //        metric("FR/LeftVoltage", _frontRight.getLeftVoltage());
         //        metric("FR/RightVoltage", _frontRight.getRightVoltage());
 
-        metric("FR/ReferenceWheelAngVel", _frontRight.getReferenceWheelVelocity());
-        metric("FR/PredictedAngVelWheel", _frontRight.getPredictedWheelAngularVelocity());
-        metric("FR/WheelAngVel", _frontRight.getWheelAngularVelocity());
+        //        metric("FR/ReferenceWheelAngVel", _frontRight.getReferenceWheelVelocity());
+        //        metric("FR/PredictedAngVelWheel", _frontRight.getPredictedWheelAngularVelocity());
+        //        metric("FR/WheelAngVel", _frontRight.getWheelAngularVelocity());
 
         //                SmartDashboard.putNumberArray(
         //                        "DriveTrain/FR/state predict", _frontRight.getPredictedState());
@@ -313,9 +311,6 @@ public class DriveTrain extends OutliersSubsystem {
             _PIDAngle = getHeading().getRadians();
             _angleController.reset(_PIDAngle);
         } else if (lockTarget || Math.abs(omega) > 0) {
-            double averageSpeed = (vx + vy) / 2;
-            //            omega *= averageSpeed;
-
             SwerveModuleState[] swerveModuleStates =
                     _kinematics.toSwerveModuleStates(
                             fieldRelative
@@ -329,14 +324,7 @@ public class DriveTrain extends OutliersSubsystem {
             setBackRightModuleState(swerveModuleStates[3]);
             _PIDAngle = getHeading().getRadians();
             _angleController.reset(_PIDAngle);
-            //            error("Holding Angle");
         } else {
-            //            error("PID Control, heading");
-            //            if (lockTarget && _vision.hasTarget()) {
-            //                _PIDAngle = getHeading().getRadians() -
-            // Math.toRadians(_vision.getTargetYaw());
-            //                _angleController.reset(_PIDAngle);
-            //            }
             SwerveModuleState[] swerveModuleStates =
                     _kinematics.toSwerveModuleStates(
                             ChassisSpeeds.fromFieldRelativeSpeeds(
@@ -351,7 +339,6 @@ public class DriveTrain extends OutliersSubsystem {
             setBackLeftModuleState(swerveModuleStates[2]);
             setBackRightModuleState(swerveModuleStates[3]);
         }
-        _prevHoldAngle = lockTarget;
     }
 
     public SwerveDriveKinematicsConstraint getKinematicConstraint() {

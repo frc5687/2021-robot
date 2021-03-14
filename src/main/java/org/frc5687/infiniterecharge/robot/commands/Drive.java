@@ -39,16 +39,14 @@ public class Drive extends OutliersCommand {
     @Override
     public void execute() {
         super.execute();
-        // this is correct because of coordinate system.
 
+        // this is correct because of coordinate system.
         double vx =
                 //                _vxLimiter.calculate(
                 Helpers.applySensitivityFactor(-_oi.getDriveY(), SENSITIVITY_VX) * MAX_MPS / 2.0;
         double vy =
                 //                _vyLimiter.calculate(
                 Helpers.applySensitivityFactor(_oi.getDriveX(), SENSITIVITY_VY) * MAX_MPS / 2.0;
-        metric("vx", vx);
-        metric("vy", vy);
 
         double rot =
                 (_oi.holdAngle() && _driveTrain.hasVisionTarget())
