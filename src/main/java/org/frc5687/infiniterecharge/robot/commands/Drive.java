@@ -21,9 +21,9 @@ public class Drive extends OutliersCommand {
     public Drive(DriveTrain driveTrain, OI oi) {
         _driveTrain = driveTrain;
         _oi = oi;
-        _vxLimiter = new SlewRateLimiter(5);
-        _vyLimiter = new SlewRateLimiter(5);
-        _rotLimiter = new SlewRateLimiter(5);
+        _vxLimiter = new SlewRateLimiter(3);
+        _vyLimiter = new SlewRateLimiter(3);
+        _rotLimiter = new SlewRateLimiter(3);
         _visionController = new PIDController(0.2, 0, 0.005);
         addRequirements(_driveTrain);
     }
@@ -42,11 +42,17 @@ public class Drive extends OutliersCommand {
 
         // this is correct because of coordinate system.
         double vx =
-                //                _vxLimiter.calculate(
-                Helpers.applySensitivityFactor(-_oi.getDriveY(), SENSITIVITY_VX) * MAX_MPS / 5;
+                _vxLimiter.calculate(
+                                Helpers.applySensitivityFactor(-_oi.getDriveY(), SENSITIVITY_VX))
+                        * MAX_MPS
+                        / 1.5;
         double vy =
-                //                _vyLimiter.calculate(
-                Helpers.applySensitivityFactor(_oi.getDriveX(), SENSITIVITY_VY) * MAX_MPS / 5;
+                _vyLimiter.calculate(
+                                Helpers.applySensitivityFactor(_oi.getDriveX(), SENSITIVITY_VY))
+                        * MAX_MPS
+                        / 1.5;
+        metric("vx", vx);
+        metric("vy", vy);
 
         double rot =
                 (_oi.holdAngle() && _driveTrain.hasVisionTarget())

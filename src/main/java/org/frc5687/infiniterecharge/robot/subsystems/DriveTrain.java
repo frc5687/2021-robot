@@ -126,16 +126,7 @@ public class DriveTrain extends OutliersSubsystem {
         }
 
         enableMetrics();
-        logMetrics(
-                "FR/angle",
-                "FR/Reference Angle",
-                "FR/Predicted Angle",
-                "FR/AngleVel",
-                "FR/ReferenceAngleVel",
-                "FR/PredictedAngleVel",
-                "FR/ReferenceWheelAngVel",
-                "FR/PredictedAngVelWheel",
-                "FR/WheelAngVel");
+        logMetrics("x", "y", "heading", "xg", "yg", "thetag");
 
         _field = new Field2d();
         SmartDashboard.putData("Field", _field);
@@ -151,14 +142,14 @@ public class DriveTrain extends OutliersSubsystem {
 
     @Override
     public void periodic() {
-        _odomerty.update(
-                getHeading(),
-                _frontLeft.getState(),
-                _frontRight.getState(),
-                _backLeft.getState(),
-                _backRight.getState());
-        //        _field.setRobotPose(_poseEstimator.getEstimatedPosition());
-        //        updateOdometry();
+        //        _odomerty.update(
+        //                getHeading(),
+        //                _frontLeft.getState(),
+        //                _frontRight.getState(),
+        //                _backLeft.getState(),
+        //                _backRight.getState());
+        _field.setRobotPose(_poseEstimator.getEstimatedPosition());
+        updateOdometry();
 
         //        metric("estimated Pose", _poseEstimator.getEstimatedPosition().toString());
         //        metric("slam pose", getSlamPose().toString());
@@ -202,7 +193,7 @@ public class DriveTrain extends OutliersSubsystem {
 
     @Override
     public void updateDashboard() {
-        //        metric ("Pose Estimation", _poseEstimator.getEstimatedPosition().toString());
+//                metric ("Pose Estimation", _poseEstimator.getEstimatedPosition().toString());
         //        metric("Odometry pose", _odomerty.getPoseMeters().toString());
         //        metric("Position Error", _backLeft.getPositionError());
         //        SmartDashboard.putNumberArray("DriveTrain/Reference", _frontRight.getReference());
@@ -211,6 +202,10 @@ public class DriveTrain extends OutliersSubsystem {
         //        metric("Reference Module Angle", _backLeft.getReferenceModuleAngle());
         metric("Heading", getHeading().getDegrees());
         metric("IMU test", _imu.getAngle());
+        metric("x", getOdometryPose().getX());
+        metric("y", getOdometryPose().getY());
+        metric("heading", getOdometryPose().getRotation().getDegrees());
+
         //        metric("Estimated Pose", _poseEstimator.getEstimatedPosition().toString());
         //        metric("has Target", _vision.hasTarget());
         //        SmartDashboard.putString("Pose", _vision.getTargetPose().toString());
@@ -220,7 +215,7 @@ public class DriveTrain extends OutliersSubsystem {
         //        metric("Left Voltage", _backLeft.getLeftVoltage());
         //        metric("Right Voltage", _backLeft.getRightVoltage());
         //
-        //        metric("Wheel Angular Velocity", _backLeft.getWheelAngularVelocity());
+        metric("Wheel Angular Velocity", _backLeft.getWheelAngularVelocity());
         //        metric("Wheel Predicted Angular Velocity",
         // _backLeft.getPredictedWheelAngularVelocity());
         //        metric("Wheel Reference Angular Velocity",
@@ -241,7 +236,7 @@ public class DriveTrain extends OutliersSubsystem {
 
         //        metric("FR/ReferenceWheelAngVel", _frontRight.getReferenceWheelVelocity());
         //        metric("FR/PredictedAngVelWheel", _frontRight.getPredictedWheelAngularVelocity());
-        //        metric("FR/WheelAngVel", _frontRight.getWheelAngularVelocity());
+        metric("FR/WheelAngVel", _frontRight.getWheelAngularVelocity());
 
         //                SmartDashboard.putNumberArray(
         //                        "DriveTrain/FR/state predict", _frontRight.getPredictedState());
@@ -353,7 +348,10 @@ public class DriveTrain extends OutliersSubsystem {
     public void trajectoryFollower(Trajectory.State goal, Rotation2d heading) {
         ChassisSpeeds adjustedSpeeds =
                 _controller.calculate(_odomerty.getPoseMeters(), goal, heading);
-        error("wanted heading is: " + heading.getDegrees());
+
+        metric("xg", goal.poseMeters.getX());
+        metric("yg", goal.poseMeters.getY());
+        metric("thetag", goal.poseMeters.getRotation().getDegrees());
         SwerveModuleState[] moduleStates = _kinematics.toSwerveModuleStates(adjustedSpeeds);
         SwerveDriveKinematics.normalizeWheelSpeeds(moduleStates, MAX_MPS);
 

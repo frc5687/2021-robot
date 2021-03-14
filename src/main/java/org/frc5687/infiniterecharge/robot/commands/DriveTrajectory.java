@@ -27,6 +27,8 @@ public class DriveTrajectory extends OutliersCommand {
         _driveTrain = driveTrain;
         _trajectory = trajectory;
         _realtime = false;
+        _heading = new ArrayList<>();
+        _heading.add(new Rotation2d(0));
         _timer = new Timer();
     }
 
@@ -64,10 +66,11 @@ public class DriveTrajectory extends OutliersCommand {
     public void execute() {
         int n = 0;
         Trajectory.State goal = _trajectory.sample(_timer.get());
-        if (goal.poseMeters.getTranslation().equals(_waypoints.get(n))) {
-            n++;
-        }
-        _driveTrain.trajectoryFollower(goal, _heading.get(n + 1));
+        metric("goal pose", goal.poseMeters.toString());
+        //        if (goal.poseMeters.getTranslation().equals(_waypoints.get(n))) {
+        //            n++;
+        //        }
+        _driveTrain.trajectoryFollower(goal, _heading.get(n));
     }
 
     @Override

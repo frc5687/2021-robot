@@ -62,7 +62,6 @@ public class Hood extends OutliersSubsystem {
     @Override
     public void periodic() {
         //        metric("hood speed", _hood.get());
-
         if (isHallTriggered() && _hood.getAppliedOutput() < 0) {
             setSpeed(0);
             setEncoderAngle(MIN_ANGLE);
