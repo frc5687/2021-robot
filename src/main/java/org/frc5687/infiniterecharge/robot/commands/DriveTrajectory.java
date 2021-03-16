@@ -4,58 +4,45 @@ package org.frc5687.infiniterecharge.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
-import java.util.ArrayList;
+import java.util.List;
 import org.frc5687.infiniterecharge.robot.subsystems.DriveTrain;
+import org.frc5687.infiniterecharge.robot.util.SwerveTrajectory;
+import org.frc5687.infiniterecharge.robot.util.SwerveTrajectoryGenerator;
 
 public class DriveTrajectory extends OutliersCommand {
 
-    private DriveTrain _driveTrain;
-    private Pose2d _start;
-    private Pose2d _end;
-    private ArrayList<Translation2d> _waypoints;
-    private ArrayList<Rotation2d> _heading;
+    private final DriveTrain _driveTrain;
+    private List<Pose2d> _waypoints;
+    private List<Rotation2d> _heading;
     private double _time;
     private final boolean _realtime;
-    private Trajectory _trajectory;
-    private Timer _timer;
+    private SwerveTrajectory _trajectory;
+    private final Timer _timer;
 
-    public DriveTrajectory(DriveTrain driveTrain, Trajectory trajectory) {
-        addRequirements(driveTrain);
-        _driveTrain = driveTrain;
-        _trajectory = trajectory;
-        _realtime = false;
-        _heading = new ArrayList<>();
-        _heading.add(new Rotation2d(0));
-        _timer = new Timer();
-    }
+    //    public DriveTrajectory(DriveTrain driveTrain, Trajectory trajectory) {
+    //        addRequirements(driveTrain);
+    //        _driveTrain = driveTrain;
+    //        _trajectory = trajectory;
+    //        _realtime = false;
+    //        _timer = new Timer();
+    //    }
 
     public DriveTrajectory(
-            DriveTrain driveTrain,
-            Pose2d start,
-            ArrayList<Translation2d> waypoints,
-            ArrayList<Rotation2d> heading,
-            Pose2d end) {
+            DriveTrain driveTrain, List<Pose2d> waypoints, List<Rotation2d> heading) {
         addRequirements(driveTrain);
         _driveTrain = driveTrain;
-        _start = start;
         _waypoints = waypoints;
         _heading = heading;
-        _end = end;
         _realtime = true;
         _timer = new Timer();
-        _heading.add(0, _start.getRotation());
-        _heading.add(_end.getRotation());
     }
 
     @Override
     public void initialize() {
         if (_realtime) {
             _trajectory =
-                    TrajectoryGenerator.generateTrajectory(
-                            _start, _waypoints, _end, _driveTrain.getConfig());
+                    SwerveTrajectoryGenerator.generateTrajectory(
+                            _waypoints, _heading, _driveTrain.getConfig());
         }
         _time = _trajectory.getTotalTimeSeconds();
         _timer.reset();
@@ -64,13 +51,9 @@ public class DriveTrajectory extends OutliersCommand {
 
     @Override
     public void execute() {
-        int n = 0;
-        Trajectory.State goal = _trajectory.sample(_timer.get());
-        metric("goal pose", goal.poseMeters.toString());
-        //        if (goal.poseMeters.getTranslation().equals(_waypoints.get(n))) {
-        //            n++;
-        //        }
-        _driveTrain.trajectoryFollower(goal, _heading.get(n));
+        SwerveTrajectory.State goal = _trajectory.sample(_timer.get());
+        error("goal is :" + goal.heading.toString());
+        _driveTrain.trajectoryFollower(goal.state, goal.heading);
     }
 
     @Override

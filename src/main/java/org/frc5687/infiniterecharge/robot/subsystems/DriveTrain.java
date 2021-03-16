@@ -142,14 +142,14 @@ public class DriveTrain extends OutliersSubsystem {
 
     @Override
     public void periodic() {
-        //        _odomerty.update(
-        //                getHeading(),
-        //                _frontLeft.getState(),
-        //                _frontRight.getState(),
-        //                _backLeft.getState(),
-        //                _backRight.getState());
-        _field.setRobotPose(_poseEstimator.getEstimatedPosition());
-        updateOdometry();
+        _odomerty.update(
+                getHeading(),
+                _frontLeft.getState(),
+                _frontRight.getState(),
+                _backLeft.getState(),
+                _backRight.getState());
+        //        _field.setRobotPose(_poseEstimator.getEstimatedPosition());
+        //        updateOdometry();
 
         //        metric("estimated Pose", _poseEstimator.getEstimatedPosition().toString());
         //        metric("slam pose", getSlamPose().toString());
@@ -193,7 +193,8 @@ public class DriveTrain extends OutliersSubsystem {
 
     @Override
     public void updateDashboard() {
-//                metric ("Pose Estimation", _poseEstimator.getEstimatedPosition().toString());
+        //                metric ("Pose Estimation",
+        // _poseEstimator.getEstimatedPosition().toString());
         //        metric("Odometry pose", _odomerty.getPoseMeters().toString());
         //        metric("Position Error", _backLeft.getPositionError());
         //        SmartDashboard.putNumberArray("DriveTrain/Reference", _frontRight.getReference());

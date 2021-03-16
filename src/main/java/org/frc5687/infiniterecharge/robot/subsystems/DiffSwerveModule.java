@@ -217,21 +217,6 @@ public class DiffSwerveModule {
         _leftFalcon.set(TalonFXControlMode.PercentOutput, limVoltage / 12.0);
     }
 
-    public void setVelocityRPM(double RPM) {
-        _rightFalcon.set(
-                ControlMode.Velocity,
-                (RPM
-                        * Constants.DifferentialSwerveModule.TICKS_TO_ROTATIONS
-                        / 600
-                        / Constants.DifferentialSwerveModule.GEAR_RATIO_WHEEL));
-        _leftFalcon.set(
-                ControlMode.Velocity,
-                (RPM
-                        * Constants.DifferentialSwerveModule.TICKS_TO_ROTATIONS
-                        / 600
-                        / Constants.DifferentialSwerveModule.GEAR_RATIO_WHEEL));
-    }
-
     public double getModuleAngle() {
         return Helpers.boundHalfAngle(_lampreyEncoder.getDistance(), true);
     }
