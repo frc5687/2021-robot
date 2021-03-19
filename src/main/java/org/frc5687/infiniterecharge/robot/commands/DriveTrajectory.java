@@ -4,6 +4,7 @@ package org.frc5687.infiniterecharge.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import java.util.List;
 import org.frc5687.infiniterecharge.robot.subsystems.DriveTrain;
 import org.frc5687.infiniterecharge.robot.util.SwerveTrajectory;
@@ -17,15 +18,16 @@ public class DriveTrajectory extends OutliersCommand {
     private double _time;
     private final boolean _realtime;
     private SwerveTrajectory _trajectory;
+    private Trajectory _trajectoryW;
     private final Timer _timer;
 
-    //    public DriveTrajectory(DriveTrain driveTrain, Trajectory trajectory) {
-    //        addRequirements(driveTrain);
-    //        _driveTrain = driveTrain;
-    //        _trajectory = trajectory;
-    //        _realtime = false;
-    //        _timer = new Timer();
-    //    }
+    public DriveTrajectory(DriveTrain driveTrain, Trajectory trajectory) {
+        addRequirements(driveTrain);
+        _driveTrain = driveTrain;
+        _trajectoryW = trajectory;
+        _realtime = false;
+        _timer = new Timer();
+    }
 
     public DriveTrajectory(
             DriveTrain driveTrain, List<Pose2d> waypoints, List<Rotation2d> heading) {
@@ -44,16 +46,15 @@ public class DriveTrajectory extends OutliersCommand {
                     SwerveTrajectoryGenerator.generateTrajectory(
                             _waypoints, _heading, _driveTrain.getConfig());
         }
-        _time = _trajectory.getTotalTimeSeconds();
+        _time = _trajectoryW.getTotalTimeSeconds();
         _timer.reset();
         _timer.start();
     }
 
     @Override
     public void execute() {
-        SwerveTrajectory.State goal = _trajectory.sample(_timer.get());
-        error("goal is :" + goal.heading.toString());
-        _driveTrain.trajectoryFollower(goal.state, goal.heading);
+        Trajectory.State goal = _trajectoryW.sample(_timer.get());
+        _driveTrain.trajectoryFollower(goal, new Rotation2d(0));
     }
 
     @Override

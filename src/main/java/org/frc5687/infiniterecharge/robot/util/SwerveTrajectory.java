@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import java.util.Collections;
 import java.util.List;
 
 public class SwerveTrajectory {
@@ -16,6 +17,12 @@ public class SwerveTrajectory {
 
     private boolean prevEquals = false;
     private int n = 0;
+
+    public SwerveTrajectory(Trajectory trajectory, List<Pose2d> waypoints) {
+        this.trajectory = trajectory;
+        this.waypoints = waypoints;
+        this.headings = Collections.singletonList(new Rotation2d(0));
+    }
 
     public SwerveTrajectory(
             Trajectory trajectory, List<Pose2d> waypoints, List<Rotation2d> headings) {
@@ -55,6 +62,10 @@ public class SwerveTrajectory {
     public boolean equals(Translation2d translation1, Translation2d translation2) {
         return (Math.abs(translation1.getX() - translation2.getX()) < 0.01
                 && Math.abs(translation1.getY() - translation2.getY()) < 0.01);
+    }
+
+    public Pose2d getInitialPose() {
+        return sample(0).poseMeters;
     }
 
     public static class State extends Trajectory.State {

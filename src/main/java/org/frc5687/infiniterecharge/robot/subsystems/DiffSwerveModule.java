@@ -7,11 +7,13 @@ import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.AnalogEncoder;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.controller.LinearQuadraticRegulator;
 import edu.wpi.first.wpilibj.estimator.KalmanFilter;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.system.LinearSystem;
 import edu.wpi.first.wpilibj.system.LinearSystemLoop;
 import edu.wpi.first.wpilibj.system.plant.DCMotor;
@@ -25,6 +27,7 @@ public class DiffSwerveModule {
     private final TalonFX _rightFalcon;
     private final TalonFX _leftFalcon;
     private final AnalogEncoder _lampreyEncoder;
+    private DutyCycleEncoder _boreEncoder;
     private final Translation2d _positionVector;
     private final LinearSystemLoop<N3, N2, N3> _swerveControlLoop;
     //    private StatorCurrentLimitConfiguration _currentCfg;
@@ -39,6 +42,7 @@ public class DiffSwerveModule {
             int rightMotorID,
             AnalogInput encoderNum) {
         //        _currentCfg = new StatorCurrentLimitConfiguration(true, 10, 10, 0);
+        _boreEncoder = null;
         _lampreyEncoder = new AnalogEncoder(encoderNum);
         _lampreyEncoder.setDistancePerRotation(
                 2.0 * Math.PI / Constants.DifferentialSwerveModule.VOLTS_TO_ROTATIONS);
@@ -147,6 +151,17 @@ public class DiffSwerveModule {
         _running = false;
     }
 
+    public DiffSwerveModule(
+            Translation2d positionVector,
+            int leftMotorID,
+            int rightMotorID,
+            AnalogInput encoderNum,
+            int encoderDIO) {
+        this(positionVector, leftMotorID, rightMotorID, encoderNum);
+        _boreEncoder = new DutyCycleEncoder(encoderDIO);
+        _boreEncoder.setDistancePerRotation(2 * Math.PI);
+    }
+
     /**
      * wraps angle so that absolute encoder can be continues. (i.e) No issues when switching between
      * -PI and PI as they are the same point but different values.
@@ -218,7 +233,14 @@ public class DiffSwerveModule {
     }
 
     public double getModuleAngle() {
-        return Helpers.boundHalfAngle(_lampreyEncoder.getDistance(), true);
+        double angle =
+                (_boreEncoder == null) ? _lampreyEncoder.getDistance() : _boreEncoder.getDistance();
+        if (_boreEncoder != null) {
+            SmartDashboard.putNumber(
+                    "bore encoder angle",
+                    (Math.abs(_boreEncoder.getDistance()) % 2 * Math.PI));
+        }
+        return Helpers.boundHalfAngle(angle, true);
     }
 
     public double getWheelAngularVelocity() {
@@ -232,6 +254,10 @@ public class DiffSwerveModule {
     public double getWheelVelocity() {
         return getWheelAngularVelocity()
                 * Constants.DifferentialSwerveModule.WHEEL_RADIUS; // Meters per sec.
+    }
+
+    public double getPredictedWheelVelocity() {
+        return getPredictedWheelAngularVelocity() * WHEEL_RADIUS;
     }
 
     public double getAzimuthAngularVelocity() {
