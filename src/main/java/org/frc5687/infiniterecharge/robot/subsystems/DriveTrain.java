@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.trajectory.constraint.SwerveDriveKinematicsConstraint;
+import edu.wpi.first.wpilibj.util.Units;
 import java.util.concurrent.atomic.AtomicReference;
 import org.frc5687.infiniterecharge.robot.Constants;
 import org.frc5687.infiniterecharge.robot.OI;
@@ -71,8 +72,7 @@ public class DriveTrain extends OutliersSubsystem {
                             FRONT_LEFT_POSITION,
                             FL_LEFT_FALCON,
                             FL_RIGHT_FALCON,
-                            RobotMap.Analog.ENCODER_FL,
-                            3);
+                            RobotMap.Analog.ENCODER_FL);
             _backRight =
                     new DiffSwerveModule(
                             BACK_RIGHT_POSITION,
@@ -256,7 +256,12 @@ public class DriveTrain extends OutliersSubsystem {
         //        metric("BR/Wanted Angle", _backRight.getReferenceModuleAngle());
         //
         metric("BL/angle", _backLeft.getModuleAngle());
-        //        metric("BL/vel", _backLeft.getWheelVelocity());
+        metric("BL/vel", _backLeft.getWheelVelocity());
+        metric("BL/predicted vel", _backLeft.getPredictedWheelVelocity());
+        metric(
+                "BL/wheel angle vel",
+                Units.radiansPerSecondToRotationsPerMinute(_backLeft.getWheelAngularVelocity()));
+        metric("BL/wheel distance", _backLeft.getModuleDistance());
         //        //        SmartDashboard.putNumberArray("DriveTrain/BL/state predict",
         //        // _backLeft.getPredictedState());
         //        metric("BL/Wanted Angle", _backLeft.getReferenceModuleAngle());

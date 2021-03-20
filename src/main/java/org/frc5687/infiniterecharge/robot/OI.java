@@ -86,16 +86,16 @@ public class OI extends OutliersProxy {
     }
 
     public double getDriveY() {
-        //        double speed = getSpeedFromAxis(_leftJoystick, _leftJoystick.getYChannel());
-        double speed = getSpeedFromAxis(_singleJoystick, _singleJoystick.getYChannel());
+        double speed = getSpeedFromAxis(_leftJoystick, _leftJoystick.getYChannel());
+        //        double speed = getSpeedFromAxis(_singleJoystick, _singleJoystick.getYChannel());
         //        double speed = getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_Y.getNumber());
         speed = applyDeadband(speed, DEADBAND);
         return speed;
     }
 
     public double getDriveX() {
-        //        double speed = -getSpeedFromAxis(_leftJoystick, _leftJoystick.getXChannel());
-        double speed = -getSpeedFromAxis(_singleJoystick, _singleJoystick.getXChannel());
+        double speed = -getSpeedFromAxis(_leftJoystick, _leftJoystick.getXChannel());
+        //        double speed = -getSpeedFromAxis(_singleJoystick, _singleJoystick.getXChannel());
         //        double speed = -getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_X.getNumber());
         speed = applyDeadband(speed, DEADBAND);
         return speed;

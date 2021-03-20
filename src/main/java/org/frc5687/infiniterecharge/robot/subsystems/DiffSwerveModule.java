@@ -33,6 +33,7 @@ public class DiffSwerveModule {
     //    private StatorCurrentLimitConfiguration _currentCfg;
     private Matrix<N3, N1> _reference; // same thing as a set point.
     private Matrix<N2, N1> _u;
+    private double _positionWheel;
 
     private boolean _running = false;
 
@@ -149,6 +150,7 @@ public class DiffSwerveModule {
         _u = VecBuilder.fill(0, 0);
 
         _running = false;
+        _positionWheel = 0;
     }
 
     public DiffSwerveModule(
@@ -237,8 +239,7 @@ public class DiffSwerveModule {
                 (_boreEncoder == null) ? _lampreyEncoder.getDistance() : _boreEncoder.getDistance();
         if (_boreEncoder != null) {
             SmartDashboard.putNumber(
-                    "bore encoder angle",
-                    (Math.abs(_boreEncoder.getDistance()) % 2 * Math.PI));
+                    "bore encoder angle", (Math.abs(_boreEncoder.getDistance()) % 2 * Math.PI));
         }
         return Helpers.boundHalfAngle(angle, true);
     }
@@ -370,6 +371,10 @@ public class DiffSwerveModule {
         } else {
             setModuleState(state);
         }
+    }
+
+    public double getModuleDistance() {
+        return _positionWheel += (getWheelAngularVelocity() * (2.0 * Math.PI * WHEEL_RADIUS)) * kDt;
     }
 
     /**

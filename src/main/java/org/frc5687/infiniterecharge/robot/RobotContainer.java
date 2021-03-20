@@ -78,10 +78,10 @@ public class RobotContainer extends OutliersContainer {
             Trajectory trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
             Trajectory trajectory2 =
                     TrajectoryGenerator.generateTrajectory(
-                            Constants.AutoPaths.test.waypoints, _driveTrain.getConfig());
+                            Constants.AutoPaths.Slalom.waypoint, _driveTrain.getConfig());
             Transform2d transform =
-                    new Pose2d(0, 0, new Rotation2d(0)).minus(trajectory2.getInitialPose());
-            trajectoryNew = trajectory2.transformBy(transform);
+                    new Pose2d(0, 0, new Rotation2d(0)).minus(trajectory.getInitialPose());
+            trajectoryNew = trajectory.transformBy(transform);
 
             error("Trajectory successfully opened.");
         } catch (IOException ex) {

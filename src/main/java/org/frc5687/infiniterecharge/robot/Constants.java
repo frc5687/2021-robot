@@ -65,7 +65,7 @@ public class Constants {
         public static final double MAX_ANG_VEL = Math.PI * 2.0;
         public static final double MAX_MPSS = 0.5; // accel
 
-        public static final double ANGLE_kP = 3.5;
+        public static final double ANGLE_kP = 4.5;
         public static final double ANGLE_kI = 0.0;
         public static final double ANGLE_kD = 0.0;
 
@@ -86,7 +86,7 @@ public class Constants {
         public static final double GEAR_RATIO_WHEEL = 6.46875;
         public static final double GEAR_RATIO_STEER = 11.5;
         public static final double FALCON_RATE = 600.0;
-        public static final double WHEEL_RADIUS = 0.0429; // Meters with compression.
+        public static final double WHEEL_RADIUS = 0.0469; // Meters with compression.
         public static final double TICKS_TO_ROTATIONS = 2048.0;
         public static final double VOLTS_TO_ROTATIONS = 3.3;
         public static final double FEED_FORWARD = 12.0 / (FALCON_FREE_SPEED / GEAR_RATIO_WHEEL);
@@ -94,8 +94,8 @@ public class Constants {
         // Create Parameters for DiffSwerve State Space
         public static final double INERTIA_WHEEL = 0.005;
         public static final double INERTIA_STEER = 0.004;
-        public static final double Q_AZIMUTH_ANG_VELOCITY = 1.3; // radians per sec
-        public static final double Q_AZIMUTH = .11; // radians
+        public static final double Q_AZIMUTH_ANG_VELOCITY = 1.2; // radians per sec
+        public static final double Q_AZIMUTH = .08; // radians
         public static final double Q_WHEEL_ANG_VELOCITY = 1; // radians per sec
         public static final double MODEL_AZIMUTH_ANGLE_NOISE = .01; // radians
         public static final double MODEL_AZIMUTH_ANG_VELOCITY_NOISE = 1.0; // radians per sec
@@ -180,14 +180,14 @@ public class Constants {
             public static final Pose2d startPose = new Pose2d(1.3, -3.9, new Rotation2d(0));
             public static final List<Pose2d> waypoint =
                     Arrays.asList(
-                            new Pose2d(1.0, -3.9, new Rotation2d(0)),
+                            new Pose2d(1.3, -3.9, new Rotation2d(0)),
                             new Pose2d(3, -2.3, new Rotation2d(0)),
-                            new Pose2d(6.9, -2.3, Rotation2d.fromDegrees(0)),
-                            new Pose2d(7.4, -3.6, Rotation2d.fromDegrees(0)),
-                            new Pose2d(8.9, -3.6, Rotation2d.fromDegrees(0)),
-                            new Pose2d(8.9, -2.3, Rotation2d.fromDegrees(180)),
-                            new Pose2d(7.4, -2.3, Rotation2d.fromDegrees(-180)),
-                            new Pose2d(6.9, -3.6, Rotation2d.fromDegrees(180)),
+                            new Pose2d(6.37, -2.3, Rotation2d.fromDegrees(0)),
+                            new Pose2d(7.07, -3.6, Rotation2d.fromDegrees(0)),
+                            new Pose2d(8.3, -3.6, Rotation2d.fromDegrees(0)),
+                            new Pose2d(8.3, -2.3, Rotation2d.fromDegrees(180)),
+                            new Pose2d(7.07, -2.3, Rotation2d.fromDegrees(-180)),
+                            new Pose2d(6.37, -3.6, Rotation2d.fromDegrees(180)),
                             new Pose2d(2.8, -3.6, Rotation2d.fromDegrees(180)),
                             new Pose2d(1.0, -2.1, Rotation2d.fromDegrees(180)));
 
