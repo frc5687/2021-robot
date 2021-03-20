@@ -5,17 +5,19 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Transform2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import java.io.IOException;
 import java.nio.file.Path;
-import org.frc5687.infiniterecharge.robot.commands.Drive;
-import org.frc5687.infiniterecharge.robot.commands.OutliersCommand;
-import org.frc5687.infiniterecharge.robot.subsystems.DriveTrain;
-import org.frc5687.infiniterecharge.robot.subsystems.OutliersSubsystem;
+import org.frc5687.infiniterecharge.robot.commands.*;
+import org.frc5687.infiniterecharge.robot.subsystems.*;
 import org.frc5687.infiniterecharge.robot.util.OutliersContainer;
+import org.frc5687.infiniterecharge.robot.util.SwerveTrajectory;
+import org.frc5687.infiniterecharge.robot.util.SwerveTrajectoryGenerator;
 import org.frc5687.lib.T265Camera;
 
 public class RobotContainer extends OutliersContainer {
@@ -26,6 +28,10 @@ public class RobotContainer extends OutliersContainer {
 
     private Robot _robot;
     private DriveTrain _driveTrain;
+    private Intake _intake;
+    private Spindexer _spindexer;
+    private Hood _hood;
+    private Shooter _shooter;
 
     public RobotContainer(Robot robot, IdentityMode identityMode) {
         super(identityMode);
@@ -37,6 +43,12 @@ public class RobotContainer extends OutliersContainer {
         _oi = new OI();
         _imu = new AHRS(SPI.Port.kMXP, (byte) 200);
         _slamCamera = null;
+
+        _intake = new Intake(this);
+        _spindexer = new Spindexer(this);
+        _hood = new Hood(this);
+        _shooter = new Shooter(this);
+        _driveTrain = new DriveTrain(this, _oi, _imu, _slamCamera);
 
         while (++counter <= 1 && _slamCamera == null) {
             try {
@@ -52,24 +64,36 @@ public class RobotContainer extends OutliersContainer {
                 metric("Slam Camera Status", "Broken!");
             }
         }
-        String trajectoryJSON = "output/BarrelRace.wpilib.json";
-        Trajectory trajectory = new Trajectory();
+
+        String trajectoryJSON = "output/Slalom.wpilib.json";
         Trajectory trajectoryNew = new Trajectory();
+        SwerveTrajectory trajectory1 =
+                SwerveTrajectoryGenerator.generateTrajectory(
+                        Constants.AutoPaths.Slalom.waypoint,
+                        _driveTrain.getConfig(),
+                        new Transform2d(
+                                _driveTrain.getOdometryPose().getTranslation(), new Rotation2d(0)));
         try {
             Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
-            trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+            Trajectory trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+            Trajectory trajectory2 =
+                    TrajectoryGenerator.generateTrajectory(
+                            Constants.AutoPaths.test.waypoints, _driveTrain.getConfig());
             Transform2d transform =
-                    new Pose2d(0, 0, _driveTrain.getHeading()).minus(trajectory.getInitialPose());
-            trajectoryNew = trajectory.transformBy(transform);
+                    new Pose2d(0, 0, new Rotation2d(0)).minus(trajectory2.getInitialPose());
+            trajectoryNew = trajectory2.transformBy(transform);
 
             error("Trajectory successfully opened.");
         } catch (IOException ex) {
             error("Unable to open trajectory: " + trajectoryJSON + ex.getMessage());
         }
-
-        _driveTrain = new DriveTrain(this, _oi, _imu, _slamCamera);
-        _oi.initializeButtons(_driveTrain, trajectoryNew);
+        error("TrajectoryNew staring pose is " + trajectoryNew.getInitialPose().toString());
+        _oi.initializeButtons(_driveTrain, _intake, _spindexer, _shooter, _hood, trajectoryNew);
         setDefaultCommand(_driveTrain, new Drive(_driveTrain, _oi));
+        setDefaultCommand(_intake, new IdleIntake(_intake));
+        setDefaultCommand(_spindexer, new IdleSpindexer(_spindexer));
+        setDefaultCommand(_hood, new IdleHood(_hood, _oi));
+        setDefaultCommand(_shooter, new IdleShooter(_shooter, _oi));
 
         _robot.addPeriodic(this::controllerPeriodic, 0.005, 0.005);
         _imu.reset();
@@ -99,6 +123,7 @@ public class RobotContainer extends OutliersContainer {
     @Override
     public void updateDashboard() {
         _driveTrain.updateDashboard();
+        //        metric("yaw", _imu.getYaw());
     }
 
     public void controllerPeriodic() {

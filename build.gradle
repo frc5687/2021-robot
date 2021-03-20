@@ -29,7 +29,6 @@ spotless {
 	}
 }
 
-wpi.maven.useDevelopment = true
 wpi.wpilibVersion = '2021.+'
 
 
