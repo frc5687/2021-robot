@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.estimator.KalmanFilter;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.system.LinearSystem;
 import edu.wpi.first.wpilibj.system.LinearSystemLoop;
 import edu.wpi.first.wpilibj.system.plant.DCMotor;
@@ -234,12 +233,9 @@ public class DiffSwerveModule {
 
     public double getModuleAngle() {
         double angle =
-                (_boreEncoder == null) ? _lampreyEncoder.getDistance() : _boreEncoder.getDistance();
-        if (_boreEncoder != null) {
-            SmartDashboard.putNumber(
-                    "bore encoder angle",
-                    (Math.abs(_boreEncoder.getDistance()) % 2 * Math.PI));
-        }
+                (_boreEncoder == null)
+                        ? _lampreyEncoder.getDistance()
+                        : Math.abs(_boreEncoder.getDistance()) % (2.0 * Math.PI);
         return Helpers.boundHalfAngle(angle, true);
     }
 
