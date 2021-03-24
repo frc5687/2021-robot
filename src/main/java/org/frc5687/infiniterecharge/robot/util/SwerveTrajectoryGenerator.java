@@ -20,27 +20,8 @@ public class SwerveTrajectoryGenerator {
     }
 
     public static SwerveTrajectory generateTrajectory(
-            List<Pose2d> waypoints, TrajectoryConfig config, Transform2d transform) {
-        List<Pose2d> newWaypoints = new ArrayList<>();
-        waypoints.forEach(
-                (pose2d -> {
-                    newWaypoints.add(pose2d.transformBy(transform));
-                }));
+            List<Pose2d> waypoints, TrajectoryConfig config) {
         return new SwerveTrajectory(
-                TrajectoryGenerator.generateTrajectory(newWaypoints, config), waypoints);
-    }
-
-    public static SwerveTrajectory generateTrajectory(
-            List<Pose2d> waypoints,
-            List<Rotation2d> headings,
-            TrajectoryConfig config,
-            Transform2d transform) {
-        List<Pose2d> newWaypoints = new ArrayList<>();
-        waypoints.forEach(
-                (pose2d -> {
-                    newWaypoints.add(pose2d.transformBy(transform));
-                }));
-        return new SwerveTrajectory(
-                TrajectoryGenerator.generateTrajectory(newWaypoints, config), waypoints, headings);
+                TrajectoryGenerator.generateTrajectory(waypoints, config), waypoints);
     }
 }

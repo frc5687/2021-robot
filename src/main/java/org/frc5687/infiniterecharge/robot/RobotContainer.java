@@ -69,10 +69,7 @@ public class RobotContainer extends OutliersContainer {
         Trajectory trajectoryNew = new Trajectory();
         SwerveTrajectory trajectory1 =
                 SwerveTrajectoryGenerator.generateTrajectory(
-                        Constants.AutoPaths.Slalom.waypoint,
-                        _driveTrain.getConfig(),
-                        new Transform2d(
-                                _driveTrain.getOdometryPose().getTranslation(), new Rotation2d(0)));
+                        Constants.AutoPaths.Slalom.waypoint, _driveTrain.getConfig());
         try {
             Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
             Trajectory trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);

@@ -1,8 +1,6 @@
 /* (C)2020-2021 */
 package org.frc5687.infiniterecharge.robot;
 
-import edu.wpi.first.wpilibj.AnalogInput;
-
 public class RobotMap {
 
     /**
@@ -59,12 +57,7 @@ public class RobotMap {
      * There should be an entry here for each Analgo port, preferrably in numerical order. Note that
      * for Analog only one device can connect to each port, so the numbers should be unique.
      */
-    public static class Analog {
-        public static final AnalogInput ENCODER_BL = new AnalogInput(2);
-        public static final AnalogInput ENCODER_BR = new AnalogInput(1);
-        public static final AnalogInput ENCODER_FL = new AnalogInput(3);
-        public static final AnalogInput ENCODER_FR = new AnalogInput(0);
-    }
+    public static class Analog {}
 
     /**
      * There should be an entry here for each DIO port, preferrably in numerical order. Note that
@@ -73,5 +66,9 @@ public class RobotMap {
     public static class DIO {
         public static final int HOOD_HALL = 0;
         public static final int HOOD_HALL_TOP = 1;
+        public static final int ENCODER_FR = 2;
+        public static final int ENCODER_FL = 3;
+        public static final int ENCODER_BR = 4;
+        public static final int ENCODER_BL = 5;
     }
 }
