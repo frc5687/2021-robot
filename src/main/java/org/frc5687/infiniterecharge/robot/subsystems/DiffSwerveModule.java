@@ -214,7 +214,7 @@ public class DiffSwerveModule {
     }
 
     public double getModuleAngle() {
-        return Helpers.boundHalfAngle(-(_boreEncoder.getDistance() % (2.0 * Math.PI)), true);
+        return Helpers.boundHalfAngle((_boreEncoder.getDistance() % (2.0 * Math.PI)), true);
     }
 
     public double getWheelAngularVelocity() {

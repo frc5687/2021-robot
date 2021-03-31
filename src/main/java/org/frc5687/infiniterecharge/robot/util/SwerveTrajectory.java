@@ -1,140 +1,386 @@
 /* (C)2021 */
 package org.frc5687.infiniterecharge.robot.util;
 
-import edu.wpi.first.wpilibj.DriverStation;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Transform2d;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
-public class SwerveTrajectory extends Trajectory {
+/**
+ * Represents a time-parameterized trajectory. The trajectory contains of various States that
+ * represent the pose, curvature, time elapsed, velocity, and acceleration at that point.
+ */
+public class SwerveTrajectory {
+    private final double m_totalTimeSeconds;
+    private final List<State> m_states;
 
-    private final List<Pose2d> waypoints;
-    private List<Rotation2d> headings;
-    private List<Trajectory.State> states;
-    private final double totalTimeSeconds;
-
-    private boolean prevEquals = false;
-    private int n = 0;
-
-    public SwerveTrajectory(Trajectory trajectory, List<Pose2d> waypoints) {
-        this.states = trajectory.getStates();
-        this.waypoints = waypoints;
-        this.totalTimeSeconds = trajectory.getTotalTimeSeconds();
-        this.headings = Collections.singletonList(new Rotation2d(0));
+    /** Constructs an empty trajectory. */
+    public SwerveTrajectory() {
+        m_states = new ArrayList<>();
+        m_totalTimeSeconds = 0.0;
     }
 
-    public SwerveTrajectory(
-            Trajectory trajectory, List<Pose2d> waypoints, List<Rotation2d> headings) {
-        this(trajectory, waypoints);
-        this.headings = headings;
+    /**
+     * Constructs a trajectory from a vector of states.
+     *
+     * @param states A vector of states.
+     */
+    public SwerveTrajectory(final List<State> states) {
+        m_states = states;
+        m_totalTimeSeconds = m_states.get(m_states.size() - 1).timeSeconds;
     }
 
-//    /**
-//     * Sample the trajectory at a point in time.
-//     *
-//     * @param timeSeconds The point in time since the beginning of the trajectory to sample.
-//     * @return The state at that point in time.
-//     */
-//    public Trajectory.State sample(double timeSeconds) {
-//        if (timeSeconds <= states.get(0).timeSeconds) {
-//            return states.get(0);
-//        }
-//        if (timeSeconds >= totalTimeSeconds) {
-//            return states.get(states.size() - 1);
-//        }
-//
-//        // To get the element that we want, we will use a binary search algorithm
-//        // instead of iterating over a for-loop. A binary search is O(std::log(n))
-//        // whereas searching using a loop is O(n).
-//
-//        // This starts at 1 because we use the previous state later on for
-//        // interpolation.
-//        int low = 1;
-//        int high = states.size() - 1;
-//
-//        while (low != high) {
-//            int mid = (low + high) / 2;
-//            if (states.get(mid).timeSeconds < timeSeconds) {
-//                // This index and everything under it are less than the requested
-//                // timestamp. Therefore, we can discard them.
-//                low = mid + 1;
-//            } else {
-//                // t is at least as large as the element at this index. This means that
-//                // anything after it cannot be what we are looking for.
-//                high = mid;
-//            }
-//        }
-//
-//        // High and Low should be the same.
-//
-//        // The sample's timestamp is now greater than or equal to the requested
-//        // timestamp. If it is greater, we need to interpolate between the
-//        // previous state and the current state to get the exact state that we
-//        // want.
-//        final Trajectory.State sample = states.get(low);
-//        final Trajectory.State prevSample = states.get(low - 1);
-//
-//        // If the difference in states is negligible, then we are spot on!
-//        if (Math.abs(sample.timeSeconds - prevSample.timeSeconds) < 1E-9) {
-//            return sample;
-//        }
-//        // Interpolate between the two states for the state that we want.
-//        return prevSample.interpolate(
-//                sample,
-//                (timeSeconds - prevSample.timeSeconds) / (sample.timeSeconds - prevSample.timeSeconds));
-//    }
-//    public State sample(double timeSeconds) {
-//        boolean equals =
-//                equals(
-//                        trajectory.sample(timeSeconds).poseMeters.getTranslation(),
-//                        waypoints.get(n).getTranslation());
-//
-//        if (equals && !prevEquals) {
-//            if (n != headings.size() - 1) {
-//                DriverStation.reportError(
-//                        trajectory.sample(timeSeconds).poseMeters.toString()
-//                                + " is equal to "
-//                                + waypoints.get(n).toString(),
-//                        false);
-//                n++;
-//            }
-//            prevEquals = equals;
-//        }
-//        if (waypoints.size() != headings.size()) {
-//            return new State(trajectory.sample(timeSeconds), new Rotation2d(0));
-//        }
-//        prevEquals = equals;
-//        return new State(trajectory.sample(timeSeconds), headings.get(n));
-//    }
-
-    private Rotation2d lerp(Rotation2d startVal, Rotation2d endVal, double t) {
-        return startVal.plus((endVal.minus(startVal)).times(t));
+    /**
+     * Linearly interpolates between two values.
+     *
+     * @param startValue The start value.
+     * @param endValue The end value.
+     * @param t The fraction for interpolation.
+     * @return The interpolated value.
+     */
+    @SuppressWarnings("ParameterName")
+    private static double lerp(double startValue, double endValue, double t) {
+        return startValue + (endValue - startValue) * t;
     }
 
-//    public double getTotalTimeSeconds() {
-//        return trajectory.getTotalTimeSeconds();
-//    }
-
-    public boolean equals(Translation2d translation1, Translation2d translation2) {
-        return (Math.abs(translation1.getX() - translation2.getX()) < 0.01
-                && Math.abs(translation1.getY() - translation2.getY()) < 0.01);
+    /**
+     * Linearly interpolates between two poses.
+     *
+     * @param startValue The start pose.
+     * @param endValue The end pose.
+     * @param t The fraction for interpolation.
+     * @return The interpolated pose.
+     */
+    @SuppressWarnings("ParameterName")
+    private static Pose2d lerp(Pose2d startValue, Pose2d endValue, double t) {
+        return startValue.plus((endValue.minus(startValue)).times(t));
     }
 
+    private static Rotation2d lerp(Rotation2d startValue, Rotation2d endValue, double t) {
+        return startValue.plus((endValue.minus(startValue)).times(t));
+    }
+
+    /**
+     * Returns the initial pose of the trajectory.
+     *
+     * @return The initial pose of the trajectory.
+     */
     public Pose2d getInitialPose() {
         return sample(0).poseMeters;
     }
 
-    public static class State extends Trajectory.State {
-        public Trajectory.State state;
+    /**
+     * Returns the overall duration of the trajectory.
+     *
+     * @return The duration of the trajectory.
+     */
+    public double getTotalTimeSeconds() {
+        return m_totalTimeSeconds;
+    }
+
+    /**
+     * Return the states of the trajectory.
+     *
+     * @return The states of the trajectory.
+     */
+    public List<State> getStates() {
+        return m_states;
+    }
+
+    /**
+     * Sample the trajectory at a point in time.
+     *
+     * @param timeSeconds The point in time since the beginning of the trajectory to sample.
+     * @return The state at that point in time.
+     */
+    public State sample(double timeSeconds) {
+        if (timeSeconds <= m_states.get(0).timeSeconds) {
+            return m_states.get(0);
+        }
+        if (timeSeconds >= m_totalTimeSeconds) {
+            return m_states.get(m_states.size() - 1);
+        }
+
+        // To get the element that we want, we will use a binary search algorithm
+        // instead of iterating over a for-loop. A binary search is O(std::log(n))
+        // whereas searching using a loop is O(n).
+
+        // This starts at 1 because we use the previous state later on for
+        // interpolation.
+        int low = 1;
+        int high = m_states.size() - 1;
+
+        while (low != high) {
+            int mid = (low + high) / 2;
+            if (m_states.get(mid).timeSeconds < timeSeconds) {
+                // This index and everything under it are less than the requested
+                // timestamp. Therefore, we can discard them.
+                low = mid + 1;
+            } else {
+                // t is at least as large as the element at this index. This means that
+                // anything after it cannot be what we are looking for.
+                high = mid;
+            }
+        }
+
+        // High and Low should be the same.
+
+        // The sample's timestamp is now greater than or equal to the requested
+        // timestamp. If it is greater, we need to interpolate between the
+        // previous state and the current state to get the exact state that we
+        // want.
+        final State sample = m_states.get(low);
+        final State prevSample = m_states.get(low - 1);
+
+        // If the difference in states is negligible, then we are spot on!
+        if (Math.abs(sample.timeSeconds - prevSample.timeSeconds) < 1E-9) {
+            return sample;
+        }
+        // Interpolate between the two states for the state that we want.
+        return prevSample.interpolate(
+                sample,
+                (timeSeconds - prevSample.timeSeconds)
+                        / (sample.timeSeconds - prevSample.timeSeconds));
+    }
+
+    /**
+     * Transforms all poses in the trajectory by the given transform. This is useful for converting
+     * a robot-relative trajectory into a field-relative trajectory. This works with respect to the
+     * first pose in the trajectory.
+     *
+     * @param transform The transform to transform the trajectory by.
+     * @return The transformed trajectory.
+     */
+    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
+    public SwerveTrajectory transformBy(Transform2d transform) {
+        var firstState = m_states.get(0);
+        var firstPose = firstState.poseMeters;
+
+        // Calculate the transformed first pose.
+        var newFirstPose = firstPose.plus(transform);
+        List<SwerveTrajectory.State> newStates = new ArrayList<>();
+
+        newStates.add(
+                new SwerveTrajectory.State(
+                        firstState.timeSeconds,
+                        firstState.velocityMetersPerSecond,
+                        firstState.accelerationMetersPerSecondSq,
+                        newFirstPose,
+                        firstState.curvatureRadPerMeter,
+                        firstState.heading));
+
+        for (int i = 1; i < m_states.size(); i++) {
+            var state = m_states.get(i);
+            // We are transforming relative to the coordinate frame of the new initial pose.
+            newStates.add(
+                    new SwerveTrajectory.State(
+                            state.timeSeconds,
+                            state.velocityMetersPerSecond,
+                            state.accelerationMetersPerSecondSq,
+                            newFirstPose.plus(state.poseMeters.minus(firstPose)),
+                            state.curvatureRadPerMeter,
+                            state.heading));
+        }
+
+        return new SwerveTrajectory(newStates);
+    }
+
+    /**
+     * Transforms all poses in the trajectory so that they are relative to the given pose. This is
+     * useful for converting a field-relative trajectory into a robot-relative trajectory.
+     *
+     * @param pose The pose that is the origin of the coordinate frame that the current trajectory
+     *     will be transformed into.
+     * @return The transformed trajectory.
+     */
+    public SwerveTrajectory relativeTo(Pose2d pose) {
+        return new SwerveTrajectory(
+                m_states.stream()
+                        .map(
+                                state ->
+                                        new SwerveTrajectory.State(
+                                                state.timeSeconds,
+                                                state.velocityMetersPerSecond,
+                                                state.accelerationMetersPerSecondSq,
+                                                state.poseMeters.relativeTo(pose),
+                                                state.curvatureRadPerMeter,
+                                                state.heading))
+                        .collect(Collectors.toList()));
+    }
+
+    /**
+     * Represents a time-parameterized trajectory. The trajectory contains of various States that
+     * represent the pose, curvature, time elapsed, velocity, and acceleration at that point.
+     */
+    @SuppressWarnings("MemberName")
+    public static class State {
+        // The time elapsed since the beginning of the trajectory.
+        @JsonProperty("time")
+        public double timeSeconds;
+
+        // The speed at that point of the trajectory.
+        @JsonProperty("velocity")
+        public double velocityMetersPerSecond;
+
+        // The acceleration at that point of the trajectory.
+        @JsonProperty("acceleration")
+        public double accelerationMetersPerSecondSq;
+
+        // The pose at that point of the trajectory.
+        @JsonProperty("pose")
+        public Pose2d poseMeters;
+
+        // The curvature at that point of the trajectory.
+        @JsonProperty("curvature")
+        public double curvatureRadPerMeter;
+
         public Rotation2d heading;
 
-        public State(Trajectory.State state, Rotation2d heading) {
-            this.state = state;
+        public State() {
+            poseMeters = new Pose2d();
+        }
+
+        /**
+         * Constructs a State with the specified parameters.
+         *
+         * @param timeSeconds The time elapsed since the beginning of the trajectory.
+         * @param velocityMetersPerSecond The speed at that point of the trajectory.
+         * @param accelerationMetersPerSecondSq The acceleration at that point of the trajectory.
+         * @param poseMeters The pose at that point of the trajectory.
+         * @param curvatureRadPerMeter The curvature at that point of the trajectory.
+         */
+        public State(
+                double timeSeconds,
+                double velocityMetersPerSecond,
+                double accelerationMetersPerSecondSq,
+                Pose2d poseMeters,
+                double curvatureRadPerMeter,
+                Rotation2d heading) {
+            this.timeSeconds = timeSeconds;
+            this.velocityMetersPerSecond = velocityMetersPerSecond;
+            this.accelerationMetersPerSecondSq = accelerationMetersPerSecondSq;
+            this.poseMeters = poseMeters;
+            this.curvatureRadPerMeter = curvatureRadPerMeter;
             this.heading = heading;
         }
+
+        /**
+         * Interpolates between two States.
+         *
+         * @param endValue The end value for the interpolation.
+         * @param i The interpolant (fraction).
+         * @return The interpolated state.
+         */
+        @SuppressWarnings("ParameterName")
+        State interpolate(State endValue, double i) {
+            // Find the new t value.
+            final double newT = lerp(timeSeconds, endValue.timeSeconds, i);
+
+            // Find the delta time between the current state and the interpolated state.
+            final double deltaT = newT - timeSeconds;
+
+            // If delta time is negative, flip the order of interpolation.
+            if (deltaT < 0) {
+                return endValue.interpolate(this, 1 - i);
+            }
+
+            // Check whether the robot is reversing at this stage.
+            final boolean reversing =
+                    velocityMetersPerSecond < 0
+                            || Math.abs(velocityMetersPerSecond) < 1E-9
+                                    && accelerationMetersPerSecondSq < 0;
+
+            // Calculate the new velocity
+            // v_f = v_0 + at
+            final double newV = velocityMetersPerSecond + (accelerationMetersPerSecondSq * deltaT);
+
+            // Calculate the change in position.
+            // delta_s = v_0 t + 0.5 at^2
+            final double newS =
+                    (velocityMetersPerSecond * deltaT
+                                    + 0.5 * accelerationMetersPerSecondSq * Math.pow(deltaT, 2))
+                            * (reversing ? -1.0 : 1.0);
+
+            // Return the new state. To find the new position for the new state, we need
+            // to interpolate between the two endpoint poses. The fraction for
+            // interpolation is the change in position (delta s) divided by the total
+            // distance between the two endpoints.
+            final double interpolationFrac =
+                    newS
+                            / endValue.poseMeters
+                                    .getTranslation()
+                                    .getDistance(poseMeters.getTranslation());
+
+            return new State(
+                    newT,
+                    newV,
+                    accelerationMetersPerSecondSq,
+                    lerp(poseMeters, endValue.poseMeters, interpolationFrac),
+                    lerp(curvatureRadPerMeter, endValue.curvatureRadPerMeter, interpolationFrac),
+                    lerp(heading, endValue.heading, interpolationFrac));
+        }
+
+        @Override
+        public String toString() {
+            return String.format(
+                    "State(Sec: %.2f, Vel m/s: %.2f, Accel m/s/s: %.2f, Pose: %s, Curvature: %.2f)",
+                    timeSeconds,
+                    velocityMetersPerSecond,
+                    accelerationMetersPerSecondSq,
+                    poseMeters,
+                    curvatureRadPerMeter);
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (!(obj instanceof State)) {
+                return false;
+            }
+            State state = (State) obj;
+            return Double.compare(state.timeSeconds, timeSeconds) == 0
+                    && Double.compare(state.velocityMetersPerSecond, velocityMetersPerSecond) == 0
+                    && Double.compare(
+                                    state.accelerationMetersPerSecondSq,
+                                    accelerationMetersPerSecondSq)
+                            == 0
+                    && Double.compare(state.curvatureRadPerMeter, curvatureRadPerMeter) == 0
+                    && Objects.equals(poseMeters, state.poseMeters);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(
+                    timeSeconds,
+                    velocityMetersPerSecond,
+                    accelerationMetersPerSecondSq,
+                    poseMeters,
+                    curvatureRadPerMeter);
+        }
+    }
+
+    @Override
+    public String toString() {
+        String stateList =
+                m_states.stream().map(State::toString).collect(Collectors.joining(", \n"));
+        return String.format(
+                "Trajectory - Seconds: %.2f, States:\n%s", m_totalTimeSeconds, stateList);
+    }
+
+    @Override
+    public int hashCode() {
+        return m_states.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof edu.wpi.first.wpilibj.trajectory.Trajectory
+                && m_states.equals(((edu.wpi.first.wpilibj.trajectory.Trajectory) obj).getStates());
     }
 }
