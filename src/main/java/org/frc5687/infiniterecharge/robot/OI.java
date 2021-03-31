@@ -5,11 +5,9 @@ import static org.frc5687.infiniterecharge.robot.Constants.DriveTrain.DEADBAND;
 import static org.frc5687.infiniterecharge.robot.util.Helpers.applyDeadband;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import org.frc5687.infiniterecharge.robot.commands.AutoIntake;
-import org.frc5687.infiniterecharge.robot.commands.AutoShoot;
 import org.frc5687.infiniterecharge.robot.commands.DriveTrajectory;
 import org.frc5687.infiniterecharge.robot.subsystems.*;
 import org.frc5687.infiniterecharge.robot.util.*;
@@ -48,7 +46,7 @@ public class OI extends OutliersProxy {
         _driverRightStickButton =
                 new JoystickButton(_driverGamepad, Gamepad.Buttons.RIGHT_STICK.getNumber());
 
-        _trigger = new JoystickButton(_rightJoystick, 1);
+        _trigger = new JoystickButton(_singleJoystick, 1);
         _thumbButton = new JoystickButton(_rightJoystick, 2);
         _shootButton = new JoystickButton(_leftJoystick, 1);
         _resetYawButton = new JoystickButton(_rightJoystick, 4);
@@ -69,7 +67,7 @@ public class OI extends OutliersProxy {
             Spindexer spindexer,
             Shooter shooter,
             Hood hood,
-            Trajectory trajectory) {
+            SwerveTrajectory trajectory) {
         _driverAButton.whenPressed(
                 new DriveTrajectory(
                         driveTrain,
@@ -85,14 +83,14 @@ public class OI extends OutliersProxy {
         // 55));
         //        //        _driverAButton.whenPressed(new AutoHoodSetpoint(hood, 45));
         _trigger.whileHeld(new AutoIntake(intake));
-        _shootButton.whileHeld(new AutoShoot(spindexer, shooter));
+        //        _shootButton.whileHeld(new AutoShoot(spindexer, shooter));
         //                        _driverAButton.whenPressed(new AutoHoodSetpoint(hood, 45));
         _resetYawButton.whenPressed(driveTrain::resetYaw);
     }
 
     public double getDriveY() {
         yIn = getSpeedFromAxis(_leftJoystick, _leftJoystick.getYChannel());
-        yIn = applyDeadband(yIn, 0.01);
+        yIn = applyDeadband(yIn, 0.02);
         //        double speed = getSpeedFromAxis(_singleJoystick, _singleJoystick.getYChannel());
         double yOut = yIn / (Math.sqrt(yIn * yIn + (xIn * xIn)) + 0.0001);
         yOut = (yOut + (yIn * 2)) / 3.0;
@@ -102,7 +100,7 @@ public class OI extends OutliersProxy {
 
     public double getDriveX() {
         xIn = -getSpeedFromAxis(_leftJoystick, _leftJoystick.getXChannel());
-        xIn = applyDeadband(xIn, 0.01);
+        xIn = applyDeadband(xIn, 0.02);
 
         double xOut = xIn / (Math.sqrt(xIn * xIn + (yIn * yIn)) + 0.0001);
         xOut = (xOut + (xIn * 2)) / 3.0;

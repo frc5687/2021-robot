@@ -6,7 +6,6 @@ import static org.frc5687.infiniterecharge.robot.RobotMap.CAN.TALONFX.*;
 
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.controller.HolonomicDriveController;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.estimator.SwerveDrivePoseEstimator;
@@ -19,17 +18,17 @@ import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
-import edu.wpi.first.wpilibj.trajectory.constraint.SwerveDriveKinematicsConstraint;
 import edu.wpi.first.wpilibj.util.Units;
 import java.util.concurrent.atomic.AtomicReference;
 import org.frc5687.infiniterecharge.robot.Constants;
 import org.frc5687.infiniterecharge.robot.OI;
 import org.frc5687.infiniterecharge.robot.RobotMap;
+import org.frc5687.infiniterecharge.robot.commands.HolonomicDriveController;
 import org.frc5687.infiniterecharge.robot.util.GloWorm;
 import org.frc5687.infiniterecharge.robot.util.OutliersContainer;
+import org.frc5687.infiniterecharge.robot.util.SwerveTrajectory;
 import org.frc5687.lib.T265Camera;
 
 public class DriveTrain extends OutliersSubsystem {
@@ -125,13 +124,13 @@ public class DriveTrain extends OutliersSubsystem {
                             ANGLE_kD,
                             new TrapezoidProfile.Constraints(
                                     PROFILE_CONSTRAINT_VEL, PROFILE_CONSTRAINT_ACCEL));
-            _angleController.enableContinuousInput(-Math.PI / 2.0, Math.PI / 2.0);
+            _angleController.enableContinuousInput(-Math.PI, Math.PI);
         } catch (Exception e) {
             error(e.getMessage());
         }
 
-        enableMetrics();
-        logMetrics("x", "y", "heading", "xg", "yg", "thetag");
+        //        enableMetrics();
+        //        logMetrics("x", "y", "heading", "xg", "yg", "thetag");
 
         _field = new Field2d();
         SmartDashboard.putData("Field", _field);
@@ -166,6 +165,10 @@ public class DriveTrain extends OutliersSubsystem {
         //                _backLeft.getState(),
         //                _backRight.getState());
         //        _poseEstimator.addVisionMeasurement(getSlamPose(), Timer.getFPGATimestamp());
+    }
+
+    public void setField(Pose2d pose, Rotation2d rot) {
+        _field.setRobotPose(pose.getX(), pose.getY(), rot);
     }
 
     public void updateOdometry() {
@@ -346,23 +349,12 @@ public class DriveTrain extends OutliersSubsystem {
         }
     }
 
-    public SwerveDriveKinematicsConstraint getKinematicConstraint() {
-        return new SwerveDriveKinematicsConstraint(_kinematics, MAX_MPS);
-    }
-
     public TrajectoryConfig getConfig() {
-        return new TrajectoryConfig(MAX_MPS, MAX_MPSS)
-                .setKinematics(_kinematics)
-                .addConstraint(getKinematicConstraint());
+        return new TrajectoryConfig(MAX_MPS, MAX_MPSS).setKinematics(_kinematics);
     }
 
-    public void trajectoryFollower(Trajectory.State goal, Rotation2d heading) {
-        ChassisSpeeds adjustedSpeeds =
-                _controller.calculate(_odomerty.getPoseMeters(), goal, heading);
-
-        metric("xg", goal.poseMeters.getX());
-        metric("yg", goal.poseMeters.getY());
-        metric("thetag", goal.poseMeters.getRotation().getDegrees());
+    public void trajectoryFollower(SwerveTrajectory.State goal) {
+        ChassisSpeeds adjustedSpeeds = _controller.calculate(_odomerty.getPoseMeters(), goal);
         SwerveModuleState[] moduleStates = _kinematics.toSwerveModuleStates(adjustedSpeeds);
         SwerveDriveKinematics.normalizeWheelSpeeds(moduleStates, MAX_MPS);
 

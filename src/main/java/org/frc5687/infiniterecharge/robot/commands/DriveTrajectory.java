@@ -16,27 +16,38 @@ public class DriveTrajectory extends OutliersCommand {
     private List<Pose2d> _waypoints;
     private List<Rotation2d> _heading;
     private double _time;
-    private final boolean _realtime;
+    private boolean _realtime;
     private SwerveTrajectory _trajectory;
     private Trajectory _trajectoryW;
     private final Timer _timer;
 
-    public DriveTrajectory(DriveTrain driveTrain, Trajectory trajectory) {
+    public DriveTrajectory(DriveTrain driveTrain) {
         addRequirements(driveTrain);
         _driveTrain = driveTrain;
+        _timer = new Timer();
+        enableMetrics();
+        logMetrics("x", "y", "heading");
+    }
+
+    public DriveTrajectory(DriveTrain driveTrain, Trajectory trajectory) {
+        this(driveTrain);
         _trajectoryW = trajectory;
         _realtime = false;
-        _timer = new Timer();
+    }
+
+    public DriveTrajectory(DriveTrain driveTrain, SwerveTrajectory swerveTrajectory) {
+        this(driveTrain);
+
+        _trajectory = swerveTrajectory;
+        _realtime = false;
     }
 
     public DriveTrajectory(
             DriveTrain driveTrain, List<Pose2d> waypoints, List<Rotation2d> heading) {
-        addRequirements(driveTrain);
-        _driveTrain = driveTrain;
+        this(driveTrain);
         _waypoints = waypoints;
         _heading = heading;
         _realtime = true;
-        _timer = new Timer();
     }
 
     @Override
@@ -46,15 +57,20 @@ public class DriveTrajectory extends OutliersCommand {
                     SwerveTrajectoryGenerator.generateTrajectory(
                             _waypoints, _heading, _driveTrain.getConfig());
         }
-        _time = _trajectoryW.getTotalTimeSeconds();
+        _time = _trajectory.getTotalTimeSeconds();
         _timer.reset();
         _timer.start();
     }
 
     @Override
     public void execute() {
-        Trajectory.State goal = _trajectoryW.sample(_timer.get());
-        _driveTrain.trajectoryFollower(goal, new Rotation2d(0));
+        SwerveTrajectory.State goal = _trajectory.sample(_timer.get());
+        _driveTrain.setField(goal.poseMeters, goal.heading);
+
+        //        metric("heading", goal.heading.getDegrees());
+        //        metric("x", goal.poseMeters.getX());
+        //        metric("y", goal.poseMeters.getY());
+        _driveTrain.trajectoryFollower(goal);
     }
 
     @Override

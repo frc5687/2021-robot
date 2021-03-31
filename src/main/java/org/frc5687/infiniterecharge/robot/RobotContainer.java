@@ -4,11 +4,7 @@ package org.frc5687.infiniterecharge.robot;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Transform2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import java.io.IOException;
@@ -67,25 +63,20 @@ public class RobotContainer extends OutliersContainer {
 
         String trajectoryJSON = "output/Slalom.wpilib.json";
         Trajectory trajectoryNew = new Trajectory();
-        SwerveTrajectory trajectory1 =
+        SwerveTrajectory swerveTrajectory =
                 SwerveTrajectoryGenerator.generateTrajectory(
-                        Constants.AutoPaths.Slalom.waypoint, _driveTrain.getConfig());
+                        Constants.AutoPaths.Slalom.waypoints,
+                        Constants.AutoPaths.Slalom.headings,
+                        _driveTrain.getConfig());
         try {
             Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
             Trajectory trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-            Trajectory trajectory2 =
-                    TrajectoryGenerator.generateTrajectory(
-                            Constants.AutoPaths.Slalom.waypoint, _driveTrain.getConfig());
-            Transform2d transform =
-                    new Pose2d(0, 0, new Rotation2d(0)).minus(trajectory.getInitialPose());
-            trajectoryNew = trajectory.transformBy(transform);
 
             error("Trajectory successfully opened.");
         } catch (IOException ex) {
             error("Unable to open trajectory: " + trajectoryJSON + ex.getMessage());
         }
-        error("TrajectoryNew staring pose is " + trajectoryNew.getInitialPose().toString());
-        _oi.initializeButtons(_driveTrain, _intake, _spindexer, _shooter, _hood, trajectoryNew);
+        _oi.initializeButtons(_driveTrain, _intake, _spindexer, _shooter, _hood, swerveTrajectory);
         setDefaultCommand(_driveTrain, new Drive(_driveTrain, _oi));
         setDefaultCommand(_intake, new IdleIntake(_intake));
         setDefaultCommand(_spindexer, new IdleSpindexer(_spindexer));

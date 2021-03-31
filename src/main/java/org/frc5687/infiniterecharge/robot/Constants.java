@@ -60,20 +60,20 @@ public class Constants {
         public static final double SENSITIVITY_VY = 0.9;
         public static final double SENSITIVITY_OMEGA = 0.3;
         public static final double MAX_MPS = 5.1816;
-
-        //        public static final double MAX_MPS = 1.0;
-        public static final double MAX_ANG_VEL = Math.PI * 2.0;
         public static final double MAX_MPSS = 0.5; // accel
+
+        public static final double MAX_ANG_VEL = Math.PI * 2.0;
 
         public static final double ANGLE_kP = 4.5;
         public static final double ANGLE_kI = 0.0;
-        public static final double ANGLE_kD = 0.0;
+        public static final double ANGLE_kD = 0.1;
 
         public static final double kP = 10.5;
         public static final double kI = 0.0;
         public static final double kD = 0.5;
-        public static final double PROFILE_CONSTRAINT_VEL = 3.0 * Math.PI;
-        public static final double PROFILE_CONSTRAINT_ACCEL = Math.PI;
+
+        public static final double PROFILE_CONSTRAINT_VEL = 4.0 * Math.PI;
+        public static final double PROFILE_CONSTRAINT_ACCEL = 2.5 * Math.PI;
     }
 
     public static class DifferentialSwerveModule {
@@ -177,25 +177,35 @@ public class Constants {
 
     public static class AutoPaths {
         public static class Slalom {
-            public static final Pose2d startPose = new Pose2d(1.3, -3.9, new Rotation2d(0));
-            public static final List<Pose2d> waypoint =
+            public static final List<Pose2d> waypoints =
                     Arrays.asList(
-                            new Pose2d(1.3, -3.9, new Rotation2d(0)),
-                            new Pose2d(3, -2.3, new Rotation2d(0)),
-                            new Pose2d(6.37, -2.3, Rotation2d.fromDegrees(0)),
-                            new Pose2d(7.07, -3.6, Rotation2d.fromDegrees(0)),
-                            new Pose2d(8.3, -3.6, Rotation2d.fromDegrees(0)),
-                            new Pose2d(8.3, -2.3, Rotation2d.fromDegrees(180)),
-                            new Pose2d(7.07, -2.3, Rotation2d.fromDegrees(-180)),
-                            new Pose2d(6.37, -3.6, Rotation2d.fromDegrees(180)),
-                            new Pose2d(2.8, -3.6, Rotation2d.fromDegrees(180)),
-                            new Pose2d(1.0, -2.1, Rotation2d.fromDegrees(180)));
-
-            public static final Pose2d endPose = new Pose2d(0.8, -2.1, Rotation2d.fromDegrees(180));
+                            new Pose2d(0.0, 0.0, Rotation2d.fromDegrees(45)),
+                            new Pose2d(1.16, 1.0, Rotation2d.fromDegrees(0)),
+                            new Pose2d(5.76, 1.0, Rotation2d.fromDegrees(-20)),
+                            new Pose2d(6.1, 0.5, Rotation2d.fromDegrees(-60)),
+                            new Pose2d(6.85, 0.0, Rotation2d.fromDegrees(0)),
+                            new Pose2d(7.3, 0.5, Rotation2d.fromDegrees(90)),
+                            new Pose2d(6.85, 1.0, Rotation2d.fromDegrees(180)),
+                            new Pose2d(6.1, 0.5, Rotation2d.fromDegrees(-120)),
+                            new Pose2d(5.76, 0.0, Rotation2d.fromDegrees(-160)),
+                            new Pose2d(1.143, 0.0, Rotation2d.fromDegrees(160)),
+                            new Pose2d(0.0, 1.0, Rotation2d.fromDegrees(180)));
+            public static final List<Rotation2d> headings =
+                    Arrays.asList(
+                            Rotation2d.fromDegrees(0),
+                            Rotation2d.fromDegrees(-90),
+                            Rotation2d.fromDegrees(-110),
+                            Rotation2d.fromDegrees(-180),
+                            Rotation2d.fromDegrees(-90),
+                            Rotation2d.fromDegrees(0),
+                            Rotation2d.fromDegrees(90),
+                            Rotation2d.fromDegrees(180),
+                            Rotation2d.fromDegrees(180),
+                            Rotation2d.fromDegrees(180),
+                            Rotation2d.fromDegrees(180));
         }
 
         public static class BouncePath {
-            public static final Pose2d startPose = new Pose2d(1.4, -2.3, new Rotation2d(0));
             public static final List<Translation2d> waypoint =
                     Arrays.asList(
                             new Translation2d(2.3, -0.78),
@@ -207,8 +217,6 @@ public class Constants {
                             new Translation2d(6.35, -3.6),
                             new Translation2d(6.88, -0.85),
                             new Translation2d(7.35, -2.2));
-
-            public static final Pose2d endPose = new Pose2d(8.4, -2.4, new Rotation2d(0));
         }
 
         public static class test {
@@ -216,12 +224,12 @@ public class Constants {
                     Arrays.asList(
                             new Pose2d(0, 0, new Rotation2d(0)),
                             new Pose2d(1, 0, new Rotation2d(0)),
-                            new Pose2d(9, 0, new Rotation2d(0)));
+                            new Pose2d(3, 0, new Rotation2d(0)));
             public static final List<Rotation2d> headings =
                     Arrays.asList(
                             new Rotation2d(0),
-                            Rotation2d.fromDegrees(0),
-                            Rotation2d.fromDegrees(0));
+                            Rotation2d.fromDegrees(90),
+                            Rotation2d.fromDegrees(-90));
         }
     }
 }
