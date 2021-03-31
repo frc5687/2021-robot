@@ -30,15 +30,21 @@ public class DiffSwerveModule {
     private Matrix<N3, N1> _reference; // same thing as a set point.
     private Matrix<N2, N1> _u;
     private double _positionWheel;
+    private double _encoderOffset;
 
     private boolean _running = false;
 
     public DiffSwerveModule(
-            Translation2d positionVector, int leftMotorID, int rightMotorID, int encoderNum) {
+            Translation2d positionVector,
+            int leftMotorID,
+            int rightMotorID,
+            int encoderNum,
+            double encoderOffset) {
         _boreEncoder = new DutyCycleEncoder(encoderNum);
         _boreEncoder.setDistancePerRotation(2 * Math.PI);
         _reference = Matrix.mat(Nat.N3(), Nat.N1()).fill(0, 0, 0);
         _positionVector = positionVector;
+        _encoderOffset = encoderOffset;
 
         _leftFalcon = new TalonFX(leftMotorID);
         _rightFalcon = new TalonFX(rightMotorID);
@@ -214,7 +220,8 @@ public class DiffSwerveModule {
     }
 
     public double getModuleAngle() {
-        return Helpers.boundHalfAngle(-(_boreEncoder.getDistance() % (2.0 * Math.PI)), true);
+        return Helpers.boundHalfAngle(
+                (_boreEncoder.getDistance() % (2.0 * Math.PI)) - _encoderOffset, true);
     }
 
     public double getWheelAngularVelocity() {

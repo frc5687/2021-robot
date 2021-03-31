@@ -34,6 +34,9 @@ public class OI extends OutliersProxy {
     private Button _driverYButton;
     private Button _driverRightTrigger;
 
+    private double xIn;
+    private double yIn;
+
     public OI() {
         _driverGamepad = new Gamepad(0);
 
@@ -56,6 +59,8 @@ public class OI extends OutliersProxy {
         _driverXButton = new JoystickButton(_driverGamepad, Gamepad.Buttons.X.getNumber());
         _driverRightTrigger =
                 new AxisButton(_driverGamepad, Gamepad.Axes.RIGHT_TRIGGER.getNumber(), 0.2);
+        xIn = 0;
+        yIn = 0;
     }
 
     public void initializeButtons(
@@ -86,19 +91,24 @@ public class OI extends OutliersProxy {
     }
 
     public double getDriveY() {
-        double speed = getSpeedFromAxis(_leftJoystick, _leftJoystick.getYChannel());
+        yIn = getSpeedFromAxis(_leftJoystick, _leftJoystick.getYChannel());
+        yIn = applyDeadband(yIn, 0.01);
         //        double speed = getSpeedFromAxis(_singleJoystick, _singleJoystick.getYChannel());
+        double yOut = yIn / (Math.sqrt(yIn * yIn + (xIn * xIn)) + 0.0001);
+        yOut = (yOut + (yIn * 2)) / 3.0;
         //        double speed = getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_Y.getNumber());
-        speed = applyDeadband(speed, DEADBAND);
-        return speed;
+        return yOut;
     }
 
     public double getDriveX() {
-        double speed = -getSpeedFromAxis(_leftJoystick, _leftJoystick.getXChannel());
+        xIn = -getSpeedFromAxis(_leftJoystick, _leftJoystick.getXChannel());
+        xIn = applyDeadband(xIn, 0.01);
+
+        double xOut = xIn / (Math.sqrt(xIn * xIn + (yIn * yIn)) + 0.0001);
+        xOut = (xOut + (xIn * 2)) / 3.0;
         //        double speed = -getSpeedFromAxis(_singleJoystick, _singleJoystick.getXChannel());
         //        double speed = -getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_X.getNumber());
-        speed = applyDeadband(speed, DEADBAND);
-        return speed;
+        return xOut;
     }
 
     public double getRotationX() {
