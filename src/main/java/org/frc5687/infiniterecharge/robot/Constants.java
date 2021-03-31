@@ -179,10 +179,12 @@ public class Constants {
         public static class Slalom {
             public static final List<Pose2d> waypoints =
                     Arrays.asList(
-                            new Pose2d(0.0, 0.0, Rotation2d.fromDegrees(45)),
+                            new Pose2d(0.0, 0.0, Rotation2d.fromDegrees(30)),
+                            new Pose2d(0.6, 0.5, Rotation2d.fromDegrees(45)),
                             new Pose2d(1.16, 1.0, Rotation2d.fromDegrees(0)),
-                            new Pose2d(5.76, 1.0, Rotation2d.fromDegrees(-20)),
-                            new Pose2d(6.1, 0.5, Rotation2d.fromDegrees(-60)),
+                            new Pose2d(4.76, 1.0, Rotation2d.fromDegrees(0)),
+                            new Pose2d(5.76, 0.8, Rotation2d.fromDegrees(0)),
+                            new Pose2d(6.1, 0.5, Rotation2d.fromDegrees(-45)),
                             new Pose2d(6.85, 0.0, Rotation2d.fromDegrees(0)),
                             new Pose2d(7.3, 0.5, Rotation2d.fromDegrees(90)),
                             new Pose2d(6.85, 1.0, Rotation2d.fromDegrees(180)),
@@ -193,8 +195,10 @@ public class Constants {
             public static final List<Rotation2d> headings =
                     Arrays.asList(
                             Rotation2d.fromDegrees(0),
+                            Rotation2d.fromDegrees(-20),
                             Rotation2d.fromDegrees(-90),
                             Rotation2d.fromDegrees(-110),
+                            Rotation2d.fromDegrees(-140),
                             Rotation2d.fromDegrees(-180),
                             Rotation2d.fromDegrees(-90),
                             Rotation2d.fromDegrees(0),
