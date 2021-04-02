@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import org.frc5687.infiniterecharge.robot.commands.AutoIntake;
+import org.frc5687.infiniterecharge.robot.commands.AutoShootSetpoint;
 import org.frc5687.infiniterecharge.robot.commands.DriveTrajectory;
 import org.frc5687.infiniterecharge.robot.subsystems.*;
 import org.frc5687.infiniterecharge.robot.util.*;
@@ -47,9 +48,9 @@ public class OI extends OutliersProxy {
                 new JoystickButton(_driverGamepad, Gamepad.Buttons.RIGHT_STICK.getNumber());
 
         _trigger = new JoystickButton(_singleJoystick, 1);
-        _thumbButton = new JoystickButton(_rightJoystick, 2);
+        _thumbButton = new JoystickButton(_singleJoystick, 2);
         _shootButton = new JoystickButton(_leftJoystick, 1);
-        _resetYawButton = new JoystickButton(_rightJoystick, 4);
+        _resetYawButton = new JoystickButton(_singleJoystick, 4);
 
         _driverAButton = new JoystickButton(_driverGamepad, Gamepad.Buttons.A.getNumber());
         _driverBButton = new JoystickButton(_driverGamepad, Gamepad.Buttons.B.getNumber());
@@ -78,14 +79,12 @@ public class OI extends OutliersProxy {
         //                        waypoints,
         //                        heading,
         //                        new Pose2d(2, 0, new Rotation2d(0))));
-        //                _driverYButton.whenHeld(new AutoShootSetpoint(shooter, spindexer, hood,
-        // 3000,
-        // 55));
+        _driverYButton.whenHeld(new AutoShootSetpoint(shooter, spindexer, hood, 5000, 45));
         //        //        _driverAButton.whenPressed(new AutoHoodSetpoint(hood, 45));
         _trigger.whileHeld(new AutoIntake(intake));
         //        _shootButton.whileHeld(new AutoShoot(spindexer, shooter));
         //                        _driverAButton.whenPressed(new AutoHoodSetpoint(hood, 45));
-        _resetYawButton.whenPressed(driveTrain::resetYaw);
+        _resetYawButton.whenPressed(driveTrain::resetOdometry);
     }
 
     public double getDriveY() {

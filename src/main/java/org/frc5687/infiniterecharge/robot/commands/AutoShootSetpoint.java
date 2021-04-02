@@ -34,7 +34,7 @@ public class AutoShootSetpoint extends Shoot {
         super.initialize();
         _endTime = null;
         _shooter.setVelocitySpeed(_setpointShooter);
-        _hood.setHoodAngle(_setpointHood);
+        //        _hood.setHoodAngle(_setpointHood);
     }
 
     @Override

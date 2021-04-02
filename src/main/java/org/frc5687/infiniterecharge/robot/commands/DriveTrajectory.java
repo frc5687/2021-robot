@@ -65,7 +65,7 @@ public class DriveTrajectory extends OutliersCommand {
     @Override
     public void execute() {
         SwerveTrajectory.State goal = _trajectory.sample(_timer.get());
-        _driveTrain.setField(goal.poseMeters, goal.heading);
+        _driveTrain.setFieldPath(goal.poseMeters, goal.heading);
 
         //        metric("heading", goal.heading.getDegrees());
         //        metric("x", goal.poseMeters.getX());

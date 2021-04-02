@@ -112,9 +112,9 @@ public class DriveTrain extends OutliersSubsystem {
                             new PIDController(kP, kI, kD),
                             new PIDController(kP, kI, kD),
                             new ProfiledPIDController(
-                                    kP,
-                                    kI,
-                                    kD,
+                                    ANGLE_kP,
+                                    ANGLE_kI,
+                                    ANGLE_kD,
                                     new TrapezoidProfile.Constraints(
                                             PROFILE_CONSTRAINT_VEL, PROFILE_CONSTRAINT_ACCEL)));
             _angleController =
@@ -129,8 +129,8 @@ public class DriveTrain extends OutliersSubsystem {
             error(e.getMessage());
         }
 
-        //        enableMetrics();
-        //        logMetrics("x", "y", "heading", "xg", "yg", "thetag");
+        enableMetrics();
+        logMetrics("x", "y", "heading");
 
         _field = new Field2d();
         SmartDashboard.putData("Field", _field);
@@ -154,6 +154,7 @@ public class DriveTrain extends OutliersSubsystem {
                 _backRight.getState());
         //        _field.setRobotPose(_poseEstimator.getEstimatedPosition());
         //        updateOdometry();
+        _field.setRobotPose(getOdometryPose());
 
         //        metric("estimated Pose", _poseEstimator.getEstimatedPosition().toString());
         //        metric("slam pose", getSlamPose().toString());
@@ -169,6 +170,14 @@ public class DriveTrain extends OutliersSubsystem {
 
     public void setField(Pose2d pose, Rotation2d rot) {
         _field.setRobotPose(pose.getX(), pose.getY(), rot);
+    }
+
+    public void setFieldPath(Pose2d pose, Rotation2d rot) {
+        _field.getObject("robot trajectory").setPose(pose.getX(), pose.getY(), rot);
+    }
+
+    public void resetOdometry() {
+        _odomerty.resetPosition(new Pose2d(0, 0, new Rotation2d()), getHeading());
     }
 
     public void updateOdometry() {
@@ -276,19 +285,19 @@ public class DriveTrain extends OutliersSubsystem {
     }
 
     public void setFrontRightModuleState(SwerveModuleState state) {
-        _frontRight.setIdealState(state);
+        _frontRight.setModuleState(state);
     }
 
     public void setFrontLeftModuleState(SwerveModuleState state) {
-        _frontLeft.setIdealState(state);
+        _frontLeft.setModuleState(state);
     }
 
     public void setBackLeftModuleState(SwerveModuleState state) {
-        _backLeft.setIdealState(state);
+        _backLeft.setModuleState(state);
     }
 
     public void setBackRightModuleState(SwerveModuleState state) {
-        _backRight.setIdealState(state);
+        _backRight.setModuleState(state);
     }
 
     public double getYaw() {
