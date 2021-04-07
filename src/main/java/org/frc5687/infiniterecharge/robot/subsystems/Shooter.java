@@ -41,7 +41,7 @@ public class Shooter extends OutliersSubsystem {
             _leftShooter.setStatusFramePeriod(StatusFrame.Status_1_General, 255);
             _leftShooter.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 255);
 
-            _rightShooter.configClosedloopRamp(2);
+            _rightShooter.configClosedloopRamp(4);
             _rightShooter.selectProfileSlot(0, 0);
         } catch (Exception e) {
             error(e.getMessage());

@@ -87,7 +87,7 @@ public class DriveTrain extends OutliersSubsystem {
                             BL_RIGHT_FALCON,
                             BL_LEFT_FALCON,
                             RobotMap.DIO.ENCODER_BL,
-                            -0.416);
+                            -3.557); // -0.416
 
             _kinematics =
                     new SwerveDriveKinematics(
@@ -130,7 +130,7 @@ public class DriveTrain extends OutliersSubsystem {
         }
 
         enableMetrics();
-        logMetrics("x", "y", "heading");
+        logMetrics("leftVoltage", "rightVoltage", "leftCurrent", "rightCurrent");
 
         _field = new Field2d();
         SmartDashboard.putData("Field", _field);
@@ -154,30 +154,14 @@ public class DriveTrain extends OutliersSubsystem {
                 _backRight.getState());
         //        _field.setRobotPose(_poseEstimator.getEstimatedPosition());
         //        updateOdometry();
-        _field.setRobotPose(getOdometryPose());
-
-        //        metric("estimated Pose", _poseEstimator.getEstimatedPosition().toString());
-        //        metric("slam pose", getSlamPose().toString());
-        SmartDashboard.putString("pose", _odomerty.getPoseMeters().toString());
-        //        _poseEstimator.update(
-        //                getHeading(),
-        //                _frontLeft.getState(),
-        //                _frontRight.getState(),
-        //                _backLeft.getState(),
-        //                _backRight.getState());
-        //        _poseEstimator.addVisionMeasurement(getSlamPose(), Timer.getFPGATimestamp());
-    }
-
-    public void setField(Pose2d pose, Rotation2d rot) {
-        _field.setRobotPose(pose.getX(), pose.getY(), rot);
-    }
-
-    public void setFieldPath(Pose2d pose, Rotation2d rot) {
-        _field.getObject("robot trajectory").setPose(pose.getX(), pose.getY(), rot);
     }
 
     public void resetOdometry() {
         _odomerty.resetPosition(new Pose2d(0, 0, new Rotation2d()), getHeading());
+    }
+
+    public void setRobotPosition(Pose2d pose) {
+        _poseEstimator.resetPosition(pose, getHeading());
     }
 
     public void updateOdometry() {
@@ -218,11 +202,16 @@ public class DriveTrain extends OutliersSubsystem {
         //        metric("Module Angle", _backLeft.getModuleAngle());
         //        //        metric("Predicted Angle", _backLeft.getPredictedAzimuthAngle());
         //        metric("Reference Module Angle", _backLeft.getReferenceModuleAngle());
-        metric("Heading", getHeading().getDegrees());
-        metric("IMU test", _imu.getAngle());
-        metric("x", getOdometryPose().getX());
-        metric("y", getOdometryPose().getY());
-        metric("heading", getOdometryPose().getRotation().getDegrees());
+        //        metric("Heading", getHeading().getDegrees());
+        //        metric("IMU test", _imu.getAngle());
+        //        metric("x", getOdometryPose().getX());
+        //        metric("y", getOdometryPose().getY());
+        //        metric("heading", getOdometryPose().getRotation().getDegrees());
+
+        metric("leftVoltage", _backLeft.getLeftVoltage());
+        metric("leftCurrent", _backLeft.getLeftCurrent());
+        metric("rightCurrent", _backLeft.getRightCurrent());
+        metric("rightVoltage", _backLeft.getRightVoltage());
 
         //        metric("Estimated Pose", _poseEstimator.getEstimatedPosition().toString());
         //        metric("has Target", _vision.hasTarget());
@@ -285,19 +274,19 @@ public class DriveTrain extends OutliersSubsystem {
     }
 
     public void setFrontRightModuleState(SwerveModuleState state) {
-        _frontRight.setModuleState(state);
+        _frontRight.setIdealState(state);
     }
 
     public void setFrontLeftModuleState(SwerveModuleState state) {
-        _frontLeft.setModuleState(state);
+        _frontLeft.setIdealState(state);
     }
 
     public void setBackLeftModuleState(SwerveModuleState state) {
-        _backLeft.setModuleState(state);
+        _backLeft.setIdealState(state);
     }
 
     public void setBackRightModuleState(SwerveModuleState state) {
-        _backRight.setModuleState(state);
+        _backRight.setIdealState(state);
     }
 
     public double getYaw() {

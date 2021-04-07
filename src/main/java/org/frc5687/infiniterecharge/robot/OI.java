@@ -7,9 +7,7 @@ import static org.frc5687.infiniterecharge.robot.util.Helpers.applyDeadband;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import org.frc5687.infiniterecharge.robot.commands.AutoIntake;
-import org.frc5687.infiniterecharge.robot.commands.AutoShootSetpoint;
-import org.frc5687.infiniterecharge.robot.commands.DriveTrajectory;
+import org.frc5687.infiniterecharge.robot.commands.*;
 import org.frc5687.infiniterecharge.robot.subsystems.*;
 import org.frc5687.infiniterecharge.robot.util.*;
 
@@ -68,18 +66,28 @@ public class OI extends OutliersProxy {
             Spindexer spindexer,
             Shooter shooter,
             Hood hood,
-            SwerveTrajectory trajectory) {
-        _driverAButton.whenPressed(
-                new DriveTrajectory(
-                        driveTrain,
-                        Constants.AutoPaths.test.waypoints,
-                        Constants.AutoPaths.test.headings));
-        _driverBButton.whenPressed(new DriveTrajectory(driveTrain, trajectory));
+            SwerveTrajectory trajectory,
+            SwerveTrajectory trajectory1) {
+        //        _driverAButton.whenPressed(
+        //                new DriveTrajectory(
+        //                        driveTrain,
+        //                        Constants.AutoPaths.test.waypoints,
+        //                        Constants.AutoPaths.test.headings));
+        _driverAButton.whenPressed(new DriveTrajectory(driveTrain, trajectory));
+        //        _driverBButton.whenPressed(new DriveTrajectory(driveTrain, trajectory1));
+        //        _driverBButton.whenPressed(new DriveTrajectoryAndIntake(driveTrain, intake,
+        // trajectory));
         //                        driveTrain.getOdometryPose(),
         //                        waypoints,
         //                        heading,
         //                        new Pose2d(2, 0, new Rotation2d(0))));
-        _driverYButton.whenHeld(new AutoShootSetpoint(shooter, spindexer, hood, 5000, 45));
+        //        _driverAButton.whenHeld(new AutoShootSetpoint(shooter, spindexer, hood, 3500,
+        // 48));
+        //        _shootButton.whenHeld(new AutoShootSetpoint(shooter, spindexer, hood, 4100, 70));
+        //        _driverYButton.whenHeld(new AutoShootSetpoint(shooter, spindexer, hood, 4500,
+        // 72));
+        //        _driverXButton.whenHeld(new AutoShootSetpoint(shooter, spindexer, hood, 5000,
+        // 78)); // 4th
         //        //        _driverAButton.whenPressed(new AutoHoodSetpoint(hood, 45));
         _trigger.whileHeld(new AutoIntake(intake));
         //        _shootButton.whileHeld(new AutoShoot(spindexer, shooter));
@@ -89,7 +97,7 @@ public class OI extends OutliersProxy {
 
     public double getDriveY() {
         yIn = getSpeedFromAxis(_leftJoystick, _leftJoystick.getYChannel());
-        yIn = applyDeadband(yIn, 0.02);
+        yIn = applyDeadband(yIn, 0.1);
         //        double speed = getSpeedFromAxis(_singleJoystick, _singleJoystick.getYChannel());
         double yOut = yIn / (Math.sqrt(yIn * yIn + (xIn * xIn)) + 0.0001);
         yOut = (yOut + (yIn * 2)) / 3.0;
@@ -99,7 +107,7 @@ public class OI extends OutliersProxy {
 
     public double getDriveX() {
         xIn = -getSpeedFromAxis(_leftJoystick, _leftJoystick.getXChannel());
-        xIn = applyDeadband(xIn, 0.02);
+        xIn = applyDeadband(xIn, 0.1);
 
         double xOut = xIn / (Math.sqrt(xIn * xIn + (yIn * yIn)) + 0.0001);
         xOut = (xOut + (xIn * 2)) / 3.0;

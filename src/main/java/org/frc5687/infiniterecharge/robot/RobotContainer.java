@@ -4,6 +4,7 @@ package org.frc5687.infiniterecharge.robot;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -68,23 +69,40 @@ public class RobotContainer extends OutliersContainer {
                         Constants.AutoPaths.Slalom.waypoints,
                         Constants.AutoPaths.Slalom.headings,
                         _driveTrain.getConfig());
+        SwerveTrajectory swerveTrajectory1 =
+                SwerveTrajectoryGenerator.generateTrajectory(
+                        Constants.AutoPaths.ShootPositions.waypoints1,
+                        Constants.AutoPaths.ShootPositions.headings1,
+                        _driveTrain.getConfig());
+
         try {
             Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
             Trajectory trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-
             error("Trajectory successfully opened.");
         } catch (IOException ex) {
             error("Unable to open trajectory: " + trajectoryJSON + ex.getMessage());
         }
-        _oi.initializeButtons(_driveTrain, _intake, _spindexer, _shooter, _hood, swerveTrajectory);
+        _oi.initializeButtons(
+                _driveTrain,
+                _intake,
+                _spindexer,
+                _shooter,
+                _hood,
+                swerveTrajectory,
+                swerveTrajectory1);
         setDefaultCommand(_driveTrain, new Drive(_driveTrain, _oi));
         setDefaultCommand(_intake, new IdleIntake(_intake));
-        setDefaultCommand(_spindexer, new IdleSpindexer(_spindexer));
+        //        setDefaultCommand(_spindexer, new IdleSpindexer(_spindexer));
         setDefaultCommand(_hood, new IdleHood(_hood, _oi));
         setDefaultCommand(_shooter, new IdleShooter(_shooter, _oi));
 
         _robot.addPeriodic(this::controllerPeriodic, 0.005, 0.005);
         _imu.reset();
+        _driveTrain.setRobotPosition(
+                new Pose2d(
+                        Constants.Field.FULL_FIELD_X - 4,
+                        Constants.Field.TARGET_LINE_Y,
+                        _driveTrain.getHeading()));
     }
 
     public void periodic() {}
@@ -111,6 +129,7 @@ public class RobotContainer extends OutliersContainer {
     @Override
     public void updateDashboard() {
         _driveTrain.updateDashboard();
+        _hood.updateDashboard();
         //        metric("yaw", _imu.getYaw());
     }
 

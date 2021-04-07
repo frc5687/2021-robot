@@ -23,7 +23,9 @@ public class IdleShooter extends OutliersCommand {
     @Override
     public void execute() {
         super.execute();
-        _shooter.setShooterSpeed(-_oi.getFlywheelSpeed());
+        // 4100 good
+        //        _shooter.setVelocitySpeed(5500);
+        //                _shooter.setShooterSpeed(-_oi.getFlywheelSpeed());
     }
 
     @Override

@@ -33,8 +33,8 @@ public class AutoShootSetpoint extends Shoot {
     public void initialize() {
         super.initialize();
         _endTime = null;
-        _shooter.setVelocitySpeed(_setpointShooter);
-        //        _hood.setHoodAngle(_setpointHood);
+        //        _shooter.setVelocitySpeed(_setpointShooter);
+        _hood.setHoodAngle(_setpointHood);
     }
 
     @Override
@@ -51,5 +51,12 @@ public class AutoShootSetpoint extends Shoot {
             return false;
         }
         return System.currentTimeMillis() >= _endTime;
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        super.end(interrupted);
+        _hood.setHoodAngle(Constants.Hood.MIN_ANGLE);
+        _shooter.setVelocitySpeed(0);
     }
 }

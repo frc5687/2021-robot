@@ -4,6 +4,6 @@
   "maxVelocity": 5.1816,
   "maxAcceleration": 1.0,
   "wheelBase": 0.6223,
-  "gameName": "Slalom Path",
+  "gameName": "Bounce Path",
   "outputDir": "../src/main/deploy"
 }

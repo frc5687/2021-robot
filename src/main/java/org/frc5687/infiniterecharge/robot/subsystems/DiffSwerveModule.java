@@ -60,8 +60,8 @@ public class DiffSwerveModule {
         _rightFalcon.configForwardSoftLimitEnable(false);
         _leftFalcon.configForwardSoftLimitEnable(false);
 
-        _leftFalcon.configVoltageCompSaturation(12.0, TIMEOUT);
-        _rightFalcon.configVoltageCompSaturation(12.0, TIMEOUT);
+        _leftFalcon.configVoltageCompSaturation(VOLTAGE, TIMEOUT);
+        _rightFalcon.configVoltageCompSaturation(VOLTAGE, TIMEOUT);
         _leftFalcon.enableVoltageCompensation(true);
         _rightFalcon.enableVoltageCompensation(true);
 
@@ -116,32 +116,24 @@ public class DiffSwerveModule {
         // Update Rate.
         _swerveControlLoop =
                 new LinearSystemLoop<>(
-                        swerveModuleModel, swerveController, swerveObserver, 12.0, kDt);
+                        swerveModuleModel, swerveController, swerveObserver, VOLTAGE, kDt);
 
         _rightFalcon.setStatusFramePeriod(StatusFrame.Status_1_General, 5, TIMEOUT);
         _leftFalcon.setStatusFramePeriod(StatusFrame.Status_1_General, 5, TIMEOUT);
-        _rightFalcon.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 20, TIMEOUT);
-        _leftFalcon.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 20, TIMEOUT);
+        _rightFalcon.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 10, TIMEOUT);
+        _leftFalcon.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 10, TIMEOUT);
         _rightFalcon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, TIMEOUT);
         _leftFalcon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, TIMEOUT);
         _rightFalcon.configForwardSoftLimitEnable(false);
         _leftFalcon.configForwardSoftLimitEnable(false);
         _rightFalcon.configClosedloopRamp(0);
         _leftFalcon.configClosedloopRamp(0);
-        _leftFalcon.configVoltageCompSaturation(12.0, TIMEOUT);
-        _rightFalcon.configVoltageCompSaturation(12.0, TIMEOUT);
         _leftFalcon.enableVoltageCompensation(true);
         _rightFalcon.enableVoltageCompensation(true);
-        //        _leftFalcon.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_5Ms,
-        // TIMEOUT);
-        //        _rightFalcon.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_5Ms,
-        // TIMEOUT);
         _leftFalcon.configOpenloopRamp(0.25, TIMEOUT);
         _rightFalcon.configOpenloopRamp(0.25, TIMEOUT);
         _leftFalcon.configClosedloopRamp(0.25, TIMEOUT);
         _rightFalcon.configClosedloopRamp(0.25, TIMEOUT);
-        //        _leftFalcon.configGetStatorCurrentLimit(_currentCfg, TIMEOUT);
-        //        _rightFalcon.configGetStatorCurrentLimit(_currentCfg, TIMEOUT);
         _swerveControlLoop.reset(VecBuilder.fill(0, 0, 0));
         _u = VecBuilder.fill(0, 0);
 
@@ -164,8 +156,7 @@ public class DiffSwerveModule {
         double angleError = reference.get(0, 0) - getModuleAngle();
         double positionError = MathUtil.inputModulus(angleError, minAngle, maxAngle);
         Matrix<N3, N1> error = reference.minus(xHat);
-        return VecBuilder.fill(
-                positionError, reference.get(1, 0) - getAzimuthAngularVelocity(), error.get(2, 0));
+        return VecBuilder.fill(positionError, error.get(1, 0), error.get(2, 0));
     }
 
     public void periodic() {
@@ -210,13 +201,13 @@ public class DiffSwerveModule {
     }
 
     public void setRightFalconVoltage(double voltage) {
-        double limVoltage = Helpers.limit(voltage, -12.0, 12.0);
-        _rightFalcon.set(TalonFXControlMode.PercentOutput, limVoltage / 12.0);
+        double limVoltage = Helpers.limit(voltage, -VOLTAGE, VOLTAGE);
+        _rightFalcon.set(TalonFXControlMode.PercentOutput, limVoltage / VOLTAGE);
     }
 
     public void setLeftFalconVoltage(double voltage) {
-        double limVoltage = Helpers.limit(voltage, -12.0, 12.0);
-        _leftFalcon.set(TalonFXControlMode.PercentOutput, limVoltage / 12.0);
+        double limVoltage = Helpers.limit(voltage, -VOLTAGE, VOLTAGE);
+        _leftFalcon.set(TalonFXControlMode.PercentOutput, limVoltage / VOLTAGE);
     }
 
     public double getModuleAngle() {
@@ -343,7 +334,7 @@ public class DiffSwerveModule {
 
     public void setIdealState(SwerveModuleState state) {
         Rotation2d angleDifference = state.angle.minus(new Rotation2d(getModuleAngle()));
-        if (Math.abs(angleDifference.getRadians()) > (Math.PI / 2.0) + 0.1) {
+        if (Math.abs(angleDifference.getRadians()) > (Math.PI / 2.0)) {
             setModuleState(
                     new SwerveModuleState(
                             -state.speedMetersPerSecond,

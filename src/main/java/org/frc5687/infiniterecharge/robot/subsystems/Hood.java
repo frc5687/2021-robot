@@ -28,9 +28,9 @@ public class Hood extends OutliersSubsystem {
         _hood.restoreFactoryDefaults();
         _hood.setCANTimeout(500);
         _hood.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        _hood.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus0, 20);
-        _hood.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1, 20);
-        _hood.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus2, 20);
+        _hood.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus0, 100);
+        _hood.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1, 100);
+        _hood.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus2, 100);
         _hood.setInverted(INVERTED);
 
         _hoodEncoder = _hood.getAlternateEncoder(8192);
@@ -83,7 +83,7 @@ public class Hood extends OutliersSubsystem {
 
     @Override
     public void updateDashboard() {
-        metric("hood angle", getPosition());
+        metric("hood angle", getAngle());
     }
 
     public double getPosition() {

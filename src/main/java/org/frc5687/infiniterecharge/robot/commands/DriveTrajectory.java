@@ -37,6 +37,7 @@ public class DriveTrajectory extends OutliersCommand {
 
     public DriveTrajectory(DriveTrain driveTrain, SwerveTrajectory swerveTrajectory) {
         this(driveTrain);
+        error("running");
 
         _trajectory = swerveTrajectory;
         _realtime = false;
@@ -57,6 +58,7 @@ public class DriveTrajectory extends OutliersCommand {
                     SwerveTrajectoryGenerator.generateTrajectory(
                             _waypoints, _heading, _driveTrain.getConfig());
         }
+
         _time = _trajectory.getTotalTimeSeconds();
         _timer.reset();
         _timer.start();
@@ -65,7 +67,7 @@ public class DriveTrajectory extends OutliersCommand {
     @Override
     public void execute() {
         SwerveTrajectory.State goal = _trajectory.sample(_timer.get());
-        _driveTrain.setFieldPath(goal.poseMeters, goal.heading);
+        error("trajectory is, " + _trajectory.getTotalTimeSeconds());
 
         //        metric("heading", goal.heading.getDegrees());
         //        metric("x", goal.poseMeters.getX());
@@ -75,13 +77,15 @@ public class DriveTrajectory extends OutliersCommand {
 
     @Override
     public boolean isFinished() {
-        return _timer.get() == _time;
+        error("ending");
+        return _timer.get() >= _time;
         //        return (Math.abs(_timer.get() - _time) < 0.1);
     }
 
     @Override
     public void end(boolean interrupted) {
         super.end(interrupted);
+        //        _driveTrain.resetOdometry(_trajectory.sample(_time).poseMeters.getTranslation());
         _timer.reset();
     }
 }
