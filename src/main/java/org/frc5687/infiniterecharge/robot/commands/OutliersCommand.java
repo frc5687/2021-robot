@@ -1,11 +1,12 @@
 /* (C)2020-2021 */
 package org.frc5687.infiniterecharge.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.frc5687.infiniterecharge.robot.util.ILoggingSource;
 import org.frc5687.infiniterecharge.robot.util.MetricTracker;
 import org.frc5687.infiniterecharge.robot.util.RioLogger;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public abstract class OutliersCommand extends CommandBase implements ILoggingSource {
     private MetricTracker _metricTracker;

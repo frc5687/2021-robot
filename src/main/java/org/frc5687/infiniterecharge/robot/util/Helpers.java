@@ -84,6 +84,12 @@ public class Helpers {
         return capped * input * input * input + (1 - capped) * input;
     }
 
+    /**
+     * sets angle between -PI and PI.
+     * @param angle current to be changed.
+     * @param radians determines if angle is radians or not.
+     * @return changed angle.
+     */
     public static double boundHalfAngle(double angle, boolean radians) {
         angle = radians ? angle : Units.degreesToRadians(angle);
         while (angle >= Math.PI) {

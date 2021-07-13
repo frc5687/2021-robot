@@ -1,4 +1,4 @@
-/* (C)2020-2021 */
+/* Team 5687 (C)2020-2021 */
 package org.frc5687.infiniterecharge.robot;
 
 import edu.wpi.first.wpilibj.*;
@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+
 import org.frc5687.infiniterecharge.robot.util.*;
 
 /**
@@ -33,7 +34,7 @@ public class Robot extends OutliersRobot implements ILoggingSource {
 
     private Command _autoCommand;
 
-    private edu.wpi.first.wpilibj.Timer _timer;
+    private Timer _timer;
     private double _prevTime;
     private double _time;
 
