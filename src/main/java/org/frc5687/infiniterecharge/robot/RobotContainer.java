@@ -4,11 +4,9 @@ package org.frc5687.infiniterecharge.robot;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import org.frc5687.infiniterecharge.robot.commands.Drive;
+import org.frc5687.infiniterecharge.robot.commands.*;
+import org.frc5687.infiniterecharge.robot.subsystems.*;
 import org.frc5687.infiniterecharge.robot.util.OutliersContainer;
-import org.frc5687.infiniterecharge.robot.commands.OutliersCommand;
-import org.frc5687.infiniterecharge.robot.subsystems.DriveTrain;
-import org.frc5687.infiniterecharge.robot.subsystems.OutliersSubsystem;
 
 public class RobotContainer extends OutliersContainer {
 
@@ -17,6 +15,10 @@ public class RobotContainer extends OutliersContainer {
 
     private Robot _robot;
     private DriveTrain _driveTrain;
+    private Intake _intake;
+    private Spindexer _spindexer;
+    private Hood _hood;
+    private Shooter _shooter;
 
     public RobotContainer(Robot robot, IdentityMode identityMode) {
         super(identityMode);
@@ -24,13 +26,22 @@ public class RobotContainer extends OutliersContainer {
     }
 
     public void init() {
-        int counter = 0;
         _oi = new OI();
         _imu = new AHRS(SPI.Port.kMXP, (byte) 200);
 
         _driveTrain = new DriveTrain(this, _oi, _imu);
+        _intake = new Intake(this);
+        _hood = new Hood(this);
+        _spindexer = new Spindexer(this);
+        _shooter = new Shooter(this);
 
         setDefaultCommand(_driveTrain, new Drive(_driveTrain, _oi));
+        setDefaultCommand(_intake, new IdleIntake(_intake));
+        setDefaultCommand(_spindexer, new IdleSpindexer(_spindexer));
+        setDefaultCommand(_hood, new IdleHood(_hood, _oi));
+        setDefaultCommand(_shooter, new IdleShooter(_shooter, _oi));
+
+
         _robot.addPeriodic(this::controllerPeriodic, 0.005, 0.005);
         _imu.reset();
     }
