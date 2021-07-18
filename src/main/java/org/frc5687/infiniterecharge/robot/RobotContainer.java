@@ -1,4 +1,4 @@
-/* Team 5687 (C)2021 */
+/* (C)5687-2021 */
 package org.frc5687.infiniterecharge.robot;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -19,6 +19,7 @@ public class RobotContainer extends OutliersContainer {
     private Spindexer _spindexer;
     private Hood _hood;
     private Shooter _shooter;
+    private Climber _climber;
 
     public RobotContainer(Robot robot, IdentityMode identityMode) {
         super(identityMode);
@@ -34,13 +35,14 @@ public class RobotContainer extends OutliersContainer {
         _hood = new Hood(this);
         _spindexer = new Spindexer(this);
         _shooter = new Shooter(this);
+        _climber = new Climber(this);
 
         setDefaultCommand(_driveTrain, new Drive(_driveTrain, _oi));
         setDefaultCommand(_intake, new IdleIntake(_intake));
         setDefaultCommand(_spindexer, new IdleSpindexer(_spindexer));
         setDefaultCommand(_hood, new IdleHood(_hood, _oi));
         setDefaultCommand(_shooter, new IdleShooter(_shooter, _oi));
-
+        setDefaultCommand(_climber, new IdleClimber(_climber, _oi));
 
         _robot.addPeriodic(this::controllerPeriodic, 0.005, 0.005);
         _imu.reset();

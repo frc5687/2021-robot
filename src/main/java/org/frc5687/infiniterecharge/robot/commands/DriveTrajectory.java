@@ -1,4 +1,4 @@
-/* Team 5687 (C)2021 */
+/* (C)5687-2021 */
 package org.frc5687.infiniterecharge.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -44,5 +44,4 @@ public class DriveTrajectory extends OutliersCommand {
         super.end(interrupted);
         _timer.reset();
     }
-
 }

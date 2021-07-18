@@ -1,4 +1,4 @@
-/* Team 5687 (C)2021 */
+/* (C)5687-2021 */
 package org.frc5687.infiniterecharge.robot.commands;
 
 import static org.frc5687.infiniterecharge.robot.Constants.DriveTrain.MAX_ANG_VEL;

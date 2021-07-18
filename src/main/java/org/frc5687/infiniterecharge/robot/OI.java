@@ -1,4 +1,4 @@
-/* Team 5687 (C)2020-2021 */
+/* (C)5687-2021 */
 package org.frc5687.infiniterecharge.robot;
 
 import static org.frc5687.infiniterecharge.robot.Constants.DriveTrain.*;
@@ -6,14 +6,15 @@ import static org.frc5687.infiniterecharge.robot.Constants.DriveTrain.*;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import org.frc5687.infiniterecharge.robot.subsystems.DriveTrain;
 import org.frc5687.infiniterecharge.robot.util.AxisButton;
 import org.frc5687.infiniterecharge.robot.util.Gamepad;
 import org.frc5687.infiniterecharge.robot.util.Helpers;
 import org.frc5687.infiniterecharge.robot.util.OutliersProxy;
-import org.frc5687.infiniterecharge.robot.subsystems.DriveTrain;
 
 public class OI extends OutliersProxy {
     protected Gamepad _driverGamepad;
+    protected Gamepad _operatorGamepad;
     protected Joystick _leftJoystick;
     protected Joystick _rightJoystick;
 
@@ -35,6 +36,7 @@ public class OI extends OutliersProxy {
 
     public OI() {
         _driverGamepad = new Gamepad(0);
+        _operatorGamepad = new Gamepad(3);
 
         _leftJoystick = new Joystick(1);
         _rightJoystick = new Joystick(2);
@@ -85,6 +87,20 @@ public class OI extends OutliersProxy {
 
     protected double getSpeedFromAxis(Joystick gamepad, int axisNumber) {
         return gamepad.getRawAxis(axisNumber);
+    }
+
+    public boolean raiseArm() {
+        return _driverAButton.get();
+    }
+
+    public boolean lowerArm() {
+        return _driverBButton.get();
+    }
+
+    public double getWinchSpeed() {
+        double speed = getSpeedFromAxis(_operatorGamepad, Gamepad.Axes.LEFT_X.getNumber());
+        speed = Helpers.applyDeadband(speed, 0.1);
+        return speed;
     }
 
     @Override

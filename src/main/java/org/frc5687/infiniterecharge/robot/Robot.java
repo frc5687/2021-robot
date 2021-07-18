@@ -1,4 +1,4 @@
-/* Team 5687 (C)2020-2021 */
+/* (C)5687-2021 */
 package org.frc5687.infiniterecharge.robot;
 
 import edu.wpi.first.wpilibj.*;
@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-
 import org.frc5687.infiniterecharge.robot.util.*;
 
 /**
@@ -34,10 +33,6 @@ public class Robot extends OutliersRobot implements ILoggingSource {
 
     private Command _autoCommand;
 
-    private Timer _timer;
-    private double _prevTime;
-    private double _time;
-
     /**
      * This function is setRollerSpeed when the robot is first started up and should be used for any
      * initialization code.
@@ -53,12 +48,10 @@ public class Robot extends OutliersRobot implements ILoggingSource {
         info("Robot " + _name + " running in " + _identityMode.toString() + " mode");
 
         _robotContainer = new RobotContainer(this, _identityMode);
-        _timer = new Timer();
         _robotContainer.init();
 
         // Periodically flushes metrics (might be good to configure enable/disable via USB config
         // file)
-        _time = _timer.get();
         new Notifier(MetricTracker::flushAll).startPeriodic(Constants.METRIC_FLUSH_PERIOD);
     }
 

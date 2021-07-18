@@ -1,4 +1,4 @@
-/* Team 5687 (C)2020-2021 */
+/* (C)5687-2021 */
 package org.frc5687.infiniterecharge.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.*;
@@ -58,21 +58,33 @@ public class DiffSwerveModule {
         _rightFalcon.setNeutralMode(NeutralMode.Brake);
         _leftFalcon.setNeutralMode(NeutralMode.Brake);
 
-        _rightFalcon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, Constants.DifferentialSwerveModule.TIMEOUT);
-        _leftFalcon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, Constants.DifferentialSwerveModule.TIMEOUT);
+        _rightFalcon.configSelectedFeedbackSensor(
+                FeedbackDevice.IntegratedSensor, 0, Constants.DifferentialSwerveModule.TIMEOUT);
+        _leftFalcon.configSelectedFeedbackSensor(
+                FeedbackDevice.IntegratedSensor, 0, Constants.DifferentialSwerveModule.TIMEOUT);
         _rightFalcon.configForwardSoftLimitEnable(false);
         _leftFalcon.configForwardSoftLimitEnable(false);
 
-        _leftFalcon.configVoltageCompSaturation(Constants.DifferentialSwerveModule.VOLTAGE, Constants.DifferentialSwerveModule.TIMEOUT);
-        _rightFalcon.configVoltageCompSaturation(Constants.DifferentialSwerveModule.VOLTAGE, Constants.DifferentialSwerveModule.TIMEOUT);
+        _leftFalcon.configVoltageCompSaturation(
+                Constants.DifferentialSwerveModule.VOLTAGE,
+                Constants.DifferentialSwerveModule.TIMEOUT);
+        _rightFalcon.configVoltageCompSaturation(
+                Constants.DifferentialSwerveModule.VOLTAGE,
+                Constants.DifferentialSwerveModule.TIMEOUT);
         _leftFalcon.enableVoltageCompensation(true);
         _rightFalcon.enableVoltageCompensation(true);
-        _rightFalcon.setStatusFramePeriod(StatusFrame.Status_1_General, 5, Constants.DifferentialSwerveModule.TIMEOUT);
-        _leftFalcon.setStatusFramePeriod(StatusFrame.Status_1_General, 5, Constants.DifferentialSwerveModule.TIMEOUT);
-        _rightFalcon.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 10, Constants.DifferentialSwerveModule.TIMEOUT);
-        _leftFalcon.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 10, Constants.DifferentialSwerveModule.TIMEOUT);
-        _rightFalcon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, Constants.DifferentialSwerveModule.TIMEOUT);
-        _leftFalcon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, Constants.DifferentialSwerveModule.TIMEOUT);
+        _rightFalcon.setStatusFramePeriod(
+                StatusFrame.Status_1_General, 5, Constants.DifferentialSwerveModule.TIMEOUT);
+        _leftFalcon.setStatusFramePeriod(
+                StatusFrame.Status_1_General, 5, Constants.DifferentialSwerveModule.TIMEOUT);
+        _rightFalcon.setStatusFramePeriod(
+                StatusFrame.Status_2_Feedback0, 10, Constants.DifferentialSwerveModule.TIMEOUT);
+        _leftFalcon.setStatusFramePeriod(
+                StatusFrame.Status_2_Feedback0, 10, Constants.DifferentialSwerveModule.TIMEOUT);
+        _rightFalcon.configSelectedFeedbackSensor(
+                FeedbackDevice.IntegratedSensor, 0, Constants.DifferentialSwerveModule.TIMEOUT);
+        _leftFalcon.configSelectedFeedbackSensor(
+                FeedbackDevice.IntegratedSensor, 0, Constants.DifferentialSwerveModule.TIMEOUT);
         _rightFalcon.configForwardSoftLimitEnable(false);
         _leftFalcon.configForwardSoftLimitEnable(false);
         _rightFalcon.configSupplyCurrentLimit(
@@ -139,7 +151,11 @@ public class DiffSwerveModule {
         // Update Rate.
         _swerveControlLoop =
                 new LinearSystemLoop<>(
-                        swerveModuleModel, swerveController, swerveObserver, 12.0, Constants.DifferentialSwerveModule.kDt);
+                        swerveModuleModel,
+                        swerveController,
+                        swerveObserver,
+                        12.0,
+                        Constants.DifferentialSwerveModule.kDt);
 
         // Initializes the vectors and matrices.
         _swerveControlLoop.reset(VecBuilder.fill(0, 0, 0));
@@ -185,7 +201,8 @@ public class DiffSwerveModule {
     // use custom predict() function for as absolute encoder azimuth angle and the angular velocity
     // of the module need to be continuous.
     private void predict() {
-        // creates our input of voltage to our motors of u = K(r-x) but need to wrap angle to be continuous
+        // creates our input of voltage to our motors of u = K(r-x) but need to wrap angle to be
+        // continuous
         // see wrapAngle().
         _u =
                 _swerveControlLoop.clampInput(
@@ -200,8 +217,10 @@ public class DiffSwerveModule {
                                                 Math.PI))
                                 .plus(
                                         VecBuilder.fill(
-                                                Constants.DifferentialSwerveModule.FEED_FORWARD * _reference.get(2, 0),
-                                                -Constants.DifferentialSwerveModule.FEED_FORWARD * _reference.get(2, 0))));
+                                                Constants.DifferentialSwerveModule.FEED_FORWARD
+                                                        * _reference.get(2, 0),
+                                                -Constants.DifferentialSwerveModule.FEED_FORWARD
+                                                        * _reference.get(2, 0))));
         _swerveControlLoop.getObserver().predict(_u, Constants.DifferentialSwerveModule.kDt);
     }
 
@@ -218,13 +237,25 @@ public class DiffSwerveModule {
     }
 
     public void setRightFalconVoltage(double voltage) {
-        double limVoltage = Helpers.limit(voltage, -Constants.DifferentialSwerveModule.VOLTAGE, Constants.DifferentialSwerveModule.VOLTAGE);
-        _rightFalcon.set(TalonFXControlMode.PercentOutput, limVoltage / Constants.DifferentialSwerveModule.VOLTAGE);
+        double limVoltage =
+                Helpers.limit(
+                        voltage,
+                        -Constants.DifferentialSwerveModule.VOLTAGE,
+                        Constants.DifferentialSwerveModule.VOLTAGE);
+        _rightFalcon.set(
+                TalonFXControlMode.PercentOutput,
+                limVoltage / Constants.DifferentialSwerveModule.VOLTAGE);
     }
 
     public void setLeftFalconVoltage(double voltage) {
-        double limVoltage = Helpers.limit(voltage, -Constants.DifferentialSwerveModule.VOLTAGE, Constants.DifferentialSwerveModule.VOLTAGE);
-        _leftFalcon.set(TalonFXControlMode.PercentOutput, limVoltage / Constants.DifferentialSwerveModule.VOLTAGE);
+        double limVoltage =
+                Helpers.limit(
+                        voltage,
+                        -Constants.DifferentialSwerveModule.VOLTAGE,
+                        Constants.DifferentialSwerveModule.VOLTAGE);
+        _leftFalcon.set(
+                TalonFXControlMode.PercentOutput,
+                limVoltage / Constants.DifferentialSwerveModule.VOLTAGE);
     }
 
     public double getModuleAngle() {
@@ -352,6 +383,7 @@ public class DiffSwerveModule {
 
     /**
      * sets the modules to take the shorted path to the newest state.
+     *
      * @param state azimuth angle in radians and velocity of wheel in meters per sec.
      */
     public void setIdealState(SwerveModuleState state) {

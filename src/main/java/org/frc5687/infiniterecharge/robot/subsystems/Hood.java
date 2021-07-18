@@ -21,42 +21,42 @@ public class Hood extends OutliersSubsystem {
 
     public Hood(OutliersContainer container) {
         super(container);
-                try {
-        _hood =
-                new CANSparkMax(
-                        RobotMap.CAN.SPARKMAX.HOOD, CANSparkMaxLowLevel.MotorType.kBrushless);
-        _hood.restoreFactoryDefaults();
-        _hood.setCANTimeout(500);
-        _hood.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        _hood.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus0, 100);
-        _hood.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1, 100);
-        _hood.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus2, 100);
-        _hood.setInverted(INVERTED);
+        try {
+            _hood =
+                    new CANSparkMax(
+                            RobotMap.CAN.SPARKMAX.HOOD, CANSparkMaxLowLevel.MotorType.kBrushless);
+            _hood.restoreFactoryDefaults();
+            _hood.setCANTimeout(500);
+            _hood.setIdleMode(CANSparkMax.IdleMode.kBrake);
+            _hood.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus0, 100);
+            _hood.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1, 100);
+            _hood.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus2, 100);
+            _hood.setInverted(INVERTED);
 
-        _hoodEncoder = _hood.getAlternateEncoder(8192);
-        _hoodController = _hood.getPIDController();
-        _hoodController.setFeedbackDevice(_hoodEncoder);
+            _hoodEncoder = _hood.getAlternateEncoder(8192);
+            _hoodController = _hood.getPIDController();
+            _hoodController.setFeedbackDevice(_hoodEncoder);
 
-        _hoodEncoder.setPositionConversionFactor(DISTANCE_PER_ROTATION);
+            _hoodEncoder.setPositionConversionFactor(DISTANCE_PER_ROTATION);
 
-        _hoodController.setP(kP);
-        _hoodController.setI(kI);
-        _hoodController.setD(kD);
-        _hoodController.setIZone(kIz);
-        _hoodController.setFF(kFF);
-        _hoodController.setOutputRange(MIN_OUTPUT, MAX_OUTPUT);
+            _hoodController.setP(kP);
+            _hoodController.setI(kI);
+            _hoodController.setD(kD);
+            _hoodController.setIZone(kIz);
+            _hoodController.setFF(kFF);
+            _hoodController.setOutputRange(MIN_OUTPUT, MAX_OUTPUT);
 
-        _hoodController.setSmartMotionMaxVelocity(MAX_VEL, 0);
-        _hoodController.setSmartMotionMinOutputVelocity(MIN_VEL, 0);
-        _hoodController.setSmartMotionMaxAccel(MAX_ACCEL, 0);
-        _hoodController.setSmartMotionAllowedClosedLoopError(TOLERANCE, 0);
+            _hoodController.setSmartMotionMaxVelocity(MAX_VEL, 0);
+            _hoodController.setSmartMotionMinOutputVelocity(MIN_VEL, 0);
+            _hoodController.setSmartMotionMaxAccel(MAX_ACCEL, 0);
+            _hoodController.setSmartMotionAllowedClosedLoopError(TOLERANCE, 0);
 
-        _hallEffect = new HallEffect(RobotMap.DIO.HOOD_HALL);
-        _hallEffectTop = new HallEffect(RobotMap.DIO.HOOD_HALL_TOP);
+            _hallEffect = new HallEffect(RobotMap.DIO.HOOD_HALL);
+            _hallEffectTop = new HallEffect(RobotMap.DIO.HOOD_HALL_TOP);
 
-                } catch (Exception e) {
-                    error(e.getMessage());
-                }
+        } catch (Exception e) {
+            error(e.getMessage());
+        }
     }
 
     @Override

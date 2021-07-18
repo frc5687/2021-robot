@@ -1,14 +1,12 @@
 /* (C)2020-2021 */
 package org.frc5687.infiniterecharge.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.frc5687.infiniterecharge.robot.util.ILoggingSource;
 import org.frc5687.infiniterecharge.robot.util.MetricTracker;
 import org.frc5687.infiniterecharge.robot.util.OutliersContainer;
 import org.frc5687.infiniterecharge.robot.util.RioLogger;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
 
 public abstract class OutliersSubsystem extends SubsystemBase implements ILoggingSource {
     private MetricTracker _metricTracker;

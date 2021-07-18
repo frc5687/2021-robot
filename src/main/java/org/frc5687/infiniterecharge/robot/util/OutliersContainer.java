@@ -4,7 +4,6 @@ package org.frc5687.infiniterecharge.robot.util;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.frc5687.infiniterecharge.robot.subsystems.OutliersSubsystem;
 
 public abstract class OutliersContainer implements ILoggingSource {

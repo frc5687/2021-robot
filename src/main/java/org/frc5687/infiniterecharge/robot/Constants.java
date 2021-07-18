@@ -1,4 +1,4 @@
-/* Team 5687 (C)2020-2021 */
+/* (C)5687-2021 */
 package org.frc5687.infiniterecharge.robot;
 
 import edu.wpi.first.wpilibj.geometry.Translation2d;
@@ -91,6 +91,7 @@ public class Constants {
         public static final double SENSOR_WHEEL_ANG_VELOCITY_NOISE = 0.1; // radians per sec
         public static final double CONTROL_EFFORT = VOLTAGE;
     }
+
     public static class Spindexer {
         public static boolean SPINDEXER_INVERTED = false;
 

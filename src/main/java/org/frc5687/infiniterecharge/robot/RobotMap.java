@@ -1,4 +1,4 @@
-/* Team 5687 (C)2020-2021 */
+/* (C)5687-2021 */
 package org.frc5687.infiniterecharge.robot;
 
 public class RobotMap {
@@ -16,7 +16,7 @@ public class RobotMap {
             public static final int FEEDER = 11;
             public static final int INTAKE = 9;
             public static final int HOOD = 14;
-            public static final int WINCH = 15; //TODO: find real value.
+            public static final int WINCH = 15; // TODO: find real value.
         }
 
         public static class TALONFX {
@@ -47,8 +47,9 @@ public class RobotMap {
     public static class PCM {
         public static final int INTAKE_HIGH = 0;
         public static final int INTAKE_LOW = 7;
+        public static final int ARM_HIGH = 1;
+        public static final int ARM_LOW = 6;
     }
-
 
     /**
      * There should be an entry here for each PDP breaker, preferrably in numerical order. Note that

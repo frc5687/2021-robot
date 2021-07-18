@@ -1,10 +1,9 @@
 /* (C)2021 */
 package org.frc5687.infiniterecharge.robot.util;
 
-import org.frc5687.infiniterecharge.robot.Constants;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.frc5687.infiniterecharge.robot.Constants;
 
 public abstract class OutliersRobot extends TimedRobot implements ILoggingSource {
 

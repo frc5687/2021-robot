@@ -1,4 +1,4 @@
-/* Team 5687 (C)2020-2021 */
+/* (C)5687-2021 */
 package org.frc5687.infiniterecharge.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -82,21 +82,29 @@ public class DriveTrain extends OutliersSubsystem {
 
             _controller =
                     new HolonomicDriveController(
-                            new PIDController(Constants.DriveTrain.kP, Constants.DriveTrain.kI, Constants.DriveTrain.kD),
-                            new PIDController(Constants.DriveTrain.kP, Constants.DriveTrain.kI, Constants.DriveTrain.kD),
+                            new PIDController(
+                                    Constants.DriveTrain.kP,
+                                    Constants.DriveTrain.kI,
+                                    Constants.DriveTrain.kD),
+                            new PIDController(
+                                    Constants.DriveTrain.kP,
+                                    Constants.DriveTrain.kI,
+                                    Constants.DriveTrain.kD),
                             new ProfiledPIDController(
                                     Constants.DriveTrain.kP,
                                     Constants.DriveTrain.kI,
                                     Constants.DriveTrain.kD,
                                     new TrapezoidProfile.Constraints(
-                                            Constants.DriveTrain.PROFILE_CONSTRAINT_VEL, Constants.DriveTrain.PROFILE_CONSTRAINT_ACCEL)));
+                                            Constants.DriveTrain.PROFILE_CONSTRAINT_VEL,
+                                            Constants.DriveTrain.PROFILE_CONSTRAINT_ACCEL)));
             _angleController =
                     new ProfiledPIDController(
                             Constants.DriveTrain.ANGLE_kP,
                             Constants.DriveTrain.ANGLE_kI,
                             Constants.DriveTrain.ANGLE_kD,
                             new TrapezoidProfile.Constraints(
-                                    Constants.DriveTrain.PROFILE_CONSTRAINT_VEL, Constants.DriveTrain.PROFILE_CONSTRAINT_ACCEL));
+                                    Constants.DriveTrain.PROFILE_CONSTRAINT_VEL,
+                                    Constants.DriveTrain.PROFILE_CONSTRAINT_ACCEL));
             _angleController.enableContinuousInput(-Math.PI / 2.0, Math.PI / 2.0);
         } catch (Exception e) {
             error(e.getMessage());
@@ -127,7 +135,6 @@ public class DriveTrain extends OutliersSubsystem {
         metric("BL/Encoder Angle", _backLeft.getModuleAngle());
         metric("FL/Encoder Angle", _frontLeft.getModuleAngle());
         metric("FR/Encoder Angle", _frontRight.getModuleAngle());
-
 
         metric("BR/Predicted Angle", _backRight.getPredictedAzimuthAngle());
 
@@ -178,7 +185,9 @@ public class DriveTrain extends OutliersSubsystem {
      * @param fieldRelative forward is always forward no mater orientation of robot.
      */
     public void drive(double vx, double vy, double omega, boolean fieldRelative) {
-        if (Math.abs(vx) < Constants.DriveTrain.DEADBAND && Math.abs(vy) < Constants.DriveTrain.DEADBAND && Math.abs(omega) < Constants.DriveTrain.DEADBAND) {
+        if (Math.abs(vx) < Constants.DriveTrain.DEADBAND
+                && Math.abs(vy) < Constants.DriveTrain.DEADBAND
+                && Math.abs(omega) < Constants.DriveTrain.DEADBAND) {
             setFrontRightModuleState(
                     new SwerveModuleState(0, new Rotation2d(_frontRight.getModuleAngle())));
             setFrontLeftModuleState(
@@ -196,7 +205,8 @@ public class DriveTrain extends OutliersSubsystem {
                                     ? ChassisSpeeds.fromFieldRelativeSpeeds(
                                             vx, vy, omega, getHeading())
                                     : new ChassisSpeeds(vx, vy, omega));
-            SwerveDriveKinematics.normalizeWheelSpeeds(swerveModuleStates, Constants.DriveTrain.MAX_MPS);
+            SwerveDriveKinematics.normalizeWheelSpeeds(
+                    swerveModuleStates, Constants.DriveTrain.MAX_MPS);
             setFrontRightModuleState(swerveModuleStates[1]);
             setFrontLeftModuleState(swerveModuleStates[0]);
             setBackLeftModuleState(swerveModuleStates[2]);
@@ -212,7 +222,8 @@ public class DriveTrain extends OutliersSubsystem {
                                     _angleController.calculate(
                                             getHeading().getRadians(), _PIDAngle),
                                     new Rotation2d(_PIDAngle)));
-            SwerveDriveKinematics.normalizeWheelSpeeds(swerveModuleStates, Constants.DriveTrain.MAX_MPS);
+            SwerveDriveKinematics.normalizeWheelSpeeds(
+                    swerveModuleStates, Constants.DriveTrain.MAX_MPS);
             setFrontRightModuleState(swerveModuleStates[1]);
             setFrontLeftModuleState(swerveModuleStates[0]);
             setBackLeftModuleState(swerveModuleStates[2]);

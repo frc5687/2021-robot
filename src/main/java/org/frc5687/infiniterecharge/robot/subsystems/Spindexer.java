@@ -17,34 +17,35 @@ public class Spindexer extends OutliersSubsystem {
 
     public Spindexer(OutliersContainer container) {
         super(container);
-                try {
-        _spindexer =
-                new CANSparkMax(
-                        RobotMap.CAN.SPARKMAX.SPINDEXER, CANSparkMaxLowLevel.MotorType.kBrushless);
-        _spindexerEncoder = _spindexer.getEncoder();
+        try {
+            _spindexer =
+                    new CANSparkMax(
+                            RobotMap.CAN.SPARKMAX.SPINDEXER,
+                            CANSparkMaxLowLevel.MotorType.kBrushless);
+            _spindexerEncoder = _spindexer.getEncoder();
 
-        _feeder =
-                new CANSparkMax(
-                        RobotMap.CAN.SPARKMAX.FEEDER, CANSparkMaxLowLevel.MotorType.kBrushless);
-        _feederEncoder = _feeder.getEncoder();
+            _feeder =
+                    new CANSparkMax(
+                            RobotMap.CAN.SPARKMAX.FEEDER, CANSparkMaxLowLevel.MotorType.kBrushless);
+            _feederEncoder = _feeder.getEncoder();
 
-        _spindexer.setCANTimeout(500);
-        _feeder.setCANTimeout(500);
+            _spindexer.setCANTimeout(500);
+            _feeder.setCANTimeout(500);
 
-        _spindexer.setInverted(Constants.Spindexer.SPINDEXER_INVERTED);
-        _feeder.setInverted(Constants.Spindexer.FEEDER_INVERTED);
+            _spindexer.setInverted(Constants.Spindexer.SPINDEXER_INVERTED);
+            _feeder.setInverted(Constants.Spindexer.FEEDER_INVERTED);
 
-        _spindexer.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        _feeder.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        _spindexer.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus0, 20);
-        _spindexer.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus2, 200);
-        _spindexer.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1, 200);
-        _feeder.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus0, 20);
-        _feeder.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus2, 200);
-        _feeder.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1, 200);
-                } catch (Exception e) {
-                    error(e.getMessage());
-                }
+            _spindexer.setIdleMode(CANSparkMax.IdleMode.kCoast);
+            _feeder.setIdleMode(CANSparkMax.IdleMode.kCoast);
+            _spindexer.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus0, 20);
+            _spindexer.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus2, 200);
+            _spindexer.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1, 200);
+            _feeder.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus0, 20);
+            _feeder.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus2, 200);
+            _feeder.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1, 200);
+        } catch (Exception e) {
+            error(e.getMessage());
+        }
     }
 
     @Override
