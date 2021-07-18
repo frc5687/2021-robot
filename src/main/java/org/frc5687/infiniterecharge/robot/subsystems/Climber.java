@@ -19,6 +19,14 @@ public class Climber extends OutliersSubsystem {
         _winch =
                 new CANSparkMax(
                         RobotMap.CAN.SPARKMAX.WINCH, CANSparkMaxLowLevel.MotorType.kBrushless);
+
+        _winch.restoreFactoryDefaults();
+        _winch.setCANTimeout(500);
+        _winch.setInverted(false);
+        _winch.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        _winch.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus0, 20);
+        _winch.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus2, 100);
+        _winch.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1, 100);
         _winchEncoder = _winch.getEncoder();
         _arm = new DoubleSolenoid(RobotMap.PCM.ARM_HIGH, RobotMap.PCM.ARM_LOW);
     }

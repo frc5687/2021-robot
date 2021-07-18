@@ -26,7 +26,9 @@ public class OI extends OutliersProxy {
     private JoystickButton _resetYawButton;
 
     private Button _driverAButton;
+    private Button _operatorAButton;
     private Button _driverBButton;
+    private Button _operatorBButton;
     private Button _driverXButton;
     private Button _driverYButton;
     private Button _driverRightTrigger;
@@ -50,7 +52,9 @@ public class OI extends OutliersProxy {
         _resetYawButton = new JoystickButton(_rightJoystick, 4);
 
         _driverAButton = new JoystickButton(_driverGamepad, Gamepad.Buttons.A.getNumber());
+        _operatorAButton = new JoystickButton(_operatorGamepad, Gamepad.Buttons.A.getNumber());
         _driverBButton = new JoystickButton(_driverGamepad, Gamepad.Buttons.B.getNumber());
+        _operatorBButton = new JoystickButton(_operatorGamepad, Gamepad.Buttons.B.getNumber());
         _driverYButton = new JoystickButton(_driverGamepad, Gamepad.Buttons.Y.getNumber());
         _driverXButton = new JoystickButton(_driverGamepad, Gamepad.Buttons.X.getNumber());
         _driverRightTrigger =
@@ -90,11 +94,11 @@ public class OI extends OutliersProxy {
     }
 
     public boolean raiseArm() {
-        return _driverAButton.get();
+        return _operatorAButton.get();
     }
 
     public boolean lowerArm() {
-        return _driverBButton.get();
+        return _operatorBButton.get();
     }
 
     public double getWinchSpeed() {

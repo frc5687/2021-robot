@@ -12,6 +12,7 @@ public class IdleClimber extends OutliersCommand {
     public IdleClimber(Climber climber, OI oi) {
         _climber = climber;
         _oi = oi;
+        addRequirements(_climber);
     }
 
     @Override
