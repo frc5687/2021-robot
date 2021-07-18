@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpiutil.math.numbers.*;
 
 public class Constants {
+
     public static final int TICKS_PER_UPDATE = 1;
     public static final double METRIC_FLUSH_PERIOD = 1.0;
     public static final double UPDATE_PERIOD = 0.02;
