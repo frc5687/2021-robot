@@ -25,9 +25,9 @@ public class Intake extends OutliersSubsystem {
             _roller.setCANTimeout(500);
             _roller.setInverted(Constants.Intake.INVERTED);
             _roller.setIdleMode(CANSparkMax.IdleMode.kCoast);
-            _roller.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus0, 20);
-            _roller.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus2, 200);
-            _roller.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1, 200);
+            _roller.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus0, 100);
+            _roller.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus2, 500);
+            _roller.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1, 500);
         } catch (Exception e) {
             error(e.getMessage());
         }

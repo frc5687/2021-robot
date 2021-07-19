@@ -26,14 +26,12 @@ public class Hood extends OutliersSubsystem {
                     new CANSparkMax(
                             RobotMap.CAN.SPARKMAX.HOOD, CANSparkMaxLowLevel.MotorType.kBrushless);
             _hood.restoreFactoryDefaults();
-            _hood.setCANTimeout(500);
+            _hood.clearFaults();
             _hood.setIdleMode(CANSparkMax.IdleMode.kBrake);
-            _hood.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus0, 100);
-            _hood.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1, 100);
-            _hood.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus2, 100);
             _hood.setInverted(INVERTED);
 
-            _hoodEncoder = _hood.getAlternateEncoder(8192);
+            //            _hoodEncoder = _hood.getAlternateEncoder(8192);
+            _hoodEncoder = _hood.getEncoder();
             _hoodController = _hood.getPIDController();
             _hoodController.setFeedbackDevice(_hoodEncoder);
 

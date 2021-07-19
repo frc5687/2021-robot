@@ -65,7 +65,7 @@ public class OI extends OutliersProxy {
 
     public double getDriveY() {
         //        yIn = getSpeedFromAxis(_leftJoystick, _leftJoystick.getYChannel());
-        yIn = getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_Y.getNumber());
+        //        yIn = getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_Y.getNumber());
         yIn = Helpers.applyDeadband(yIn, DEADBAND);
 
         double yOut = yIn / (Math.sqrt(yIn * yIn + (xIn * xIn)) + 0.00001);
@@ -75,7 +75,7 @@ public class OI extends OutliersProxy {
 
     public double getDriveX() {
         //        xIn = -getSpeedFromAxis(_leftJoystick, _leftJoystick.getXChannel());
-        xIn = -getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_X.getNumber());
+        //        xIn = -getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_X.getNumber());
         xIn = Helpers.applyDeadband(xIn, DEADBAND);
 
         double xOut = xIn / (Math.sqrt(yIn * yIn + (xIn * xIn)) + 0.00001);
@@ -93,17 +93,14 @@ public class OI extends OutliersProxy {
         return gamepad.getRawAxis(axisNumber);
     }
 
-    public boolean raiseArm() {
-        return _operatorAButton.get();
-    }
-
-    public boolean lowerArm() {
-        return _operatorBButton.get();
-    }
-
     public double getWinchSpeed() {
         double speed = getSpeedFromAxis(_operatorGamepad, Gamepad.Axes.LEFT_X.getNumber());
         speed = Helpers.applyDeadband(speed, 0.1);
+        return speed;
+    }
+
+    public double getHoodSpeed() {
+        double speed = getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_Y.getNumber());
         return speed;
     }
 

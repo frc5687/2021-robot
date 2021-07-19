@@ -27,9 +27,10 @@ public class IdleHood extends OutliersCommand {
     public void execute() {
         super.execute();
         //        metric("Hood ANgle", _hood.getAngle());
-        double speed = 0;
+        double speed = _oi.getHoodSpeed();
         _hood.setSpeed(speed);
         metric("Output", _hood.getOutput());
+        metric("angle", _hood.getAngle());
         if (_hood.isHallTriggered()) {
             if (speed < 0) {
                 _hood.setSpeed(0);

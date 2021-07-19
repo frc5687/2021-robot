@@ -16,7 +16,7 @@ public class RobotMap {
             public static final int FEEDER = 11;
             public static final int INTAKE = 9;
             public static final int HOOD = 14;
-            public static final int WINCH = 12; // TODO: find real value.
+            public static final int WINCH = 1; // TODO: find real value.
         }
 
         public static class TALONFX {

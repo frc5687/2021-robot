@@ -16,23 +16,30 @@ public class Climber extends OutliersSubsystem {
 
     public Climber(OutliersContainer container) {
         super(container);
-        _winch =
-                new CANSparkMax(
-                        RobotMap.CAN.SPARKMAX.WINCH, CANSparkMaxLowLevel.MotorType.kBrushless);
+        try {
+            _winch = new CANSparkMax(1, CANSparkMaxLowLevel.MotorType.kBrushless);
+        } catch (Exception e) {
+            error("Error in constructor " + e.getMessage().toString());
+        }
 
-        _winch.restoreFactoryDefaults();
-        _winch.setCANTimeout(500);
-        _winch.setInverted(false);
-        _winch.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        _winch.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus0, 20);
-        _winch.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus2, 100);
-        _winch.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1, 100);
         _winchEncoder = _winch.getEncoder();
+        metric("error", _winch.getLastError().toString());
         _arm = new DoubleSolenoid(RobotMap.PCM.ARM_HIGH, RobotMap.PCM.ARM_LOW);
+
+        //        _winch.restoreFactoryDefaults();
+        //        _winch.setInverted(false);
+        //        _winch.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        //                _winch.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus0,
+        // 20);
+        //                _winch.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus2,
+        // 100);
+        //                _winch.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1,
+        // 100);
     }
 
     @Override
     public void periodic() {
+        metric("test", getWinchPosition());
         super.periodic();
     }
 

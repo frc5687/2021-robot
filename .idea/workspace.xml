@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9cdb5074-1904-4449-833f-2401ad4cb71a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.0.1/executionHistory/executionHistory.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.0.1/executionHistory/executionHistory.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.0.1/fileChanges/last-build.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.0.1/fileContent/fileContent.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.0.1/fileHashes/fileHashes.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.0.1/fileHashes/fileHashes.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.0.1/fileHashes/resourceHashesCache.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.0.1/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.0.1/javaCompile/classAnalysis.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.0.1/javaCompile/jarAnalysis.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.0.1/javaCompile/javaCompile.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.0.1/javaCompile/taskHistory.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/fileChanges/last-build.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/fileContent/fileContent.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/fileHashes/resourceHashesCache.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/javaCompile/classAnalysis.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/javaCompile/jarAnalysis.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/javaCompile/javaCompile.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/javaCompile/taskHistory.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.6.1/executionHistory/executionHistory.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.6.1/executionHistory/executionHistory.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.6.1/fileChanges/last-build.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.6.1/fileContent/fileContent.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.6.1/fileHashes/fileHashes.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.6.1/fileHashes/fileHashes.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.6.1/fileHashes/resourceHashesCache.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.6.1/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.6.1/javaCompile/classAnalysis.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.6.1/javaCompile/jarAnalysis.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.6.1/javaCompile/javaCompile.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.6.1/javaCompile/taskHistory.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.1.1/dependencies-accessors/dependencies-accessors.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.1.1/dependencies-accessors/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.1.1/fileChanges/last-build.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.1.1/fileHashes/fileHashes.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.1.1/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/checksums/md5-checksums.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/configuration-cache/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/vcs-1/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/discord.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries-with-intellij-classes.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.settings/org.eclipse.buildship.core.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/launch.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.wpilib/wpilib_preferences.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/debug/debuginfo.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/debug/riopartial/2021-robot.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/debug/riopartial/SwerveDrive.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/source-classes-mapping.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/SparkMax-driver-1.5.1-linuxathena.zip_720f144c6120693f94d3d8bf7b40351d/linux/athena/shared/libSparkMaxDriver.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/SparkMax-driver-1.5.1-windowsx86-64.zip_9140066d72c716986ad7b6fb4d585e87/windows/x86-64/shared/SparkMaxDriver.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/canutils-5.18.1-windowsx86-64.zip_753f5caa27ed8364ac518fcb24a76f5f/windows/x86-64/shared/CTRE_PhoenixCanutils.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cci-5.18.1-linuxathena.zip_4c262a5a0df1e14a6248fc8f4731e0f1/linux/athena/shared/libCTRE_PhoenixCCI.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cci-5.18.1-windowsx86-64.zip_7efabadc8f015679f56b542417760482/windows/x86-64/shared/CTRE_PhoenixCCI.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/core-5.18.1-linuxathena.zip_af74f5c0b5d05b1571bf83db70544aae/linux/athena/shared/libCTRE_PhoenixCore.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/core-5.18.1-windowsx86-64.zip_844bba596b2b8b7de85ec7be2e0ba275/windows/x86-64/shared/CTRE_PhoenixCore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2020.2.1-windowsx86-64.zip_7f0aa6af69ec702c39d8c2fe9b828177/windows/x86-64/shared/cscore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2020.2.1-windowsx86-64.zip_7f0aa6af69ec702c39d8c2fe9b828177/windows/x86-64/shared/cscorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2020.3.2-254-g21d949d-windowsx86-64.zip_24ab1d9746ab6930f7df76f648001246/windows/x86-64/shared/cscore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2020.3.2-254-g21d949d-windowsx86-64.zip_24ab1d9746ab6930f7df76f648001246/windows/x86-64/shared/cscorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2020.3.2-265-g37643ab-linuxathena.zip_fbd704ee9683f7e327125d6e1c5257f5/linux/athena/shared/libcscore.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2020.3.2-265-g37643ab-linuxathena.zip_fbd704ee9683f7e327125d6e1c5257f5/linux/athena/shared/libcscorejni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2020.3.2-265-g37643ab-windowsx86-64.zip_36e77d7346640345e0ee1c3e23941ae4/windows/x86-64/shared/cscore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2020.3.2-265-g37643ab-windowsx86-64.zip_36e77d7346640345e0ee1c3e23941ae4/windows/x86-64/shared/cscorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2020.3.2-269-g0614321-windowsx86-64.zip_4f73d6084c53ccf9d0674f05ebc51996/windows/x86-64/shared/cscore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2020.3.2-269-g0614321-windowsx86-64.zip_4f73d6084c53ccf9d0674f05ebc51996/windows/x86-64/shared/cscorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2020.3.2-272-g07ac537-windowsx86-64.zip_82a4422bf288468335841d49b4f95e6a/windows/x86-64/shared/cscore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2020.3.2-272-g07ac537-windowsx86-64.zip_82a4422bf288468335841d49b4f95e6a/windows/x86-64/shared/cscorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2020.3.2-289-g34b9131-linuxathena.zip_78e7868ee69f76a40dc575b34344ee8b/linux/athena/shared/libcscore.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2020.3.2-289-g34b9131-linuxathena.zip_78e7868ee69f76a40dc575b34344ee8b/linux/athena/shared/libcscorejni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2020.3.2-289-g34b9131-windowsx86-64.zip_9ac1761a7f3ee31566578ccc582a72a6/windows/x86-64/shared/cscore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2020.3.2-289-g34b9131-windowsx86-64.zip_9ac1761a7f3ee31566578ccc582a72a6/windows/x86-64/shared/cscorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2020.3.2-windowsx86-64.zip_1893bb55bbd32305d3f8edc7992fffe3/windows/x86-64/shared/cscore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2020.3.2-windowsx86-64.zip_1893bb55bbd32305d3f8edc7992fffe3/windows/x86-64/shared/cscorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.1.2-12-g8c5bfa0-linuxathena.zip_1e164dc2d047c8fdf12cd0f5d8ab115b/linux/athena/shared/libcscore.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.1.2-12-g8c5bfa0-linuxathena.zip_1e164dc2d047c8fdf12cd0f5d8ab115b/linux/athena/shared/libcscorejni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.1.2-12-g8c5bfa0-windowsx86-64.zip_b61bbcd9c25f743103419498b216a0c0/windows/x86-64/shared/cscore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.1.2-12-g8c5bfa0-windowsx86-64.zip_b61bbcd9c25f743103419498b216a0c0/windows/x86-64/shared/cscorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.1.2-3-ga44e761-windowsx86-64.zip_1f9b5a71a265f3e76c7a268493ed3eb9/windows/x86-64/shared/cscore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.1.2-3-ga44e761-windowsx86-64.zip_1f9b5a71a265f3e76c7a268493ed3eb9/windows/x86-64/shared/cscorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.1.2-5-gfb99910-linuxathena.zip_3f51ab73acd2f0811099306ff3816a81/linux/athena/shared/libcscore.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.1.2-5-gfb99910-linuxathena.zip_3f51ab73acd2f0811099306ff3816a81/linux/athena/shared/libcscorejni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.1.2-5-gfb99910-windowsx86-64.zip_b32d3a37b1451fd5de752b7559ec678f/windows/x86-64/shared/cscore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.1.2-5-gfb99910-windowsx86-64.zip_b32d3a37b1451fd5de752b7559ec678f/windows/x86-64/shared/cscorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.1.2-windowsx86-64.zip_64caa035eb03ec40edcba51d50923333/windows/x86-64/shared/cscore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.1.2-windowsx86-64.zip_64caa035eb03ec40edcba51d50923333/windows/x86-64/shared/cscorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.2.1-11-gfb13bb2-linuxathena.zip_27f5ccef6d4021ca31d275be01835e28/linux/athena/shared/libcscore.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.2.1-11-gfb13bb2-linuxathena.zip_27f5ccef6d4021ca31d275be01835e28/linux/athena/shared/libcscorejni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.2.1-11-gfb13bb2-windowsx86-64.zip_c4b00d1effb1c438aa2d4be57119ef67/windows/x86-64/shared/cscore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.2.1-11-gfb13bb2-windowsx86-64.zip_c4b00d1effb1c438aa2d4be57119ef67/windows/x86-64/shared/cscorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.2.1-12-gaec796b-windowsx86-64.zip_d8459f83ad15d42e6d2a23d608b1e10f/windows/x86-64/shared/cscore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.2.1-12-gaec796b-windowsx86-64.zip_d8459f83ad15d42e6d2a23d608b1e10f/windows/x86-64/shared/cscorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.2.1-16-g834a649-linuxathena.zip_3502364377ac5fefd29774c4c64e5ef0/linux/athena/shared/libcscore.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.2.1-16-g834a649-linuxathena.zip_3502364377ac5fefd29774c4c64e5ef0/linux/athena/shared/libcscorejni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.2.1-16-g834a649-windowsx86-64.zip_49969977e391cd2a661224689e8d665e/windows/x86-64/shared/cscore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.2.1-16-g834a649-windowsx86-64.zip_49969977e391cd2a661224689e8d665e/windows/x86-64/shared/cscorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.2.2-7-g3d44d8f-linuxathena.zip_cbd581fecb50a0ed361e8531ede7b495/linux/athena/shared/libcscore.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.2.2-7-g3d44d8f-linuxathena.zip_cbd581fecb50a0ed361e8531ede7b495/linux/athena/shared/libcscorejni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.2.2-7-g3d44d8f-windowsx86-64.zip_cc442110420b87621c41987e4bb7ba56/windows/x86-64/shared/cscore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.2.2-7-g3d44d8f-windowsx86-64.zip_cc442110420b87621c41987e4bb7ba56/windows/x86-64/shared/cscorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.2.2-linuxathena.zip_469003f6178040b869686dc9e5e622d6/linux/athena/shared/libcscore.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.2.2-linuxathena.zip_469003f6178040b869686dc9e5e622d6/linux/athena/shared/libcscorejni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.2.2-windowsx86-64.zip_bd2a4bb97c432fc7e8a8ce21b9d9dd62/windows/x86-64/shared/cscore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/cscore-cpp-2021.2.2-windowsx86-64.zip_bd2a4bb97c432fc7e8a8ce21b9d9dd62/windows/x86-64/shared/cscorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/diagnostics-5.18.1-linuxathena.zip_9061ce8a281a390b585f833a132cf77a/linux/athena/shared/libCTRE_PhoenixDiagnostics.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/diagnostics-5.18.1-windowsx86-64.zip_738a31eb220398c1a7d4c14a9fe44523/windows/x86-64/shared/CTRE_PhoenixDiagnostics.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2020.2.1-windowsx86-64.zip_5009fed7b52e2ac9d7f0aaec6902e3fc/windows/x86-64/shared/wpiHal.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2020.2.1-windowsx86-64.zip_5009fed7b52e2ac9d7f0aaec6902e3fc/windows/x86-64/shared/wpiHaljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2020.3.2-254-g21d949d-windowsx86-64.zip_14335ed05409056c9f90c08b5cf9e0fb/windows/x86-64/shared/wpiHal.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2020.3.2-254-g21d949d-windowsx86-64.zip_14335ed05409056c9f90c08b5cf9e0fb/windows/x86-64/shared/wpiHaljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2020.3.2-265-g37643ab-linuxathena.zip_ac14139a608d20fe90f77dece567ee03/linux/athena/shared/libwpiHal.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2020.3.2-265-g37643ab-linuxathena.zip_ac14139a608d20fe90f77dece567ee03/linux/athena/shared/libwpiHaljni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2020.3.2-265-g37643ab-windowsx86-64.zip_19c3e43922e670aef21894ffb515ad02/windows/x86-64/shared/wpiHal.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2020.3.2-265-g37643ab-windowsx86-64.zip_19c3e43922e670aef21894ffb515ad02/windows/x86-64/shared/wpiHaljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2020.3.2-269-g0614321-windowsx86-64.zip_ccefa113e07b913787a7b837f3627da2/windows/x86-64/shared/wpiHal.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2020.3.2-269-g0614321-windowsx86-64.zip_ccefa113e07b913787a7b837f3627da2/windows/x86-64/shared/wpiHaljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2020.3.2-272-g07ac537-windowsx86-64.zip_50c82b33dc38c692e0d8c70de114c92c/windows/x86-64/shared/wpiHal.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2020.3.2-272-g07ac537-windowsx86-64.zip_50c82b33dc38c692e0d8c70de114c92c/windows/x86-64/shared/wpiHaljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2020.3.2-289-g34b9131-linuxathena.zip_c80dda87aa7b4e54f54da95d56a052a9/linux/athena/shared/libwpiHal.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2020.3.2-289-g34b9131-linuxathena.zip_c80dda87aa7b4e54f54da95d56a052a9/linux/athena/shared/libwpiHaljni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2020.3.2-289-g34b9131-windowsx86-64.zip_d4b01027afd96dfd7ab6ce256c47492b/windows/x86-64/shared/wpiHal.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2020.3.2-289-g34b9131-windowsx86-64.zip_d4b01027afd96dfd7ab6ce256c47492b/windows/x86-64/shared/wpiHaljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2020.3.2-windowsx86-64.zip_3fbd0b9a4bb16390e6a525e244fa504a/windows/x86-64/shared/wpiHal.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2020.3.2-windowsx86-64.zip_3fbd0b9a4bb16390e6a525e244fa504a/windows/x86-64/shared/wpiHaljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.1.2-12-g8c5bfa0-linuxathena.zip_2bbb2c31d89b7ed25074f648846c1603/linux/athena/shared/libwpiHal.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.1.2-12-g8c5bfa0-linuxathena.zip_2bbb2c31d89b7ed25074f648846c1603/linux/athena/shared/libwpiHaljni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.1.2-12-g8c5bfa0-windowsx86-64.zip_ad8636edade6891b4e24e77735bd792b/windows/x86-64/shared/wpiHal.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.1.2-12-g8c5bfa0-windowsx86-64.zip_ad8636edade6891b4e24e77735bd792b/windows/x86-64/shared/wpiHaljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.1.2-3-ga44e761-windowsx86-64.zip_d4c7537408778982c669ffe28e4c44ec/windows/x86-64/shared/wpiHal.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.1.2-3-ga44e761-windowsx86-64.zip_d4c7537408778982c669ffe28e4c44ec/windows/x86-64/shared/wpiHaljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.1.2-5-gfb99910-linuxathena.zip_e5aa3573d63e4425022be7813cc6c5eb/linux/athena/shared/libwpiHal.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.1.2-5-gfb99910-linuxathena.zip_e5aa3573d63e4425022be7813cc6c5eb/linux/athena/shared/libwpiHaljni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.1.2-5-gfb99910-windowsx86-64.zip_aa71b01f19c103b155aac5c26176ec36/windows/x86-64/shared/wpiHal.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.1.2-5-gfb99910-windowsx86-64.zip_aa71b01f19c103b155aac5c26176ec36/windows/x86-64/shared/wpiHaljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.1.2-windowsx86-64.zip_bbd24cf9292df49a77ed6c722c2c5ee2/windows/x86-64/shared/wpiHal.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.1.2-windowsx86-64.zip_bbd24cf9292df49a77ed6c722c2c5ee2/windows/x86-64/shared/wpiHaljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.2.1-11-gfb13bb2-linuxathena.zip_02a35ee7e182c0b41d77f5461e07eb9e/linux/athena/shared/libwpiHal.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.2.1-11-gfb13bb2-linuxathena.zip_02a35ee7e182c0b41d77f5461e07eb9e/linux/athena/shared/libwpiHaljni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.2.1-11-gfb13bb2-windowsx86-64.zip_4ea3e5688ead1c67e621aa042cb2ed77/windows/x86-64/shared/wpiHal.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.2.1-11-gfb13bb2-windowsx86-64.zip_4ea3e5688ead1c67e621aa042cb2ed77/windows/x86-64/shared/wpiHaljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.2.1-12-gaec796b-windowsx86-64.zip_6bf43b0bb4470e2dedc0728513f17342/windows/x86-64/shared/wpiHal.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.2.1-12-gaec796b-windowsx86-64.zip_6bf43b0bb4470e2dedc0728513f17342/windows/x86-64/shared/wpiHaljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.2.1-16-g834a649-linuxathena.zip_aa19b96cf28d98b9648bcee5b4d12bcc/linux/athena/shared/libwpiHal.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.2.1-16-g834a649-linuxathena.zip_aa19b96cf28d98b9648bcee5b4d12bcc/linux/athena/shared/libwpiHaljni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.2.1-16-g834a649-windowsx86-64.zip_3a755b5187702130d79969b545156dc0/windows/x86-64/shared/wpiHal.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.2.1-16-g834a649-windowsx86-64.zip_3a755b5187702130d79969b545156dc0/windows/x86-64/shared/wpiHaljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.2.2-7-g3d44d8f-linuxathena.zip_7db8c32eb463ebbe15ccd8b2a72d4b59/linux/athena/shared/libwpiHal.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.2.2-7-g3d44d8f-linuxathena.zip_7db8c32eb463ebbe15ccd8b2a72d4b59/linux/athena/shared/libwpiHaljni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.2.2-7-g3d44d8f-windowsx86-64.zip_ee05634672817f2f13b8ba78d57b83e1/windows/x86-64/shared/wpiHal.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.2.2-7-g3d44d8f-windowsx86-64.zip_ee05634672817f2f13b8ba78d57b83e1/windows/x86-64/shared/wpiHaljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.2.2-linuxathena.zip_e067dba4455d661bb9cbea462d88db4b/linux/athena/shared/libwpiHal.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.2.2-linuxathena.zip_e067dba4455d661bb9cbea462d88db4b/linux/athena/shared/libwpiHaljni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.2.2-windowsx86-64.zip_f93aebf7ed1ef7ece27952f9396e1ae7/windows/x86-64/shared/wpiHal.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/hal-cpp-2021.2.2-windowsx86-64.zip_f93aebf7ed1ef7ece27952f9396e1ae7/windows/x86-64/shared/wpiHaljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2020.2.1-windowsx86-64.zip_9619b3c47865a45f01a83b5409f6dcb0/windows/x86-64/shared/ntcore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2020.2.1-windowsx86-64.zip_9619b3c47865a45f01a83b5409f6dcb0/windows/x86-64/shared/ntcorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2020.3.2-254-g21d949d-windowsx86-64.zip_fda173d37e3ab4d8cef709f20fb1f829/windows/x86-64/shared/ntcore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2020.3.2-254-g21d949d-windowsx86-64.zip_fda173d37e3ab4d8cef709f20fb1f829/windows/x86-64/shared/ntcorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2020.3.2-265-g37643ab-linuxathena.zip_c5874ae6c26ad313b595beddc30d74bb/linux/athena/shared/libntcore.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2020.3.2-265-g37643ab-linuxathena.zip_c5874ae6c26ad313b595beddc30d74bb/linux/athena/shared/libntcorejni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2020.3.2-265-g37643ab-windowsx86-64.zip_d0c70e335298e4e029b71899c75bfea8/windows/x86-64/shared/ntcore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2020.3.2-265-g37643ab-windowsx86-64.zip_d0c70e335298e4e029b71899c75bfea8/windows/x86-64/shared/ntcorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2020.3.2-269-g0614321-windowsx86-64.zip_af1d6370ad53a5d571041ff5754e893d/windows/x86-64/shared/ntcore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2020.3.2-269-g0614321-windowsx86-64.zip_af1d6370ad53a5d571041ff5754e893d/windows/x86-64/shared/ntcorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2020.3.2-272-g07ac537-windowsx86-64.zip_33398e4d0b6b5d02017898a1c344d624/windows/x86-64/shared/ntcore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2020.3.2-272-g07ac537-windowsx86-64.zip_33398e4d0b6b5d02017898a1c344d624/windows/x86-64/shared/ntcorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2020.3.2-289-g34b9131-linuxathena.zip_d63b2d4dae635b9ae185278a2d1e07ca/linux/athena/shared/libntcore.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2020.3.2-289-g34b9131-linuxathena.zip_d63b2d4dae635b9ae185278a2d1e07ca/linux/athena/shared/libntcorejni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2020.3.2-289-g34b9131-windowsx86-64.zip_a9ffb6c14f6c77c96eb3213a2b224f09/windows/x86-64/shared/ntcore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2020.3.2-289-g34b9131-windowsx86-64.zip_a9ffb6c14f6c77c96eb3213a2b224f09/windows/x86-64/shared/ntcorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2020.3.2-windowsx86-64.zip_bdd5b7648bf4577da18211bf5773e616/windows/x86-64/shared/ntcore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2020.3.2-windowsx86-64.zip_bdd5b7648bf4577da18211bf5773e616/windows/x86-64/shared/ntcorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.1.2-12-g8c5bfa0-linuxathena.zip_425264f14c91138dafc75cc89ba074c9/linux/athena/shared/libntcore.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.1.2-12-g8c5bfa0-linuxathena.zip_425264f14c91138dafc75cc89ba074c9/linux/athena/shared/libntcorejni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.1.2-12-g8c5bfa0-windowsx86-64.zip_b912e83792be606ce49a7384321d3e2f/windows/x86-64/shared/ntcore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.1.2-12-g8c5bfa0-windowsx86-64.zip_b912e83792be606ce49a7384321d3e2f/windows/x86-64/shared/ntcorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.1.2-3-ga44e761-windowsx86-64.zip_5d45d3b4485584c49deadd6b15a17258/windows/x86-64/shared/ntcore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.1.2-3-ga44e761-windowsx86-64.zip_5d45d3b4485584c49deadd6b15a17258/windows/x86-64/shared/ntcorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.1.2-5-gfb99910-linuxathena.zip_70a727290a1ed5e0346b45a0761a8458/linux/athena/shared/libntcore.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.1.2-5-gfb99910-linuxathena.zip_70a727290a1ed5e0346b45a0761a8458/linux/athena/shared/libntcorejni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.1.2-5-gfb99910-windowsx86-64.zip_16d73d87d5472f8aecc2e6e3769e118c/windows/x86-64/shared/ntcore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.1.2-5-gfb99910-windowsx86-64.zip_16d73d87d5472f8aecc2e6e3769e118c/windows/x86-64/shared/ntcorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.1.2-windowsx86-64.zip_6ae0f26f36e1dcc0b0d8b7d7d5db12bb/windows/x86-64/shared/ntcore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.1.2-windowsx86-64.zip_6ae0f26f36e1dcc0b0d8b7d7d5db12bb/windows/x86-64/shared/ntcorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.2.1-11-gfb13bb2-linuxathena.zip_669ec13628e2762d08881f732e9a24ee/linux/athena/shared/libntcore.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.2.1-11-gfb13bb2-linuxathena.zip_669ec13628e2762d08881f732e9a24ee/linux/athena/shared/libntcorejni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.2.1-11-gfb13bb2-windowsx86-64.zip_38aae84a5915f0d498c2578f0645815e/windows/x86-64/shared/ntcore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.2.1-11-gfb13bb2-windowsx86-64.zip_38aae84a5915f0d498c2578f0645815e/windows/x86-64/shared/ntcorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.2.1-12-gaec796b-windowsx86-64.zip_e8fb54485fc7122b342f275ad6ec31ca/windows/x86-64/shared/ntcore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.2.1-12-gaec796b-windowsx86-64.zip_e8fb54485fc7122b342f275ad6ec31ca/windows/x86-64/shared/ntcorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.2.1-16-g834a649-linuxathena.zip_f0809edb39d821b0a21847e15abd0c6a/linux/athena/shared/libntcore.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.2.1-16-g834a649-linuxathena.zip_f0809edb39d821b0a21847e15abd0c6a/linux/athena/shared/libntcorejni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.2.1-16-g834a649-windowsx86-64.zip_f8339d67a5b0451575346d46108b1fd5/windows/x86-64/shared/ntcore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.2.1-16-g834a649-windowsx86-64.zip_f8339d67a5b0451575346d46108b1fd5/windows/x86-64/shared/ntcorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.2.2-7-g3d44d8f-linuxathena.zip_9ec835b1bb84bd028a733d5b69fc6a5f/linux/athena/shared/libntcore.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.2.2-7-g3d44d8f-linuxathena.zip_9ec835b1bb84bd028a733d5b69fc6a5f/linux/athena/shared/libntcorejni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.2.2-7-g3d44d8f-windowsx86-64.zip_2c5cfa101e31c482f94d3ff02886cfeb/windows/x86-64/shared/ntcore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.2.2-7-g3d44d8f-windowsx86-64.zip_2c5cfa101e31c482f94d3ff02886cfeb/windows/x86-64/shared/ntcorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.2.2-linuxathena.zip_dd37f80b945a6b9ea211e6b391f63d59/linux/athena/shared/libntcore.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.2.2-linuxathena.zip_dd37f80b945a6b9ea211e6b391f63d59/linux/athena/shared/libntcorejni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.2.2-windowsx86-64.zip_1e764e1439cc4ecfe944831262e3b42e/windows/x86-64/shared/ntcore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/ntcore-cpp-2021.2.2-windowsx86-64.zip_1e764e1439cc4ecfe944831262e3b42e/windows/x86-64/shared/ntcorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-linuxathena.zip_cdac89b3de9eb20812a0da59c2a33aaa/linux/athena/shared/libopencv_calib3d.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-linuxathena.zip_cdac89b3de9eb20812a0da59c2a33aaa/linux/athena/shared/libopencv_core.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-linuxathena.zip_cdac89b3de9eb20812a0da59c2a33aaa/linux/athena/shared/libopencv_features2d.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-linuxathena.zip_cdac89b3de9eb20812a0da59c2a33aaa/linux/athena/shared/libopencv_flann.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-linuxathena.zip_cdac89b3de9eb20812a0da59c2a33aaa/linux/athena/shared/libopencv_highgui.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-linuxathena.zip_cdac89b3de9eb20812a0da59c2a33aaa/linux/athena/shared/libopencv_imgcodecs.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-linuxathena.zip_cdac89b3de9eb20812a0da59c2a33aaa/linux/athena/shared/libopencv_imgproc.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-linuxathena.zip_cdac89b3de9eb20812a0da59c2a33aaa/linux/athena/shared/libopencv_java347.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-linuxathena.zip_cdac89b3de9eb20812a0da59c2a33aaa/linux/athena/shared/libopencv_ml.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-linuxathena.zip_cdac89b3de9eb20812a0da59c2a33aaa/linux/athena/shared/libopencv_objdetect.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-linuxathena.zip_cdac89b3de9eb20812a0da59c2a33aaa/linux/athena/shared/libopencv_photo.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-linuxathena.zip_cdac89b3de9eb20812a0da59c2a33aaa/linux/athena/shared/libopencv_shape.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-linuxathena.zip_cdac89b3de9eb20812a0da59c2a33aaa/linux/athena/shared/libopencv_stitching.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-linuxathena.zip_cdac89b3de9eb20812a0da59c2a33aaa/linux/athena/shared/libopencv_superres.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-linuxathena.zip_cdac89b3de9eb20812a0da59c2a33aaa/linux/athena/shared/libopencv_video.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-linuxathena.zip_cdac89b3de9eb20812a0da59c2a33aaa/linux/athena/shared/libopencv_videoio.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-linuxathena.zip_cdac89b3de9eb20812a0da59c2a33aaa/linux/athena/shared/libopencv_videostab.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-windowsx86-64.zip_c1b4afe02f1d1728ff01a21481793f4b/windows/x86-64/shared/opencv_calib3d347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-windowsx86-64.zip_c1b4afe02f1d1728ff01a21481793f4b/windows/x86-64/shared/opencv_core347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-windowsx86-64.zip_c1b4afe02f1d1728ff01a21481793f4b/windows/x86-64/shared/opencv_features2d347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-windowsx86-64.zip_c1b4afe02f1d1728ff01a21481793f4b/windows/x86-64/shared/opencv_flann347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-windowsx86-64.zip_c1b4afe02f1d1728ff01a21481793f4b/windows/x86-64/shared/opencv_highgui347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-windowsx86-64.zip_c1b4afe02f1d1728ff01a21481793f4b/windows/x86-64/shared/opencv_imgcodecs347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-windowsx86-64.zip_c1b4afe02f1d1728ff01a21481793f4b/windows/x86-64/shared/opencv_imgproc347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-windowsx86-64.zip_c1b4afe02f1d1728ff01a21481793f4b/windows/x86-64/shared/opencv_java347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-windowsx86-64.zip_c1b4afe02f1d1728ff01a21481793f4b/windows/x86-64/shared/opencv_ml347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-windowsx86-64.zip_c1b4afe02f1d1728ff01a21481793f4b/windows/x86-64/shared/opencv_objdetect347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-windowsx86-64.zip_c1b4afe02f1d1728ff01a21481793f4b/windows/x86-64/shared/opencv_photo347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-windowsx86-64.zip_c1b4afe02f1d1728ff01a21481793f4b/windows/x86-64/shared/opencv_shape347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-windowsx86-64.zip_c1b4afe02f1d1728ff01a21481793f4b/windows/x86-64/shared/opencv_stitching347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-windowsx86-64.zip_c1b4afe02f1d1728ff01a21481793f4b/windows/x86-64/shared/opencv_superres347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-windowsx86-64.zip_c1b4afe02f1d1728ff01a21481793f4b/windows/x86-64/shared/opencv_video347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-windowsx86-64.zip_c1b4afe02f1d1728ff01a21481793f4b/windows/x86-64/shared/opencv_videoio347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-2-windowsx86-64.zip_c1b4afe02f1d1728ff01a21481793f4b/windows/x86-64/shared/opencv_videostab347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-linuxathena.zip_a13e35f7ea5f447a741134dc3e7cd6a6/linux/athena/shared/libopencv_calib3d.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-linuxathena.zip_a13e35f7ea5f447a741134dc3e7cd6a6/linux/athena/shared/libopencv_core.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-linuxathena.zip_a13e35f7ea5f447a741134dc3e7cd6a6/linux/athena/shared/libopencv_features2d.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-linuxathena.zip_a13e35f7ea5f447a741134dc3e7cd6a6/linux/athena/shared/libopencv_flann.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-linuxathena.zip_a13e35f7ea5f447a741134dc3e7cd6a6/linux/athena/shared/libopencv_highgui.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-linuxathena.zip_a13e35f7ea5f447a741134dc3e7cd6a6/linux/athena/shared/libopencv_imgcodecs.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-linuxathena.zip_a13e35f7ea5f447a741134dc3e7cd6a6/linux/athena/shared/libopencv_imgproc.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-linuxathena.zip_a13e35f7ea5f447a741134dc3e7cd6a6/linux/athena/shared/libopencv_java347.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-linuxathena.zip_a13e35f7ea5f447a741134dc3e7cd6a6/linux/athena/shared/libopencv_ml.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-linuxathena.zip_a13e35f7ea5f447a741134dc3e7cd6a6/linux/athena/shared/libopencv_objdetect.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-linuxathena.zip_a13e35f7ea5f447a741134dc3e7cd6a6/linux/athena/shared/libopencv_photo.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-linuxathena.zip_a13e35f7ea5f447a741134dc3e7cd6a6/linux/athena/shared/libopencv_shape.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-linuxathena.zip_a13e35f7ea5f447a741134dc3e7cd6a6/linux/athena/shared/libopencv_stitching.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-linuxathena.zip_a13e35f7ea5f447a741134dc3e7cd6a6/linux/athena/shared/libopencv_superres.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-linuxathena.zip_a13e35f7ea5f447a741134dc3e7cd6a6/linux/athena/shared/libopencv_video.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-linuxathena.zip_a13e35f7ea5f447a741134dc3e7cd6a6/linux/athena/shared/libopencv_videoio.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-linuxathena.zip_a13e35f7ea5f447a741134dc3e7cd6a6/linux/athena/shared/libopencv_videostab.so.3.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-windowsx86-64.zip_fffab528a2a8fe3f8b05d8b9ec5a431d/windows/x86-64/shared/opencv_calib3d347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-windowsx86-64.zip_fffab528a2a8fe3f8b05d8b9ec5a431d/windows/x86-64/shared/opencv_core347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-windowsx86-64.zip_fffab528a2a8fe3f8b05d8b9ec5a431d/windows/x86-64/shared/opencv_features2d347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-windowsx86-64.zip_fffab528a2a8fe3f8b05d8b9ec5a431d/windows/x86-64/shared/opencv_flann347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-windowsx86-64.zip_fffab528a2a8fe3f8b05d8b9ec5a431d/windows/x86-64/shared/opencv_highgui347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-windowsx86-64.zip_fffab528a2a8fe3f8b05d8b9ec5a431d/windows/x86-64/shared/opencv_imgcodecs347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-windowsx86-64.zip_fffab528a2a8fe3f8b05d8b9ec5a431d/windows/x86-64/shared/opencv_imgproc347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-windowsx86-64.zip_fffab528a2a8fe3f8b05d8b9ec5a431d/windows/x86-64/shared/opencv_java347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-windowsx86-64.zip_fffab528a2a8fe3f8b05d8b9ec5a431d/windows/x86-64/shared/opencv_ml347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-windowsx86-64.zip_fffab528a2a8fe3f8b05d8b9ec5a431d/windows/x86-64/shared/opencv_objdetect347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-windowsx86-64.zip_fffab528a2a8fe3f8b05d8b9ec5a431d/windows/x86-64/shared/opencv_photo347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-windowsx86-64.zip_fffab528a2a8fe3f8b05d8b9ec5a431d/windows/x86-64/shared/opencv_shape347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-windowsx86-64.zip_fffab528a2a8fe3f8b05d8b9ec5a431d/windows/x86-64/shared/opencv_stitching347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-windowsx86-64.zip_fffab528a2a8fe3f8b05d8b9ec5a431d/windows/x86-64/shared/opencv_superres347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-windowsx86-64.zip_fffab528a2a8fe3f8b05d8b9ec5a431d/windows/x86-64/shared/opencv_video347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-windowsx86-64.zip_fffab528a2a8fe3f8b05d8b9ec5a431d/windows/x86-64/shared/opencv_videoio347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/opencv-cpp-3.4.7-5-windowsx86-64.zip_fffab528a2a8fe3f8b05d8b9ec5a431d/windows/x86-64/shared/opencv_videostab347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/platform-stub-5.18.1-windowsx86-64.zip_500c3c8398dd7c5ec346ae1733360356/windows/x86-64/shared/CTRE_PhoenixPlatform.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2020.3.2-254-g21d949d-windowsx86-64.zip_24c6ddc611ba1acb6f7aa928e2e96aef/windows/x86-64/shared/wpimath.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2020.3.2-254-g21d949d-windowsx86-64.zip_24c6ddc611ba1acb6f7aa928e2e96aef/windows/x86-64/shared/wpimathjni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2020.3.2-265-g37643ab-linuxathena.zip_f6e14f2b03646fdc3f011235f3499813/linux/athena/shared/libwpimath.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2020.3.2-265-g37643ab-linuxathena.zip_f6e14f2b03646fdc3f011235f3499813/linux/athena/shared/libwpimathjni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2020.3.2-265-g37643ab-windowsx86-64.zip_2286008425ff2798dc4d9f220058e3f4/windows/x86-64/shared/wpimath.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2020.3.2-265-g37643ab-windowsx86-64.zip_2286008425ff2798dc4d9f220058e3f4/windows/x86-64/shared/wpimathjni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2020.3.2-269-g0614321-windowsx86-64.zip_bef02ef35afc892e0357125ab14e7da5/windows/x86-64/shared/wpimath.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2020.3.2-269-g0614321-windowsx86-64.zip_bef02ef35afc892e0357125ab14e7da5/windows/x86-64/shared/wpimathjni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2020.3.2-272-g07ac537-windowsx86-64.zip_5059955bf4c208845a57c6d0a592643b/windows/x86-64/shared/wpimath.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2020.3.2-272-g07ac537-windowsx86-64.zip_5059955bf4c208845a57c6d0a592643b/windows/x86-64/shared/wpimathjni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2020.3.2-289-g34b9131-linuxathena.zip_41f061200daa1a887ea64b8ebfd5159f/linux/athena/shared/libwpimath.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2020.3.2-289-g34b9131-linuxathena.zip_41f061200daa1a887ea64b8ebfd5159f/linux/athena/shared/libwpimathjni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2020.3.2-289-g34b9131-windowsx86-64.zip_6860c38b7e4384a4f6be92615c1239fb/windows/x86-64/shared/wpimath.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2020.3.2-289-g34b9131-windowsx86-64.zip_6860c38b7e4384a4f6be92615c1239fb/windows/x86-64/shared/wpimathjni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.1.2-12-g8c5bfa0-linuxathena.zip_22fd47e0bd2094270cca7e7802ffd33f/linux/athena/shared/libwpimath.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.1.2-12-g8c5bfa0-linuxathena.zip_22fd47e0bd2094270cca7e7802ffd33f/linux/athena/shared/libwpimathjni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.1.2-12-g8c5bfa0-windowsx86-64.zip_bb727ecad962c6d4e9760b6ee26f8715/windows/x86-64/shared/wpimath.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.1.2-12-g8c5bfa0-windowsx86-64.zip_bb727ecad962c6d4e9760b6ee26f8715/windows/x86-64/shared/wpimathjni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.1.2-3-ga44e761-windowsx86-64.zip_cecf5a773d9cc4415d61378f57d0d7db/windows/x86-64/shared/wpimath.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.1.2-3-ga44e761-windowsx86-64.zip_cecf5a773d9cc4415d61378f57d0d7db/windows/x86-64/shared/wpimathjni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.1.2-5-gfb99910-linuxathena.zip_33c04dac372ce178f2a41de5f3518f00/linux/athena/shared/libwpimath.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.1.2-5-gfb99910-linuxathena.zip_33c04dac372ce178f2a41de5f3518f00/linux/athena/shared/libwpimathjni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.1.2-5-gfb99910-windowsx86-64.zip_439ac11a288874392c9deffbf2d8836c/windows/x86-64/shared/wpimath.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.1.2-5-gfb99910-windowsx86-64.zip_439ac11a288874392c9deffbf2d8836c/windows/x86-64/shared/wpimathjni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.1.2-windowsx86-64.zip_445c70fc28a937b2a029eb89efdaa526/windows/x86-64/shared/wpimath.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.1.2-windowsx86-64.zip_445c70fc28a937b2a029eb89efdaa526/windows/x86-64/shared/wpimathjni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.2.1-11-gfb13bb2-linuxathena.zip_8340df5886f60a719720e1a07aef9572/linux/athena/shared/libwpimath.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.2.1-11-gfb13bb2-linuxathena.zip_8340df5886f60a719720e1a07aef9572/linux/athena/shared/libwpimathjni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.2.1-11-gfb13bb2-windowsx86-64.zip_60dfb86f99afdcccc841a099d7cfd611/windows/x86-64/shared/wpimath.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.2.1-11-gfb13bb2-windowsx86-64.zip_60dfb86f99afdcccc841a099d7cfd611/windows/x86-64/shared/wpimathjni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.2.1-12-gaec796b-windowsx86-64.zip_bdb6e73bb4fa6503d0e3d610f9710be3/windows/x86-64/shared/wpimath.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.2.1-12-gaec796b-windowsx86-64.zip_bdb6e73bb4fa6503d0e3d610f9710be3/windows/x86-64/shared/wpimathjni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.2.1-16-g834a649-linuxathena.zip_b5c74220fd4976de24a9bcda49bf8099/linux/athena/shared/libwpimath.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.2.1-16-g834a649-linuxathena.zip_b5c74220fd4976de24a9bcda49bf8099/linux/athena/shared/libwpimathjni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.2.1-16-g834a649-windowsx86-64.zip_9d9c8d76fbbc1deab0fe0d6ca446249e/windows/x86-64/shared/wpimath.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.2.1-16-g834a649-windowsx86-64.zip_9d9c8d76fbbc1deab0fe0d6ca446249e/windows/x86-64/shared/wpimathjni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.2.2-7-g3d44d8f-linuxathena.zip_a114a36206533eb5f42e9d1d0fa921a6/linux/athena/shared/libwpimath.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.2.2-7-g3d44d8f-linuxathena.zip_a114a36206533eb5f42e9d1d0fa921a6/linux/athena/shared/libwpimathjni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.2.2-7-g3d44d8f-windowsx86-64.zip_f92d60ba2e4b34b03ff6e503db587423/windows/x86-64/shared/wpimath.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.2.2-7-g3d44d8f-windowsx86-64.zip_f92d60ba2e4b34b03ff6e503db587423/windows/x86-64/shared/wpimathjni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.2.2-linuxathena.zip_6c120e12eda677ad4bd02b44f97df717/linux/athena/shared/libwpimath.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.2.2-linuxathena.zip_6c120e12eda677ad4bd02b44f97df717/linux/athena/shared/libwpimathjni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.2.2-windowsx86-64.zip_834f1921f10fb3de182c9d24d64129ea/windows/x86-64/shared/wpimath.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpimath-cpp-2021.2.2-windowsx86-64.zip_834f1921f10fb3de182c9d24d64129ea/windows/x86-64/shared/wpimathjni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2020.2.1-windowsx86-64.zip_57d2a0f971f01e6af6b1fcbd1b3e3dad/windows/x86-64/shared/wpiutil.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2020.2.1-windowsx86-64.zip_57d2a0f971f01e6af6b1fcbd1b3e3dad/windows/x86-64/shared/wpiutiljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2020.3.2-254-g21d949d-windowsx86-64.zip_74ad4e4d6b612ade79d01fd3fadd103b/windows/x86-64/shared/wpiutil.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2020.3.2-254-g21d949d-windowsx86-64.zip_74ad4e4d6b612ade79d01fd3fadd103b/windows/x86-64/shared/wpiutiljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2020.3.2-265-g37643ab-linuxathena.zip_5945edaf5c56cb53c1827e8b6dee53fb/linux/athena/shared/libwpiutil.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2020.3.2-265-g37643ab-linuxathena.zip_5945edaf5c56cb53c1827e8b6dee53fb/linux/athena/shared/libwpiutiljni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2020.3.2-265-g37643ab-windowsx86-64.zip_73d844c9f6bd6f1e4be91789d4353866/windows/x86-64/shared/wpiutil.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2020.3.2-265-g37643ab-windowsx86-64.zip_73d844c9f6bd6f1e4be91789d4353866/windows/x86-64/shared/wpiutiljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2020.3.2-269-g0614321-windowsx86-64.zip_76a4fc1dcaa67775785ec674a3426701/windows/x86-64/shared/wpiutil.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2020.3.2-269-g0614321-windowsx86-64.zip_76a4fc1dcaa67775785ec674a3426701/windows/x86-64/shared/wpiutiljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2020.3.2-272-g07ac537-windowsx86-64.zip_404ad3f274b472fc0b36c056661c5034/windows/x86-64/shared/wpiutil.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2020.3.2-272-g07ac537-windowsx86-64.zip_404ad3f274b472fc0b36c056661c5034/windows/x86-64/shared/wpiutiljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2020.3.2-289-g34b9131-linuxathena.zip_5c1e1b322a1bbf0f2042e5ffce869df7/linux/athena/shared/libwpiutil.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2020.3.2-289-g34b9131-linuxathena.zip_5c1e1b322a1bbf0f2042e5ffce869df7/linux/athena/shared/libwpiutiljni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2020.3.2-289-g34b9131-windowsx86-64.zip_1bb9bd369ac6d25eec92cd34fe310a41/windows/x86-64/shared/wpiutil.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2020.3.2-289-g34b9131-windowsx86-64.zip_1bb9bd369ac6d25eec92cd34fe310a41/windows/x86-64/shared/wpiutiljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2020.3.2-windowsx86-64.zip_fe3abbc5f8730cc6603a29fe451bc716/windows/x86-64/shared/wpiutil.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2020.3.2-windowsx86-64.zip_fe3abbc5f8730cc6603a29fe451bc716/windows/x86-64/shared/wpiutiljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.1.2-12-g8c5bfa0-linuxathena.zip_55d41417f61a74af4bc521204ed7424f/linux/athena/shared/libwpiutil.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.1.2-12-g8c5bfa0-linuxathena.zip_55d41417f61a74af4bc521204ed7424f/linux/athena/shared/libwpiutiljni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.1.2-12-g8c5bfa0-windowsx86-64.zip_44440231b1cd942904d459fbbd1f1a54/windows/x86-64/shared/wpiutil.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.1.2-12-g8c5bfa0-windowsx86-64.zip_44440231b1cd942904d459fbbd1f1a54/windows/x86-64/shared/wpiutiljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.1.2-3-ga44e761-windowsx86-64.zip_1b0fcc34bdc7d4547d9a80838421dc2e/windows/x86-64/shared/wpiutil.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.1.2-3-ga44e761-windowsx86-64.zip_1b0fcc34bdc7d4547d9a80838421dc2e/windows/x86-64/shared/wpiutiljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.1.2-5-gfb99910-linuxathena.zip_8aae2de2b70c266b5fc91c954efba66a/linux/athena/shared/libwpiutil.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.1.2-5-gfb99910-linuxathena.zip_8aae2de2b70c266b5fc91c954efba66a/linux/athena/shared/libwpiutiljni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.1.2-5-gfb99910-windowsx86-64.zip_6a3814da274aad3cab36688228a09597/windows/x86-64/shared/wpiutil.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.1.2-5-gfb99910-windowsx86-64.zip_6a3814da274aad3cab36688228a09597/windows/x86-64/shared/wpiutiljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.1.2-windowsx86-64.zip_e7dbdf87c2c292239daf013d7c9f8dbe/windows/x86-64/shared/wpiutil.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.1.2-windowsx86-64.zip_e7dbdf87c2c292239daf013d7c9f8dbe/windows/x86-64/shared/wpiutiljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.2.1-11-gfb13bb2-linuxathena.zip_ef7ccfa906dceb0ff26cae5ed0ee07bb/linux/athena/shared/libwpiutil.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.2.1-11-gfb13bb2-linuxathena.zip_ef7ccfa906dceb0ff26cae5ed0ee07bb/linux/athena/shared/libwpiutiljni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.2.1-11-gfb13bb2-windowsx86-64.zip_3cbe2acb6b0f71934ccbd63b71c5a238/windows/x86-64/shared/wpiutil.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.2.1-11-gfb13bb2-windowsx86-64.zip_3cbe2acb6b0f71934ccbd63b71c5a238/windows/x86-64/shared/wpiutiljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.2.1-12-gaec796b-windowsx86-64.zip_09405e9d35267c31511224ed83dfaea4/windows/x86-64/shared/wpiutil.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.2.1-12-gaec796b-windowsx86-64.zip_09405e9d35267c31511224ed83dfaea4/windows/x86-64/shared/wpiutiljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.2.1-16-g834a649-linuxathena.zip_e316ec83dba6357b15fccf95bb4745dc/linux/athena/shared/libwpiutil.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.2.1-16-g834a649-linuxathena.zip_e316ec83dba6357b15fccf95bb4745dc/linux/athena/shared/libwpiutiljni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.2.1-16-g834a649-windowsx86-64.zip_a63f35b51a08420096680233a3188cec/windows/x86-64/shared/wpiutil.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.2.1-16-g834a649-windowsx86-64.zip_a63f35b51a08420096680233a3188cec/windows/x86-64/shared/wpiutiljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.2.2-7-g3d44d8f-linuxathena.zip_41fb3580e46270b581be1cec995cf668/linux/athena/shared/libwpiutil.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.2.2-7-g3d44d8f-linuxathena.zip_41fb3580e46270b581be1cec995cf668/linux/athena/shared/libwpiutiljni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.2.2-7-g3d44d8f-windowsx86-64.zip_3d9b69a22af530733b7ae89b5f8a1013/windows/x86-64/shared/wpiutil.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.2.2-7-g3d44d8f-windowsx86-64.zip_3d9b69a22af530733b7ae89b5f8a1013/windows/x86-64/shared/wpiutiljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.2.2-linuxathena.zip_49c59468df0780d2dec66945c0c3511f/linux/athena/shared/libwpiutil.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.2.2-linuxathena.zip_49c59468df0780d2dec66945c0c3511f/linux/athena/shared/libwpiutiljni.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.2.2-windowsx86-64.zip_8fcf93096fd5825eb1d2d43470c72713/windows/x86-64/shared/wpiutil.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/expandedArchives/wpiutil-cpp-2021.2.2-windowsx86-64.zip_8fcf93096fd5825eb1d2d43470c72713/windows/x86-64/shared/wpiutiljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jar/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/CTRE_PhoenixCCI.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/CTRE_PhoenixCanutils.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/CTRE_PhoenixCore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/CTRE_PhoenixDiagnostics.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/CTRE_PhoenixPlatform.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/cscore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/cscorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/ntcore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/ntcorejni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/opencv_calib3d347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/opencv_core347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/opencv_features2d347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/opencv_flann347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/opencv_highgui347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/opencv_imgcodecs347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/opencv_imgproc347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/opencv_java347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/opencv_ml347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/opencv_objdetect347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/opencv_photo347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/opencv_shape347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/opencv_stitching347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/opencv_superres347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/opencv_video347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/opencv_videoio347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/opencv_videostab347.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/wpiHal.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/wpiHaljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/wpimath.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/wpimathjni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/wpiutil.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jniExtractDir/wpiutiljni.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/OI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/OI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/Robot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/Robot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/RobotContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/RobotContainer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/RobotMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/RobotMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/commands/IdleClimber.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/commands/IdleClimber.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/commands/IdleHood.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/commands/IdleHood.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/subsystems/Climber.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/subsystems/Climber.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/subsystems/DiffSwerveModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/subsystems/DiffSwerveModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/subsystems/DriveTrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/subsystems/DriveTrain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/subsystems/Hood.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/subsystems/Hood.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/subsystems/Intake.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/subsystems/Intake.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/subsystems/Spindexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/subsystems/Spindexer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendordeps/Phoenix.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendordeps/Phoenix.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendordeps/REVRobotics.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendordeps/REVRobotics.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="2021-robot" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1o7mUJ12MMdDZlrj52BQM5JO3ti" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="terminal" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\dslob\Documents\Robotics\2020-2021\2021-robot" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9cdb5074-1904-4449-833f-2401ad4cb71a" name="Default Changelist" comment="" />
+      <created>1612646016996</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1612646016996</updated>
+      <workItem from="1626620300836" duration="16339000" />
+      <workItem from="1626719902041" duration="3735000" />
+      <workItem from="1626724703491" duration="2211000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

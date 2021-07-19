@@ -73,14 +73,18 @@ public class DiffSwerveModule {
                 Constants.DifferentialSwerveModule.TIMEOUT);
         _leftFalcon.enableVoltageCompensation(true);
         _rightFalcon.enableVoltageCompensation(true);
-        _rightFalcon.setStatusFramePeriod(
-                StatusFrame.Status_1_General, 5, Constants.DifferentialSwerveModule.TIMEOUT);
-        _leftFalcon.setStatusFramePeriod(
-                StatusFrame.Status_1_General, 5, Constants.DifferentialSwerveModule.TIMEOUT);
-        _rightFalcon.setStatusFramePeriod(
-                StatusFrame.Status_2_Feedback0, 10, Constants.DifferentialSwerveModule.TIMEOUT);
-        _leftFalcon.setStatusFramePeriod(
-                StatusFrame.Status_2_Feedback0, 10, Constants.DifferentialSwerveModule.TIMEOUT);
+        //        _rightFalcon.setStatusFramePeriod(
+        //                StatusFrame.Status_1_General, 5,
+        // Constants.DifferentialSwerveModule.TIMEOUT);
+        //        _leftFalcon.setStatusFramePeriod(
+        //                StatusFrame.Status_1_General, 5,
+        // Constants.DifferentialSwerveModule.TIMEOUT);
+        //        _rightFalcon.setStatusFramePeriod(
+        //                StatusFrame.Status_2_Feedback0, 10,
+        // Constants.DifferentialSwerveModule.TIMEOUT);
+        //        _leftFalcon.setStatusFramePeriod(
+        //                StatusFrame.Status_2_Feedback0, 10,
+        // Constants.DifferentialSwerveModule.TIMEOUT);
         _rightFalcon.configSelectedFeedbackSensor(
                 FeedbackDevice.IntegratedSensor, 0, Constants.DifferentialSwerveModule.TIMEOUT);
         _leftFalcon.configSelectedFeedbackSensor(

@@ -136,15 +136,16 @@ public class DriveTrain extends OutliersSubsystem {
         metric("FL/Encoder Angle", _frontLeft.getModuleAngle());
         metric("FR/Encoder Angle", _frontRight.getModuleAngle());
 
-        metric("BR/Predicted Angle", _backRight.getPredictedAzimuthAngle());
+        //        metric("BR/Predicted Angle", _backRight.getPredictedAzimuthAngle());
 
-        metric("BR/Encoder Azimuth Vel", _backRight.getAzimuthAngularVelocity());
-        metric("BR/Predicted Azimuth Vel", _backRight.getPredictedAzimuthAngularVelocity());
+        //        metric("BR/Encoder Azimuth Vel", _backRight.getAzimuthAngularVelocity());
+        //        metric("BR/Predicted Azimuth Vel",
+        // _backRight.getPredictedAzimuthAngularVelocity());
 
-        metric("BR/Encoder Wheel Vel", _backRight.getWheelVelocity());
-        metric("BR/Predicted Wheel Vel", _backRight.getPredictedWheelVelocity());
+        //        metric("BR/Encoder Wheel Vel", _backRight.getWheelVelocity());
+        //        metric("BR/Predicted Wheel Vel", _backRight.getPredictedWheelVelocity());
 
-        metric("Odometry Pose", getOdometryPose().toString());
+        //        metric("Odometry Pose", getOdometryPose().toString());
     }
 
     public void setFrontRightModuleState(SwerveModuleState state) {
