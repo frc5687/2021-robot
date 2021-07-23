@@ -21,31 +21,27 @@ public class Shooter extends OutliersSubsystem {
 
     public Shooter(OutliersContainer container) {
         super(container);
-        try {
-            _leftShooter = new TalonFX(RobotMap.CAN.TALONFX.LEFT_SHOOTER);
-            _rightShooter = new TalonFX(RobotMap.CAN.TALONFX.RIGHT_SHOOTER);
+        _leftShooter = new TalonFX(RobotMap.CAN.TALONFX.LEFT_SHOOTER);
+        _rightShooter = new TalonFX(RobotMap.CAN.TALONFX.RIGHT_SHOOTER);
 
-            _leftShooter.follow(_rightShooter);
+        _leftShooter.follow(_rightShooter);
 
-            _leftShooter.setInverted(LEFT_INVERTED);
-            _rightShooter.setInverted(RIGHT_INVERTED);
+        _leftShooter.setInverted(LEFT_INVERTED);
+        _rightShooter.setInverted(RIGHT_INVERTED);
 
-            _rightShooter.config_kP(0, kP);
-            _rightShooter.config_kI(0, kI);
-            _rightShooter.config_kD(0, kD);
-            _rightShooter.config_kF(0, kFF);
-            _rightShooter.config_IntegralZone(0, kIz, 50);
+        _rightShooter.config_kP(0, kP);
+        _rightShooter.config_kI(0, kI);
+        _rightShooter.config_kD(0, kD);
+        _rightShooter.config_kF(0, kFF);
+        _rightShooter.config_IntegralZone(0, kIz, 50);
 
-            _rightShooter.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
-            _rightShooter.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 20);
-            _leftShooter.setStatusFramePeriod(StatusFrame.Status_1_General, 255);
-            _leftShooter.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 255);
+        _rightShooter.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+        _rightShooter.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 20);
+        _leftShooter.setStatusFramePeriod(StatusFrame.Status_1_General, 255);
+        _leftShooter.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 255);
 
-            _rightShooter.configClosedloopRamp(4);
-            _rightShooter.selectProfileSlot(0, 0);
-        } catch (Exception e) {
-            error(e.getMessage());
-        }
+        _rightShooter.configClosedloopRamp(4);
+        _rightShooter.selectProfileSlot(0, 0);
         _rpm = 0;
     }
 

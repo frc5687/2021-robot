@@ -39,76 +39,72 @@ public class DriveTrain extends OutliersSubsystem {
 
     public DriveTrain(OutliersContainer container, OI oi, AHRS imu) {
         super(container);
-        try {
-            _oi = oi;
-            _imu = imu;
+        _oi = oi;
+        _imu = imu;
 
-            _frontRight =
-                    new DiffSwerveModule(
-                            Constants.DriveTrain.FRONT_RIGHT_POSITION,
-                            RobotMap.CAN.TALONFX.FR_LEFT_FALCON,
-                            RobotMap.CAN.TALONFX.FR_RIGHT_FALCON,
-                            RobotMap.DIO.ENCODER_FR,
-                            Constants.DriveTrain.FRONT_RIGHT_ENCODER_OFFSET);
-            _frontLeft =
-                    new DiffSwerveModule(
-                            Constants.DriveTrain.FRONT_LEFT_POSITION,
-                            RobotMap.CAN.TALONFX.FL_LEFT_FALCON,
-                            RobotMap.CAN.TALONFX.FL_RIGHT_FALCON,
-                            RobotMap.DIO.ENCODER_FL,
-                            Constants.DriveTrain.FRONT_LEFT_ENCODER_OFFSET);
-            _backRight =
-                    new DiffSwerveModule(
-                            Constants.DriveTrain.BACK_RIGHT_POSITION,
-                            RobotMap.CAN.TALONFX.BR_LEFT_FALCON,
-                            RobotMap.CAN.TALONFX.BR_RIGHT_FALCON,
-                            RobotMap.DIO.ENCODER_BR,
-                            Constants.DriveTrain.BACK_RIGHT_ENCODER_OFFSET);
-            _backLeft =
-                    new DiffSwerveModule(
-                            Constants.DriveTrain.BACK_LEFT_POSITION,
-                            RobotMap.CAN.TALONFX.BL_RIGHT_FALCON,
-                            RobotMap.CAN.TALONFX.BL_LEFT_FALCON,
-                            RobotMap.DIO.ENCODER_BL,
-                            Constants.DriveTrain.BACK_LEFT_ENCODER_OFFSET);
+        _frontRight =
+                new DiffSwerveModule(
+                        Constants.DriveTrain.FRONT_RIGHT_POSITION,
+                        RobotMap.CAN.TALONFX.FR_LEFT_FALCON,
+                        RobotMap.CAN.TALONFX.FR_RIGHT_FALCON,
+                        RobotMap.DIO.ENCODER_FR,
+                        Constants.DriveTrain.FRONT_RIGHT_ENCODER_OFFSET);
+        _frontLeft =
+                new DiffSwerveModule(
+                        Constants.DriveTrain.FRONT_LEFT_POSITION,
+                        RobotMap.CAN.TALONFX.FL_LEFT_FALCON,
+                        RobotMap.CAN.TALONFX.FL_RIGHT_FALCON,
+                        RobotMap.DIO.ENCODER_FL,
+                        Constants.DriveTrain.FRONT_LEFT_ENCODER_OFFSET);
+        _backRight =
+                new DiffSwerveModule(
+                        Constants.DriveTrain.BACK_RIGHT_POSITION,
+                        RobotMap.CAN.TALONFX.BR_LEFT_FALCON,
+                        RobotMap.CAN.TALONFX.BR_RIGHT_FALCON,
+                        RobotMap.DIO.ENCODER_BR,
+                        Constants.DriveTrain.BACK_RIGHT_ENCODER_OFFSET);
+        _backLeft =
+                new DiffSwerveModule(
+                        Constants.DriveTrain.BACK_LEFT_POSITION,
+                        RobotMap.CAN.TALONFX.BL_RIGHT_FALCON,
+                        RobotMap.CAN.TALONFX.BL_LEFT_FALCON,
+                        RobotMap.DIO.ENCODER_BL,
+                        Constants.DriveTrain.BACK_LEFT_ENCODER_OFFSET);
 
-            _kinematics =
-                    new SwerveDriveKinematics(
-                            _frontLeft.getModulePosition(),
-                            _frontRight.getModulePosition(),
-                            _backLeft.getModulePosition(),
-                            _backRight.getModulePosition());
-            _odomerty = new SwerveDriveOdometry(_kinematics, getHeading());
+        _kinematics =
+                new SwerveDriveKinematics(
+                        _frontLeft.getModulePosition(),
+                        _frontRight.getModulePosition(),
+                        _backLeft.getModulePosition(),
+                        _backRight.getModulePosition());
+        _odomerty = new SwerveDriveOdometry(_kinematics, getHeading());
 
-            _controller =
-                    new HolonomicDriveController(
-                            new PIDController(
-                                    Constants.DriveTrain.kP,
-                                    Constants.DriveTrain.kI,
-                                    Constants.DriveTrain.kD),
-                            new PIDController(
-                                    Constants.DriveTrain.kP,
-                                    Constants.DriveTrain.kI,
-                                    Constants.DriveTrain.kD),
-                            new ProfiledPIDController(
-                                    Constants.DriveTrain.kP,
-                                    Constants.DriveTrain.kI,
-                                    Constants.DriveTrain.kD,
-                                    new TrapezoidProfile.Constraints(
-                                            Constants.DriveTrain.PROFILE_CONSTRAINT_VEL,
-                                            Constants.DriveTrain.PROFILE_CONSTRAINT_ACCEL)));
-            _angleController =
-                    new ProfiledPIDController(
-                            Constants.DriveTrain.ANGLE_kP,
-                            Constants.DriveTrain.ANGLE_kI,
-                            Constants.DriveTrain.ANGLE_kD,
-                            new TrapezoidProfile.Constraints(
-                                    Constants.DriveTrain.PROFILE_CONSTRAINT_VEL,
-                                    Constants.DriveTrain.PROFILE_CONSTRAINT_ACCEL));
-            _angleController.enableContinuousInput(-Math.PI / 2.0, Math.PI / 2.0);
-        } catch (Exception e) {
-            error(e.getMessage());
-        }
+        _controller =
+                new HolonomicDriveController(
+                        new PIDController(
+                                Constants.DriveTrain.kP,
+                                Constants.DriveTrain.kI,
+                                Constants.DriveTrain.kD),
+                        new PIDController(
+                                Constants.DriveTrain.kP,
+                                Constants.DriveTrain.kI,
+                                Constants.DriveTrain.kD),
+                        new ProfiledPIDController(
+                                Constants.DriveTrain.kP,
+                                Constants.DriveTrain.kI,
+                                Constants.DriveTrain.kD,
+                                new TrapezoidProfile.Constraints(
+                                        Constants.DriveTrain.PROFILE_CONSTRAINT_VEL,
+                                        Constants.DriveTrain.PROFILE_CONSTRAINT_ACCEL)));
+        _angleController =
+                new ProfiledPIDController(
+                        Constants.DriveTrain.ANGLE_kP,
+                        Constants.DriveTrain.ANGLE_kI,
+                        Constants.DriveTrain.ANGLE_kD,
+                        new TrapezoidProfile.Constraints(
+                                Constants.DriveTrain.PROFILE_CONSTRAINT_VEL,
+                                Constants.DriveTrain.PROFILE_CONSTRAINT_ACCEL));
+        _angleController.enableContinuousInput(-Math.PI / 2.0, Math.PI / 2.0);
     }
 
     // use for modules as controller is running at 200Hz.

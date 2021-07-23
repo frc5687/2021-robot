@@ -57,7 +57,7 @@ public class Constants {
 
         public static final double FALCON_FREE_SPEED =
                 Units.rotationsPerMinuteToRadiansPerSecond(6380);
-        public static final int TIMEOUT = 200;
+        public static final int TIMEOUT = 500;
         public static final double GEAR_RATIO_WHEEL = 6.46875;
         public static final double GEAR_RATIO_STEER = 9.2;
         public static final double FALCON_RATE = 600.0;
@@ -122,15 +122,14 @@ public class Constants {
         public static final double MAX_OUTPUT = 1.0;
 
         public static final double MIN_VEL = 0;
-        public static final double MAX_VEL = Units.radiansPerSecondToRotationsPerMinute(800);
-        public static final double MAX_ACCEL = Units.radiansPerSecondToRotationsPerMinute(650);
+        public static final double MAX_VEL = Units.radiansPerSecondToRotationsPerMinute(450);
+        public static final double MAX_ACCEL = Units.radiansPerSecondToRotationsPerMinute(400);
 
         public static final double TOLERANCE = 0.02; // rads
 
-        public static final double MIN_ANGLE = 20;
-        public static final double MAX_ANGLE = 85;
-
-        public static final double POSITION_TO_ANGLE = 1.354166666666667; // TODO
+        public static final double MIN_ANGLE = 25;
+        public static final double MAX_ANGLE = 73;
+        public static final double POSITION_TO_ANGLE = 1.9518272425;
     }
 
     public static class Shooter {

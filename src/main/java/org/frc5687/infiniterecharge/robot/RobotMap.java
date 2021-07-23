@@ -12,11 +12,11 @@ public class RobotMap {
     public static class CAN {
 
         public static class SPARKMAX {
-            public static final int SPINDEXER = 3;
-            public static final int FEEDER = 11;
-            public static final int INTAKE = 9;
-            public static final int HOOD = 14;
-            public static final int WINCH = 1; // TODO: find real value.
+            public static final int SPINDEXER = 1;
+            public static final int FEEDER = 2;
+            public static final int INTAKE = 5;
+            public static final int HOOD = 4;
+            public static final int WINCH = 3; // TODO: find real value.
         }
 
         public static class TALONFX {
@@ -70,9 +70,9 @@ public class RobotMap {
     public static class DIO {
         public static final int HOOD_HALL = 0;
         public static final int HOOD_HALL_TOP = 1;
-        public static final int ENCODER_FR = 4;
-        public static final int ENCODER_FL = 3;
+        public static final int ENCODER_FR = 3;
+        public static final int ENCODER_FL = 2;
         public static final int ENCODER_BR = 5;
-        public static final int ENCODER_BL = 2;
+        public static final int ENCODER_BL = 4;
     }
 }

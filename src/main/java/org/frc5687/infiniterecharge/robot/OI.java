@@ -6,7 +6,9 @@ import static org.frc5687.infiniterecharge.robot.Constants.DriveTrain.*;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import org.frc5687.infiniterecharge.robot.commands.HoodSetpoint;
 import org.frc5687.infiniterecharge.robot.subsystems.DriveTrain;
+import org.frc5687.infiniterecharge.robot.subsystems.Hood;
 import org.frc5687.infiniterecharge.robot.util.AxisButton;
 import org.frc5687.infiniterecharge.robot.util.Gamepad;
 import org.frc5687.infiniterecharge.robot.util.Helpers;
@@ -29,6 +31,7 @@ public class OI extends OutliersProxy {
     private Button _operatorAButton;
     private Button _driverBButton;
     private Button _operatorBButton;
+    private Button _operatorXButton;
     private Button _driverXButton;
     private Button _driverYButton;
     private Button _driverRightTrigger;
@@ -57,15 +60,20 @@ public class OI extends OutliersProxy {
         _operatorBButton = new JoystickButton(_operatorGamepad, Gamepad.Buttons.B.getNumber());
         _driverYButton = new JoystickButton(_driverGamepad, Gamepad.Buttons.Y.getNumber());
         _driverXButton = new JoystickButton(_driverGamepad, Gamepad.Buttons.X.getNumber());
+        _operatorXButton = new JoystickButton(_operatorGamepad, Gamepad.Buttons.X.getNumber());
         _driverRightTrigger =
                 new AxisButton(_driverGamepad, Gamepad.Axes.RIGHT_TRIGGER.getNumber(), 0.2);
     }
 
-    public void initializeButtons(DriveTrain driveTrain) {}
+    public void initializeButtons(DriveTrain driveTrain, Hood hood) {
+        _operatorAButton.whenPressed(new HoodSetpoint(hood, 30));
+        _operatorBButton.whenPressed(new HoodSetpoint(hood, 70));
+        _operatorXButton.whenPressed(new HoodSetpoint(hood, 50));
+    }
 
     public double getDriveY() {
         //        yIn = getSpeedFromAxis(_leftJoystick, _leftJoystick.getYChannel());
-        //        yIn = getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_Y.getNumber());
+        yIn = getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_Y.getNumber());
         yIn = Helpers.applyDeadband(yIn, DEADBAND);
 
         double yOut = yIn / (Math.sqrt(yIn * yIn + (xIn * xIn)) + 0.00001);
@@ -75,7 +83,7 @@ public class OI extends OutliersProxy {
 
     public double getDriveX() {
         //        xIn = -getSpeedFromAxis(_leftJoystick, _leftJoystick.getXChannel());
-        //        xIn = -getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_X.getNumber());
+        xIn = -getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_X.getNumber());
         xIn = Helpers.applyDeadband(xIn, DEADBAND);
 
         double xOut = xIn / (Math.sqrt(yIn * yIn + (xIn * xIn)) + 0.00001);
@@ -93,16 +101,24 @@ public class OI extends OutliersProxy {
         return gamepad.getRawAxis(axisNumber);
     }
 
-    public double getWinchSpeed() {
-        double speed = getSpeedFromAxis(_operatorGamepad, Gamepad.Axes.LEFT_X.getNumber());
-        speed = Helpers.applyDeadband(speed, 0.1);
+    //    public double getWinchSpeed() {
+    //        double speed = getSpeedFromAxis(_operatorGamepad, Gamepad.Axes.LEFT_X.getNumber());
+    //        speed = Helpers.applyDeadband(speed, 0.1);
+    //        return speed;
+    //    }
+
+    public double getHoodSpeed() {
+        double speed = -getSpeedFromAxis(_operatorGamepad, Gamepad.Axes.LEFT_Y.getNumber());
         return speed;
     }
 
-    public double getHoodSpeed() {
-        double speed = getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_Y.getNumber());
-        return speed;
-    }
+    //    public boolean raiseArm() {
+    //        return _operatorAButton.get();
+    //    }
+    //
+    //    public boolean lowerArm() {
+    //        return _operatorBButton.get();
+    //    }
 
     @Override
     public void updateDashboard() {}
