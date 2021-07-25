@@ -53,7 +53,7 @@ public class Constants {
     public static class DifferentialSwerveModule {
 
         // update rate of our modules 5ms.
-        public static final double kDt = 0.005;
+        public static final double kDt = 0.010;
 
         public static final double FALCON_FREE_SPEED =
                 Units.rotationsPerMinuteToRadiansPerSecond(6380);
@@ -108,25 +108,24 @@ public class Constants {
     }
 
     public static class Hood {
-        public static final boolean INVERTED = true;
-        public static final boolean SENSOR_PHASE_INVERTED = true;
+        public static final boolean INVERTED = false;
+        public static final boolean SENSOR_PHASE_INVERTED = false;
 
-        public static final double TICKS_TO_DEGREES = 1.0; //TODO
-
+        public static final double MAX_SPEED = 0.50;
         public static final int CRUISE_VELOCITY = 5000;
         public static final int ACCELERATION = 16000;
-        public static final double kP = 2.8;
+        public static final double kP = 1.0; // 2.8
         public static final double kI = 0.0;
-        public static final double kD = 30;
-        public static final double kF = 5;
-        public static final int I_ZONE =1000;
+        public static final double kD = 0; // 30
+        public static final double kF = 1; // 5
+        public static final int I_ZONE = 1000;
 
         public static final double MIN_OUTPUT = -1.0;
         public static final double MAX_OUTPUT = 1.0;
 
         public static final double MIN_ANGLE = 25;
         public static final double MAX_ANGLE = 73;
-        public static final double POSITION_TO_ANGLE = 1.9518272425;
+        public static final double TICKS_TO_DEGREES = 0.00025;
     }
 
     public static class Shooter {

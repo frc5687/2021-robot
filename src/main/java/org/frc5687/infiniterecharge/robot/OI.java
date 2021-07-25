@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import org.frc5687.infiniterecharge.robot.commands.HoodSetpoint;
-import org.frc5687.infiniterecharge.robot.subsystems.DriveTrain;
 import org.frc5687.infiniterecharge.robot.subsystems.Hood;
 import org.frc5687.infiniterecharge.robot.util.AxisButton;
 import org.frc5687.infiniterecharge.robot.util.Gamepad;
@@ -65,7 +64,7 @@ public class OI extends OutliersProxy {
                 new AxisButton(_driverGamepad, Gamepad.Axes.RIGHT_TRIGGER.getNumber(), 0.2);
     }
 
-    public void initializeButtons(DriveTrain driveTrain, Hood hood) {
+    public void initializeButtons(Hood hood) {
         _operatorAButton.whenPressed(new HoodSetpoint(hood, 30));
         _operatorBButton.whenPressed(new HoodSetpoint(hood, 70));
         _operatorXButton.whenPressed(new HoodSetpoint(hood, 50));
@@ -106,19 +105,19 @@ public class OI extends OutliersProxy {
     //        speed = Helpers.applyDeadband(speed, 0.1);
     //        return speed;
     //    }
-
+    //
     public double getHoodSpeed() {
         double speed = -getSpeedFromAxis(_operatorGamepad, Gamepad.Axes.LEFT_Y.getNumber());
         return speed;
     }
 
-    //    public boolean raiseArm() {
-    //        return _operatorAButton.get();
-    //    }
-    //
-    //    public boolean lowerArm() {
-    //        return _operatorBButton.get();
-    //    }
+    public boolean raiseArm() {
+        return _operatorAButton.get();
+    }
+
+    public boolean lowerArm() {
+        return _operatorBButton.get();
+    }
 
     @Override
     public void updateDashboard() {}

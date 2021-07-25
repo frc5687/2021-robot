@@ -74,9 +74,9 @@ public class DiffSwerveModule {
         _leftFalcon.enableVoltageCompensation(true);
         _rightFalcon.enableVoltageCompensation(true);
         _rightFalcon.setStatusFramePeriod(
-                StatusFrame.Status_1_General, 5, Constants.DifferentialSwerveModule.TIMEOUT);
+                StatusFrame.Status_1_General, 10, Constants.DifferentialSwerveModule.TIMEOUT);
         _leftFalcon.setStatusFramePeriod(
-                StatusFrame.Status_1_General, 5, Constants.DifferentialSwerveModule.TIMEOUT);
+                StatusFrame.Status_1_General, 10, Constants.DifferentialSwerveModule.TIMEOUT);
         _rightFalcon.setStatusFramePeriod(
                 StatusFrame.Status_2_Feedback0, 20, Constants.DifferentialSwerveModule.TIMEOUT);
         _leftFalcon.setStatusFramePeriod(

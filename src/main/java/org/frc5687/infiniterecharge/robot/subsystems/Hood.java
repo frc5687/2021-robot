@@ -3,10 +3,7 @@ package org.frc5687.infiniterecharge.robot.subsystems;
 
 import static org.frc5687.infiniterecharge.robot.Constants.Hood.*;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.StatusFrame;
+import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import org.frc5687.infiniterecharge.robot.Constants;
 import org.frc5687.infiniterecharge.robot.RobotMap;
@@ -27,16 +24,17 @@ public class Hood extends OutliersSubsystem {
         super(container);
 
         _hoodController = new TalonSRX(RobotMap.CAN.TALONSRX.HOOD);
+        _hoodController.configFactoryDefault();
         _hoodController.setInverted(INVERTED);
         _hoodController.setNeutralMode(NeutralMode.Brake);
-        _hoodController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 200);
+        _hoodController.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.QuadEncoder, 0, 200);
         _hoodController.setSensorPhase(SENSOR_PHASE_INVERTED);
         _hoodController.configMotionCruiseVelocity(CRUISE_VELOCITY);
         _hoodController.configMotionAcceleration(ACCELERATION);
         _hoodController.configVoltageMeasurementFilter(8);
-        _hoodController.enableVoltageCompensation(true);
-        _hoodController.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 10,200);
-        _hoodController.configClosedloopRamp(0,200);
+        //        _hoodController.enableVoltageCompensation(true);
+        _hoodController.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 20, 200);
+        _hoodController.configClosedloopRamp(0, 200);
         _hoodController.config_kP(0, kP, 200);
         _hoodController.config_kI(0, kI, 200);
         _hoodController.config_kD(0, kD, 200);
@@ -45,23 +43,33 @@ public class Hood extends OutliersSubsystem {
         _hoodController.selectProfileSlot(0, 0);
         _hallEffect = new HallEffect(RobotMap.DIO.HOOD_HALL);
         _hallEffectTop = new HallEffect(RobotMap.DIO.HOOD_HALL_TOP);
+        _hoodController.setSelectedSensorPosition(0);
     }
 
     @Override
     public void periodic() {
-        if (isHallTriggered()) {
-            if (getMotorOutput() < 0) {
-                setSpeed(0);
-            }
-            _hoodController.setSelectedSensorPosition((int) _position);
-            _position = Constants.Hood.MIN_ANGLE / Constants.Hood.TICKS_TO_DEGREES;
-        }
+        //        if ((getMotorOutput() <= 0.0) && isBottomHallTriggered()) {
+        //            _hoodController.setSelectedSensorPosition(MIN_ANGLE / TICKS_TO_DEGREES);
+        //            setSpeed(0);
+        //            //            _hoodController.setSelectedSensorPosition((int) _position);
+        //            //            _position = Constants.Hood.MIN_ANGLE /
+        // Constants.Hood.TICKS_TO_DEGREES;
+        //        }
+        //        if ((getMotorOutput() >= 0.0) && isTopHallTriggered()) {
+        //            setSpeed(0);
+        //            _hoodController.setSelectedSensorPosition((int) _position);
+        //            _position = Constants.Hood.MIN_ANGLE / Constants.Hood.TICKS_TO_DEGREES;
+        //        }
     }
+
     @Override
-    public void updateDashboard() {}
+    public void updateDashboard() {
+        metric("test", getPositionDegrees());
+    }
 
     public void setSpeed(double speed) {
-        _hoodController.set(ControlMode.PercentOutput, speed);
+        double limSpeed = Helpers.limit(speed, -MAX_SPEED, MAX_SPEED);
+        _hoodController.set(ControlMode.PercentOutput, limSpeed);
     }
 
     public void setPosition(double angle) {
@@ -84,31 +92,24 @@ public class Hood extends OutliersSubsystem {
     public double getPositionDegrees() {
         return getPositionTicks() * Constants.Hood.TICKS_TO_DEGREES;
     }
-    public double getPosition() {
-        return getPositionDegrees();
-    }
 
     public boolean isAtSetpoint() {
         return _hoodController.isMotionProfileFinished();
     }
 
-    public double getHoodDesiredAngle(double distance) {
-        return (11.285*Math.log(distance)) + 3.0224;
-    }
-
     public void zeroSensors() {
-        if (isHallTriggered()) {
+        if (isBottomHallTriggered()) {
             _position = Constants.Hood.MIN_ANGLE / Constants.Hood.TICKS_TO_DEGREES;
             _reference = Constants.Hood.MIN_ANGLE;
         }
         _hoodController.setSelectedSensorPosition((int) _position);
     }
-    public boolean isHallTriggered() {
+
+    public boolean isBottomHallTriggered() {
         return _hallEffect.get();
     }
 
     public boolean isTopHallTriggered() {
         return _hallEffectTop.get();
     }
-
 }

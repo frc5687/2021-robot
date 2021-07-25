@@ -30,23 +30,23 @@ public class RobotContainer extends OutliersContainer {
         _oi = new OI();
         _imu = new AHRS(SPI.Port.kMXP, (byte) 200);
 
-        _intake = new Intake(this);
+        //        _intake = new Intake(this);
         _hood = new Hood(this);
-        _spindexer = new Spindexer(this);
-        _shooter = new Shooter(this);
-        _climber = new Climber(this);
-        _driveTrain = new DriveTrain(this, _oi, _imu);
+        //        _spindexer = new Spindexer(this);
+        //        _shooter = new Shooter(this);
+        //        _climber = new Climber(this);
+        //        _driveTrain = new DriveTrain(this, _oi, _imu);
 
-        setDefaultCommand(_intake, new IdleIntake(_intake));
-        setDefaultCommand(_spindexer, new IdleSpindexer(_spindexer));
-        setDefaultCommand(_hood, new IdleHood(_hood, _oi));
-        setDefaultCommand(_shooter, new IdleShooter(_shooter, _oi));
-        setDefaultCommand(_climber, new IdleClimber(_climber, _oi));
-        setDefaultCommand(_driveTrain, new Drive(_driveTrain, _oi));
+        //        setDefaultCommand(_intake, new IdleIntake(_intake));
+        //        setDefaultCommand(_spindexer, new IdleSpindexer(_spindexer));
+        setDefaultCommand(_hood, new HoodSetpoint(_hood, 50));
+        //        setDefaultCommand(_shooter, new IdleShooter(_shooter, _oi));
+        //        setDefaultCommand(_climber, new IdleClimber(_climber, _oi));
+        //        setDefaultCommand(_driveTrain, new Drive(_driveTrain, _oi));
 
-        _oi.initializeButtons(_driveTrain, _hood);
+        _oi.initializeButtons(_hood);
 
-        _robot.addPeriodic(this::controllerPeriodic, 0.005, 0.005);
+        _robot.addPeriodic(this::controllerPeriodic, 0.010, 0.005);
         _imu.reset();
     }
 

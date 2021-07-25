@@ -1,9 +1,6 @@
 /* (C)2021 */
 package org.frc5687.infiniterecharge.robot.commands;
 
-import static org.frc5687.infiniterecharge.robot.Constants.Hood.MAX_ANGLE;
-import static org.frc5687.infiniterecharge.robot.Constants.Hood.MIN_ANGLE;
-
 import org.frc5687.infiniterecharge.robot.OI;
 import org.frc5687.infiniterecharge.robot.subsystems.Hood;
 
@@ -26,22 +23,18 @@ public class IdleHood extends OutliersCommand {
     @Override
     public void execute() {
         super.execute();
-        //        metric("Hood ANgle", _hood.getAngle());
         double speed = _oi.getHoodSpeed();
         _hood.setSpeed(speed);
-        metric("Output", _hood.getOutput());
-        metric("angle", _hood.getAngle());
-        if (_hood.isHallTriggered()) {
+        if (_hood.isBottomHallTriggered()) {
             if (speed < 0) {
                 _hood.setSpeed(0);
-                _hood.setEncoderAngle(MIN_ANGLE);
+                //                        _hood.setH(MIN_ANGLE);
             } else if (speed > 0) {
                 _hood.setSpeed(speed);
             }
         } else if (_hood.isTopHallTriggered()) {
             if (speed > 0) {
                 _hood.setSpeed(0);
-                _hood.setEncoderAngle(MAX_ANGLE);
             } else if (speed < 0) {
                 _hood.setSpeed(speed);
             }

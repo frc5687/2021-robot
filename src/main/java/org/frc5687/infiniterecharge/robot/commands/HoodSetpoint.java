@@ -16,7 +16,7 @@ public class HoodSetpoint extends OutliersCommand {
 
     @Override
     public void initialize() {
-
+        _hood.setPosition(_setpoint);
     }
 
     @Override

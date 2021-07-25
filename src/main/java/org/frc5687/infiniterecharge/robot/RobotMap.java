@@ -12,7 +12,7 @@ public class RobotMap {
     public static class CAN {
 
         public static class TALONSRX {
-            public static final int HOOD = 13;
+            public static final int HOOD = 11;
         }
 
         public static class SPARKMAX {
