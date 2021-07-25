@@ -109,23 +109,20 @@ public class Constants {
 
     public static class Hood {
         public static final boolean INVERTED = true;
+        public static final boolean SENSOR_PHASE_INVERTED = true;
 
-        public static final double DISTANCE_PER_ROTATION = 2; // mm
+        public static final double TICKS_TO_DEGREES = 1.0; //TODO
 
-        public static final double kP = 0.0008;
-        public static final double kI = 0.00000;
-        public static final double kD = 0.00;
-        public static final double kFF = 0.0001;
-        public static final double kIz = 1.0;
+        public static final int CRUISE_VELOCITY = 5000;
+        public static final int ACCELERATION = 16000;
+        public static final double kP = 2.8;
+        public static final double kI = 0.0;
+        public static final double kD = 30;
+        public static final double kF = 5;
+        public static final int I_ZONE =1000;
 
         public static final double MIN_OUTPUT = -1.0;
         public static final double MAX_OUTPUT = 1.0;
-
-        public static final double MIN_VEL = 0;
-        public static final double MAX_VEL = Units.radiansPerSecondToRotationsPerMinute(450);
-        public static final double MAX_ACCEL = Units.radiansPerSecondToRotationsPerMinute(400);
-
-        public static final double TOLERANCE = 0.02; // rads
 
         public static final double MIN_ANGLE = 25;
         public static final double MAX_ANGLE = 73;

@@ -11,11 +11,14 @@ public class RobotMap {
      */
     public static class CAN {
 
+        public static class TALONSRX {
+            public static final int HOOD = 13;
+        }
+
         public static class SPARKMAX {
             public static final int SPINDEXER = 1;
             public static final int FEEDER = 2;
             public static final int INTAKE = 5;
-            public static final int HOOD = 4;
             public static final int WINCH = 3; // TODO: find real value.
         }
 

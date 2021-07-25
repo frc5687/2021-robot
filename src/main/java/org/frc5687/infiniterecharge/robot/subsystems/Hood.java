@@ -3,82 +3,106 @@ package org.frc5687.infiniterecharge.robot.subsystems;
 
 import static org.frc5687.infiniterecharge.robot.Constants.Hood.*;
 
-import com.revrobotics.*;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import org.frc5687.infiniterecharge.robot.Constants;
 import org.frc5687.infiniterecharge.robot.RobotMap;
 import org.frc5687.infiniterecharge.robot.util.HallEffect;
+import org.frc5687.infiniterecharge.robot.util.Helpers;
 import org.frc5687.infiniterecharge.robot.util.OutliersContainer;
 
 public class Hood extends OutliersSubsystem {
 
-    private CANSparkMax _hood;
-    private CANEncoder _hoodEncoder;
-    private CANPIDController _hoodController;
-
+    private TalonSRX _hoodController;
     private HallEffect _hallEffect;
     private HallEffect _hallEffectTop;
 
-    private double _angle;
+    private double _reference;
+    private double _position;
 
     public Hood(OutliersContainer container) {
         super(container);
-        _hood =
-                new CANSparkMax(
-                        RobotMap.CAN.SPARKMAX.HOOD, CANSparkMaxLowLevel.MotorType.kBrushless);
-        _hood.restoreFactoryDefaults();
-        _hood.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        _hood.setInverted(INVERTED);
 
-        _hoodEncoder = _hood.getAlternateEncoder(8192);
-        _hoodController = _hood.getPIDController();
-        _hoodController.setFeedbackDevice(_hoodEncoder);
-
-        _hoodController.setP(kP);
-        _hoodController.setI(kI);
-        _hoodController.setD(kD);
-        _hoodController.setFF(kFF);
-        _hoodController.setIZone(kIz);
-
-        _hoodController.setSmartMotionMaxVelocity(MAX_VEL, 0);
-        _hoodController.setSmartMotionMaxAccel(MAX_ACCEL, 0);
-
+        _hoodController = new TalonSRX(RobotMap.CAN.TALONSRX.HOOD);
+        _hoodController.setInverted(INVERTED);
+        _hoodController.setNeutralMode(NeutralMode.Brake);
+        _hoodController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 200);
+        _hoodController.setSensorPhase(SENSOR_PHASE_INVERTED);
+        _hoodController.configMotionCruiseVelocity(CRUISE_VELOCITY);
+        _hoodController.configMotionAcceleration(ACCELERATION);
+        _hoodController.configVoltageMeasurementFilter(8);
+        _hoodController.enableVoltageCompensation(true);
+        _hoodController.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 10,200);
+        _hoodController.configClosedloopRamp(0,200);
+        _hoodController.config_kP(0, kP, 200);
+        _hoodController.config_kI(0, kI, 200);
+        _hoodController.config_kD(0, kD, 200);
+        _hoodController.config_kF(0, kF, 200);
+        _hoodController.config_IntegralZone(0, I_ZONE, 200);
+        _hoodController.selectProfileSlot(0, 0);
         _hallEffect = new HallEffect(RobotMap.DIO.HOOD_HALL);
         _hallEffectTop = new HallEffect(RobotMap.DIO.HOOD_HALL_TOP);
     }
 
     @Override
-    public void periodic() {}
-
+    public void periodic() {
+        if (isHallTriggered()) {
+            if (getMotorOutput() < 0) {
+                setSpeed(0);
+            }
+            _hoodController.setSelectedSensorPosition((int) _position);
+            _position = Constants.Hood.MIN_ANGLE / Constants.Hood.TICKS_TO_DEGREES;
+        }
+    }
     @Override
     public void updateDashboard() {}
 
+    public void setSpeed(double speed) {
+        _hoodController.set(ControlMode.PercentOutput, speed);
+    }
+
+    public void setPosition(double angle) {
+        _reference = Helpers.limit(angle, MIN_ANGLE, MAX_ANGLE);
+        _hoodController.set(ControlMode.MotionMagic, _reference / Constants.Hood.TICKS_TO_DEGREES);
+    }
+
+    public double getPositionTicks() {
+        return _hoodController.getSelectedSensorPosition(0);
+    }
+
+    public double getReference() {
+        return _reference;
+    }
+
+    public double getMotorOutput() {
+        return _hoodController.getMotorOutputPercent();
+    }
+
+    public double getPositionDegrees() {
+        return getPositionTicks() * Constants.Hood.TICKS_TO_DEGREES;
+    }
     public double getPosition() {
-        return _hoodEncoder.getPosition();
+        return getPositionDegrees();
     }
 
-    public void setEncoderAngle(double angle) {
-        _angle = angle;
-        _hoodEncoder.setPosition(_angle / POSITION_TO_ANGLE);
+    public boolean isAtSetpoint() {
+        return _hoodController.isMotionProfileFinished();
     }
 
-    public double getAngle() {
-        _angle =
-                getPosition()
-                        * POSITION_TO_ANGLE; // TODO: find out the conversion of position to angle.
-        return _angle;
+    public double getHoodDesiredAngle(double distance) {
+        return (11.285*Math.log(distance)) + 3.0224;
     }
 
-    public double getVelocity() {
-        return _hoodEncoder.getVelocity();
+    public void zeroSensors() {
+        if (isHallTriggered()) {
+            _position = Constants.Hood.MIN_ANGLE / Constants.Hood.TICKS_TO_DEGREES;
+            _reference = Constants.Hood.MIN_ANGLE;
+        }
+        _hoodController.setSelectedSensorPosition((int) _position);
     }
-
-    public void setHoodAngle(double deg) {
-        _hoodController.setReference(deg / POSITION_TO_ANGLE, ControlType.kSmartMotion);
-    }
-
-    public void setSpeed(double pow) {
-        _hood.set(pow);
-    }
-
     public boolean isHallTriggered() {
         return _hallEffect.get();
     }
@@ -87,7 +111,4 @@ public class Hood extends OutliersSubsystem {
         return _hallEffectTop.get();
     }
 
-    public double getOutput() {
-        return _hood.getAppliedOutput();
-    }
 }
