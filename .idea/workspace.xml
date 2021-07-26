@@ -7,12 +7,8 @@
     <list default="true" id="9cdb5074-1904-4449-833f-2401ad4cb71a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/OI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/OI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/RobotContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/RobotContainer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/RobotMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/RobotMap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/commands/HoodSetpoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/commands/HoodSetpoint.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/commands/IdleHood.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/commands/IdleHood.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/subsystems/DiffSwerveModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/subsystems/DiffSwerveModule.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/subsystems/Hood.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/subsystems/Hood.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -74,13 +70,15 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -102,6 +100,7 @@
       <workItem from="1626798438960" duration="2278000" />
       <workItem from="1626810986915" duration="4858000" />
       <workItem from="1627048188481" duration="31641000" />
+      <workItem from="1627308652889" duration="8329000" />
     </task>
     <servers />
   </component>

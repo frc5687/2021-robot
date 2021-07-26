@@ -28,7 +28,6 @@ public class IdleHood extends OutliersCommand {
         if (_hood.isBottomHallTriggered()) {
             if (speed < 0) {
                 _hood.setSpeed(0);
-                //                        _hood.setH(MIN_ANGLE);
             } else if (speed > 0) {
                 _hood.setSpeed(speed);
             }
