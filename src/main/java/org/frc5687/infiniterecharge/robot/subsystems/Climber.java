@@ -64,7 +64,7 @@ public class Climber extends OutliersSubsystem {
         return Climber.Position.UNKNOWN;
     }
 
-    private enum Position {
+    public enum Position {
         UNKNOWN(DoubleSolenoid.Value.kOff),
         RAISED(DoubleSolenoid.Value.kForward),
         LOWERED(DoubleSolenoid.Value.kReverse);

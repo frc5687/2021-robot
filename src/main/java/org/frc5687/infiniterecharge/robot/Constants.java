@@ -53,7 +53,7 @@ public class Constants {
     public static class DifferentialSwerveModule {
 
         // update rate of our modules 5ms.
-        public static final double kDt = 0.010;
+        public static final double kDt = 0.005;
 
         public static final double FALCON_FREE_SPEED =
                 Units.rotationsPerMinuteToRadiansPerSecond(6380);

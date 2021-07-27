@@ -22,12 +22,12 @@ public class IdleClimber extends OutliersCommand {
     public void execute() {
         //        double speed = _oi.getWinchSpeed();
         //        _climber.setWinchSpeed(speed);
-        //        if (_oi.raiseArm()) {
-        //            _climber.raiseArm();
-        //        }
-        //        if (_oi.lowerArm()) {
-        //            _climber.lowerArm();
-        //        }
+        if (_oi.raiseArm()) {
+            _climber.raiseArm();
+        }
+        if (_oi.lowerArm()) {
+            _climber.lowerArm();
+        }
     }
 
     @Override

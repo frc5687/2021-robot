@@ -44,7 +44,7 @@ public class RobotContainer extends OutliersContainer {
         setDefaultCommand(_climber, new IdleClimber(_climber, _oi));
         setDefaultCommand(_driveTrain, new Drive(_driveTrain, _oi));
 
-        _oi.initializeButtons(_hood);
+        _oi.initializeButtons(_driveTrain, _shooter, _intake, _spindexer, _hood, _climber);
 
         _robot.addPeriodic(this::controllerPeriodic, 0.010, 0.005);
         _imu.reset();

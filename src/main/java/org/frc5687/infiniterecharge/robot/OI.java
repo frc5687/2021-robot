@@ -3,11 +3,16 @@ package org.frc5687.infiniterecharge.robot;
 
 import static org.frc5687.infiniterecharge.robot.Constants.DriveTrain.*;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import org.frc5687.infiniterecharge.robot.commands.HoodSetpoint;
-import org.frc5687.infiniterecharge.robot.subsystems.Hood;
+import java.util.function.BooleanSupplier;
+import org.frc5687.infiniterecharge.robot.commands.AutoIntake;
+import org.frc5687.infiniterecharge.robot.commands.Climb;
+import org.frc5687.infiniterecharge.robot.commands.IdleClimber;
+import org.frc5687.infiniterecharge.robot.subsystems.*;
 import org.frc5687.infiniterecharge.robot.util.AxisButton;
 import org.frc5687.infiniterecharge.robot.util.Gamepad;
 import org.frc5687.infiniterecharge.robot.util.Helpers;
@@ -21,19 +26,23 @@ public class OI extends OutliersProxy {
 
     protected Button _driverRightStickButton;
 
-    private JoystickButton _trigger;
-    private JoystickButton _thumbButton;
-    private JoystickButton _shootButton;
-    private JoystickButton _resetYawButton;
+    private final JoystickButton _thumbButton;
+    private final JoystickButton _shootButton;
+    private final JoystickButton _resetYawButton;
 
-    private Button _driverAButton;
-    private Button _operatorAButton;
-    private Button _driverBButton;
-    private Button _operatorBButton;
-    private Button _operatorXButton;
-    private Button _driverXButton;
-    private Button _driverYButton;
-    private Button _driverRightTrigger;
+    private final Button _driverAButton;
+    private final Button _driverBButton;
+    private final Button _driverXButton;
+    private final Button _driverYButton;
+    private final Button _driverRightTrigger;
+
+    private final Button _operatorAButton;
+    private final Button _operatorBButton;
+    private final Button _operatorXButton;
+    private final Button _operatorYButton;
+
+    private final Button _operatorRightTrigger;
+    private final Button _operatorLeftTrigger;
 
     private double yIn = 0;
     private double xIn = 0;
@@ -48,26 +57,41 @@ public class OI extends OutliersProxy {
         _driverRightStickButton =
                 new JoystickButton(_driverGamepad, Gamepad.Buttons.RIGHT_STICK.getNumber());
 
-        _trigger = new JoystickButton(_rightJoystick, 1);
         _thumbButton = new JoystickButton(_rightJoystick, 2);
         _shootButton = new JoystickButton(_leftJoystick, 1);
         _resetYawButton = new JoystickButton(_rightJoystick, 4);
 
         _driverAButton = new JoystickButton(_driverGamepad, Gamepad.Buttons.A.getNumber());
-        _operatorAButton = new JoystickButton(_operatorGamepad, Gamepad.Buttons.A.getNumber());
         _driverBButton = new JoystickButton(_driverGamepad, Gamepad.Buttons.B.getNumber());
-        _operatorBButton = new JoystickButton(_operatorGamepad, Gamepad.Buttons.B.getNumber());
         _driverYButton = new JoystickButton(_driverGamepad, Gamepad.Buttons.Y.getNumber());
         _driverXButton = new JoystickButton(_driverGamepad, Gamepad.Buttons.X.getNumber());
-        _operatorXButton = new JoystickButton(_operatorGamepad, Gamepad.Buttons.X.getNumber());
+
         _driverRightTrigger =
                 new AxisButton(_driverGamepad, Gamepad.Axes.RIGHT_TRIGGER.getNumber(), 0.2);
+
+        _operatorAButton = new JoystickButton(_operatorGamepad, Gamepad.Buttons.A.getNumber());
+        _operatorBButton = new JoystickButton(_operatorGamepad, Gamepad.Buttons.B.getNumber());
+        _operatorXButton = new JoystickButton(_operatorGamepad, Gamepad.Buttons.X.getNumber());
+        _operatorYButton = new JoystickButton(_operatorGamepad, Gamepad.Buttons.Y.getNumber());
+
+        _operatorRightTrigger =
+                new AxisButton(_operatorGamepad, Gamepad.Axes.RIGHT_TRIGGER.getNumber(), 0.2);
+        _operatorLeftTrigger =
+                new AxisButton(_operatorGamepad, Gamepad.Axes.LEFT_TRIGGER.getNumber(), 0.2);
     }
 
-    public void initializeButtons(Hood hood) {
-        _operatorAButton.whenPressed(new HoodSetpoint(hood, 30));
-        _operatorBButton.whenPressed(new HoodSetpoint(hood, 70));
-        _operatorXButton.whenPressed(new HoodSetpoint(hood, 50));
+    public void initializeButtons(
+            DriveTrain drivetrain,
+            Shooter shooter,
+            Intake intake,
+            Spindexer spindexer,
+            Hood hood,
+            Climber climber) {
+        BooleanSupplier limit = () -> DriverStation.getInstance().getMatchNumber() <= 30.0;
+        _operatorYButton.whenPressed(
+                new ConditionalCommand(new Climb(climber), new IdleClimber(climber, this), limit));
+        //        _operatorRightTrigger.whenPressed(new Shoot(shooter, spindexer));
+        _operatorLeftTrigger.whileHeld(new AutoIntake(intake));
     }
 
     public double getDriveY() {
