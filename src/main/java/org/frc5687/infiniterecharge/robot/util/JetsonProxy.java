@@ -31,6 +31,7 @@ public class JetsonProxy {
     private Frame _latestFrame;
 
     private long trackingMillis = System.currentTimeMillis();
+    private boolean closeProxy_ = false;
 
     private JetsonListener _jetsonListener;
     private Timer _jetsonTimer;
@@ -106,6 +107,7 @@ public class JetsonProxy {
                 buffer.append(";");
                 buffer.append(state.angle.getRadians());
             }
+            buffer.append(";");
             data = buffer.toString();
         }
 

@@ -1,9 +1,14 @@
 /* (C)5687-2021 */
 package org.frc5687.infiniterecharge.robot;
 
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpiutil.math.numbers.*;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class Constants {
 
@@ -30,10 +35,12 @@ public class Constants {
         public static final double BACK_LEFT_ENCODER_OFFSET = 0.585 + Math.PI; // radians
 
         public static final double DEADBAND = 0.1;
-        public static final double SENSITIVITY_VX = 0.9;
-        public static final double SENSITIVITY_VY = 0.9;
-        public static final double SENSITIVITY_OMEGA = 0.3;
+
         public static final double MAX_MPS = 2.5816;
+
+        public static final double VISION_kP = 0.2;
+        public static final double VISION_kI = 0.0;
+        public static final double VISION_kD = 0.005;
 
         //        public static final double MAX_MPS = 1.0;
         public static final double MAX_ANG_VEL = Math.PI * 2.0;
@@ -43,7 +50,7 @@ public class Constants {
         public static final double ANGLE_kI = 0.0;
         public static final double ANGLE_kD = 0.0;
 
-        public static final double kP = 10.5;
+        public static final double kP = 1.5;
         public static final double kI = 0.0;
         public static final double kD = 0.5;
         public static final double PROFILE_CONSTRAINT_VEL = 3.0 * Math.PI;
@@ -139,7 +146,45 @@ public class Constants {
         public static final double MAX_RPM = 6380 * GEAR_RATIO;
         public static final double TICKS_TO_ROTATIONS = 2048.0;
 
+        public static final long AUTO_SHOOT_DELAY = 5000;
+        public static final long AUTO_SHOOT_RUNON = 3000;
+
         public static final double TOLERANCE = 100.0;
         public static final long TIMEOUT = 10500; // millis
+    }
+    public static class Field {
+        /**
+         * Y
+         * ^
+         * |
+         * |
+         * o - - -> X
+         */
+        public static final double FULL_FIELD_X = 16.0;
+        public static final double HALF_FIELD_X = FULL_FIELD_X / 2.0;
+        public static final double FULL_FIELD_Y = 8.21055;
+        public static final double TARGET_LINE_Y = 2.404364;
+        public static final double START_LINE_X = FULL_FIELD_X - 3.048;
+        public static final double MID_TRENCH_Y = TARGET_LINE_Y - Units.inchesToMeters(66.91);
+
+        public static final Pose2d TARGET_POSITION =
+                new Pose2d(FULL_FIELD_X, TARGET_LINE_Y, new Rotation2d(0));
+        public static final Pose2d EIGHT_BALL_TRENCH_STARTING_POSITION =
+                new Pose2d(START_LINE_X, MID_TRENCH_Y, new Rotation2d(0));
+
+    }
+    public static class AutoPath {
+        public static class EightBallAuto {
+            public static final Pose2d STARTING_POSE = Field.EIGHT_BALL_TRENCH_STARTING_POSITION;
+            public static final List<Translation2d> waypoints =
+                    Arrays.asList(
+                            new Translation2d(Field.START_LINE_X - Units.inchesToMeters(122.62), Field.MID_TRENCH_Y),
+                            new Translation2d(Field.START_LINE_X - Units.inchesToMeters(194.62), Field.MID_TRENCH_Y)
+                    );
+            public static final Pose2d END_POSE = new Pose2d(
+                 Field.START_LINE_X - Units.inchesToMeters(258.89),
+                    Field.MID_TRENCH_Y,
+                    new Rotation2d(0));
+        }
     }
 }

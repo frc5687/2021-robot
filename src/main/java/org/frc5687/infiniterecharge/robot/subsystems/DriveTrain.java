@@ -19,19 +19,23 @@ import org.frc5687.infiniterecharge.robot.Constants;
 import org.frc5687.infiniterecharge.robot.OI;
 import org.frc5687.infiniterecharge.robot.RobotMap;
 import org.frc5687.infiniterecharge.robot.util.JetsonProxy;
+import org.frc5687.infiniterecharge.robot.util.Limelight;
 import org.frc5687.infiniterecharge.robot.util.OutliersContainer;
 
 public class DriveTrain extends OutliersSubsystem {
-    private DiffSwerveModule _frontRight;
-    private DiffSwerveModule _frontLeft;
-    private DiffSwerveModule _backRight;
-    private DiffSwerveModule _backLeft;
+    private final DiffSwerveModule _frontRight;
+    private final DiffSwerveModule _frontLeft;
+    private final DiffSwerveModule _backRight;
+    private final DiffSwerveModule _backLeft;
 
-    private SwerveDriveKinematics _kinematics;
-    private SwerveDriveOdometry _odomerty;
-    private JetsonProxy _proxy;
+    private final OutliersContainer _container;
+    private final SwerveDriveKinematics _kinematics;
+    private final SwerveDriveOdometry _odomerty;
+    private final Limelight _limelight;
+    private final JetsonProxy _proxy;
 
     private double _PIDAngle;
+    private boolean _autoAim;
 
     private AHRS _imu;
     private OI _oi;
@@ -39,8 +43,10 @@ public class DriveTrain extends OutliersSubsystem {
     private HolonomicDriveController _controller;
     private ProfiledPIDController _angleController;
 
-    public DriveTrain(OutliersContainer container, JetsonProxy proxy, OI oi, AHRS imu) {
+    public DriveTrain(OutliersContainer container, Limelight limelight, JetsonProxy proxy, OI oi, AHRS imu) {
         super(container);
+        _container = container;
+        _limelight = limelight;
         _proxy = proxy;
         _oi = oi;
         _imu = imu;
@@ -108,6 +114,7 @@ public class DriveTrain extends OutliersSubsystem {
                                 Constants.DriveTrain.PROFILE_CONSTRAINT_VEL,
                                 Constants.DriveTrain.PROFILE_CONSTRAINT_ACCEL));
         _angleController.enableContinuousInput(-Math.PI / 2.0, Math.PI / 2.0);
+        _autoAim = false;
     }
 
     // use for modules as controller is running at 200Hz.
@@ -263,6 +270,25 @@ public class DriveTrain extends OutliersSubsystem {
         setBackRightModuleState(moduleStates[3]);
     }
 
+    public double getLimelightYaw() {
+        if (_limelight.hasTarget()) {
+            return _limelight.getTargetYaw();
+        }
+        return 0;
+    }
+
+    public boolean hasVisionTarget() {
+        return _limelight.hasTarget();
+    }
+
+    public void setUseAutoAim(boolean autoAim) {
+        _autoAim = autoAim;
+    }
+
+    public boolean autoAim() {
+        return _autoAim;
+    }
+
     public Pose2d getOdometryPose() {
         return _odomerty.getPoseMeters();
     }
@@ -272,5 +298,17 @@ public class DriveTrain extends OutliersSubsystem {
         _frontLeft.start();
         _backLeft.start();
         _backRight.start();
+    }
+
+    public double getDistanceToTarget() {
+        return Math.sqrt(
+                Math.pow(getOdometryPose().getX() - Constants.Field.TARGET_POSITION.getX(),2) +
+                Math.pow(getOdometryPose().getY() - Constants.Field.TARGET_POSITION.getY(),2));
+    }
+
+    public double getAngleToTarget() {
+        return Math.atan2(
+                Constants.Field.TARGET_POSITION.getY() - getOdometryPose().getY(),
+                Constants.Field.TARGET_POSITION.getX() - getOdometryPose().getX());
     }
 }

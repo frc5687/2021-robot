@@ -32,7 +32,6 @@ public class Hood extends OutliersSubsystem {
         _hoodController.configMotionCruiseVelocity(CRUISE_VELOCITY);
         _hoodController.configMotionAcceleration(ACCELERATION);
         _hoodController.configVoltageMeasurementFilter(8);
-        //        _hoodController.enableVoltageCompensation(true);
         _hoodController.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 20, 200);
         _hoodController.configClosedloopRamp(0, 200);
         _hoodController.config_kP(0, kP, 200);
@@ -106,6 +105,9 @@ public class Hood extends OutliersSubsystem {
             _reference = Constants.Hood.MIN_ANGLE;
         }
         _hoodController.setSelectedSensorPosition((int) _position);
+    }
+    public double getHoodDesiredAngle(double distance) {
+        return (11.285*Math.log(distance)) + 3.0224;
     }
 
     public boolean isBottomHallTriggered() {

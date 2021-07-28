@@ -84,4 +84,7 @@ public class Shooter extends OutliersSubsystem {
     public boolean isAtTargetVelocity() {
         return Math.abs(_rpm - getRPM()) < TOLERANCE;
     }
+    public double getDistanceSetpoint(double distance) {
+        return (-0.0106*(distance * distance)) + (11.52 * distance) + 2210.3;
+    }
 }

@@ -13,6 +13,7 @@ public class RobotContainer extends OutliersContainer {
 
     private OI _oi;
     private AHRS _imu;
+    private JetsonProxy _proxy;
 
     private Robot _robot;
     private DriveTrain _driveTrain;
@@ -21,7 +22,8 @@ public class RobotContainer extends OutliersContainer {
     private Hood _hood;
     private Shooter _shooter;
     private Climber _climber;
-    private JetsonProxy _proxy;
+
+    private int count = 0;
 
     public RobotContainer(Robot robot, IdentityMode identityMode) {
         super(identityMode);
