@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.trajectory.constraint.SwerveDriveKinematicsConstrai
 import org.frc5687.infiniterecharge.robot.Constants;
 import org.frc5687.infiniterecharge.robot.OI;
 import org.frc5687.infiniterecharge.robot.RobotMap;
+import org.frc5687.infiniterecharge.robot.util.JetsonProxy;
 import org.frc5687.infiniterecharge.robot.util.OutliersContainer;
 
 public class DriveTrain extends OutliersSubsystem {
@@ -28,6 +29,7 @@ public class DriveTrain extends OutliersSubsystem {
 
     private SwerveDriveKinematics _kinematics;
     private SwerveDriveOdometry _odomerty;
+    private JetsonProxy _proxy;
 
     private double _PIDAngle;
 
@@ -37,8 +39,9 @@ public class DriveTrain extends OutliersSubsystem {
     private HolonomicDriveController _controller;
     private ProfiledPIDController _angleController;
 
-    public DriveTrain(OutliersContainer container, OI oi, AHRS imu) {
+    public DriveTrain(OutliersContainer container, JetsonProxy proxy, OI oi, AHRS imu) {
         super(container);
+        _proxy = proxy;
         _oi = oi;
         _imu = imu;
 
@@ -117,12 +120,22 @@ public class DriveTrain extends OutliersSubsystem {
 
     @Override
     public void periodic() {
-        _odomerty.update(
-                getHeading(),
-                _frontLeft.getState(),
-                _frontRight.getState(),
-                _backLeft.getState(),
-                _backRight.getState());
+        SwerveModuleState[] state = {
+            _frontLeft.getState(),
+            _frontRight.getState(),
+            _backLeft.getState(),
+            _backRight.getState()
+        };
+        if (!_proxy.isSocketNull()) {
+            _proxy.sendOutFrame(new JetsonProxy.OutFrame(state));
+        }
+
+        //        _odomerty.update(
+        //                getHeading(),
+        //                _frontLeft.getState(),
+        //                _frontRight.getState(),
+        //                _backLeft.getState(),
+        //                _backRight.getState());
     }
 
     @Override
@@ -131,6 +144,7 @@ public class DriveTrain extends OutliersSubsystem {
         metric("BL/Encoder Angle", _backLeft.getModuleAngle());
         metric("FL/Encoder Angle", _frontLeft.getModuleAngle());
         metric("FR/Encoder Angle", _frontRight.getModuleAngle());
+        metric("Proxy/Pose", _proxy.getLatestFrame().getEstimatedPose().toString());
 
         //        metric("BR/Predicted Angle", _backRight.getPredictedAzimuthAngle());
 

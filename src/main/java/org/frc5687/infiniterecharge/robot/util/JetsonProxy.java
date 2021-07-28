@@ -4,10 +4,12 @@ package org.frc5687.infiniterecharge.robot.util;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.Timer;
 
 public class JetsonProxy {
@@ -37,8 +39,10 @@ public class JetsonProxy {
         _period = period;
         try {
             server = new ServerSocket(_rioPort);
-            socket = server.accept();
+            DriverStation.reportError("Socket Created", false);
+            //            socket = server.accept();
         } catch (IOException exception) {
+            DriverStation.reportError("Error: " + exception.getMessage(), true);
             socket = null;
         }
 
@@ -47,11 +51,16 @@ public class JetsonProxy {
         listenerThread.start();
     }
 
+    protected synchronized void collect() {}
+
     protected synchronized void setLatestFrame(Frame frame) {
         _latestFrame = frame;
     }
 
     public Frame getLatestFrame() {
+        if (_latestFrame == null) {
+            return new Frame("");
+        }
         return _latestFrame;
     }
 
@@ -62,11 +71,18 @@ public class JetsonProxy {
         private double _estimatedHeading;
 
         public Frame(String packet) {
-            String[] a = packet.split(";");
-            _millis = Long.parseLong(a[0]);
-            _estimatedX = Double.parseDouble(a[2]);
-            _estimatedY = Double.parseDouble(a[3]);
-            _estimatedHeading = Double.parseDouble(a[4]);
+            if (packet.equals("")) {
+                _millis = 0;
+                _estimatedX = 0;
+                _estimatedY = 0;
+                _estimatedHeading = 0;
+            } else {
+                String[] a = packet.split(";");
+                _millis = Long.parseLong(a[0]);
+                _estimatedX = Double.parseDouble(a[2]);
+                _estimatedY = Double.parseDouble(a[3]);
+                _estimatedHeading = Double.parseDouble(a[4]);
+            }
         }
 
         public long getMillis() {
@@ -78,10 +94,44 @@ public class JetsonProxy {
         }
     }
 
+    public static class OutFrame {
+        String data = "";
+
+        public OutFrame(SwerveModuleState[] moduleStates) {
+            StringBuilder buffer = new StringBuilder();
+            buffer.append(System.currentTimeMillis());
+            for (SwerveModuleState state : moduleStates) {
+                buffer.append(";");
+                buffer.append(state.speedMetersPerSecond);
+                buffer.append(";");
+                buffer.append(state.angle.getRadians());
+            }
+            data = buffer.toString();
+        }
+
+        public String getString() {
+            return data;
+        }
+    }
+
+    public void sendOutFrame(OutFrame frame) {
+        try {
+            OutputStream output = socket.getOutputStream();
+            PrintWriter writer = new PrintWriter(output, true);
+            writer.println(frame.getString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean isSocketNull() {
+        return socket == null;
+    }
+
     protected class JetsonListener implements Runnable {
         private JetsonProxy _proxy;
         private InetAddress _jetsonAddress = null;
-        private BufferedReader _incomingFrame;
+        private InputStream _incomingFrame;
         private int _roboRioPort;
 
         protected JetsonListener(JetsonProxy proxy, int roboRioPort) {
@@ -91,14 +141,17 @@ public class JetsonProxy {
 
         @Override
         public void run() {
-            String raw = null;
             try {
-                _incomingFrame = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                socket = server.accept();
+                byte[] data = new byte[1024];
+
                 while (true) {
-                    raw = _incomingFrame.readLine();
+                    _incomingFrame = socket.getInputStream();
+                    _incomingFrame.read(data);
+                    String raw = new String(data, StandardCharsets.UTF_8);
                     Frame frame = new Frame(raw);
-                    //                    DriverStation.reportError("got message", false);
                     _proxy.setLatestFrame(frame);
+                    //                    _incomingFrame.reset();
                 }
             } catch (IOException e) {
                 DriverStation.reportError("died 1" + e.getMessage(), true);

@@ -7,6 +7,8 @@
     <list default="true" id="9cdb5074-1904-4449-833f-2401ad4cb71a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/RobotContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/RobotContainer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/subsystems/DriveTrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/subsystems/DriveTrain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/util/JetsonProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/frc5687/infiniterecharge/robot/util/JetsonProxy.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,6 +76,21 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\dslob\Documents\Robotics\2020-2021\2021-robot" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
