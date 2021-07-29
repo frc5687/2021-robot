@@ -40,7 +40,7 @@ public class RobotContainer extends OutliersContainer {
 
         _intake = new Intake(this);
         _hood = new Hood(this);
-        //        _spindexer = new Spindexer(this);
+//                _spindexer = new Spindexer(this);
         _shooter = new Shooter(this);
         _climber = new Climber(this);
         _driveTrain = new DriveTrain(this, _limelight, _proxy, _oi, _imu);

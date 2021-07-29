@@ -271,6 +271,23 @@ public class DriveTrain extends OutliersSubsystem {
         setBackRightModuleState(moduleStates[3]);
     }
 
+    public void poseFollower(Pose2d pose, Rotation2d heading) {
+        ChassisSpeeds adjustedSpeeds =
+                _controller.calculate(getOdometryPose(), pose, 0.0, heading);
+        SwerveModuleState[] moduleStates = _kinematics.toSwerveModuleStates(adjustedSpeeds);
+        SwerveDriveKinematics.normalizeWheelSpeeds(moduleStates, Constants.DriveTrain.MAX_MPS);
+        setFrontLeftModuleState(moduleStates[0]);
+        setFrontRightModuleState(moduleStates[1]);
+        setBackLeftModuleState(moduleStates[2]);
+        setBackRightModuleState(moduleStates[3]);
+    }
+
+    public boolean isAtPose(Pose2d pose) {
+        double diffX = getOdometryPose().getX() - pose.getX();
+        double diffY = getOdometryPose().getY() - pose.getY();
+        return Math.abs(diffX) <= 0.01 && Math.abs(diffY) < 0.01;
+    }
+
     public double getLimelightYaw() {
         if (_limelight.hasTarget()) {
             return _limelight.getTargetYaw();
