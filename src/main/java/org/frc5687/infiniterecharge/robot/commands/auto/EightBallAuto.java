@@ -1,7 +1,7 @@
+/* (C)2021 */
 package org.frc5687.infiniterecharge.robot.commands.auto;
 
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import org.frc5687.infiniterecharge.robot.commands.*;
@@ -19,12 +19,8 @@ public class EightBallAuto extends SequentialCommandGroup {
         addCommands(
                 new ParallelDeadlineGroup(
                         new AutoShoot(shooter, spindexer),
-                        new AutoTarget(driveTrain, shooter, hood)
-                ),
+                        new AutoTarget(driveTrain, shooter, hood)),
                 new ParallelDeadlineGroup(
-                        new DriveTrajectory(driveTrain,trajectory),
-                        new AutoIntake(intake)
-                )
-        );
+                        new DriveTrajectory(driveTrain, trajectory), new AutoIntake(intake)));
     }
 }

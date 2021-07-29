@@ -106,8 +106,9 @@ public class Hood extends OutliersSubsystem {
         }
         _hoodController.setSelectedSensorPosition((int) _position);
     }
+
     public double getHoodDesiredAngle(double distance) {
-        return (11.285*Math.log(distance)) + 3.0224;
+        return (11.285 * Math.log(distance)) + 3.0224;
     }
 
     public boolean isBottomHallTriggered() {

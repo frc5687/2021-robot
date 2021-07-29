@@ -23,7 +23,7 @@ public class IdleHood extends OutliersCommand {
     @Override
     public void execute() {
         super.execute();
-        double speed = _oi.getHoodSpeed();
+        double speed = 0;
         _hood.setSpeed(speed);
         if (_hood.isBottomHallTriggered()) {
             if (speed < 0) {

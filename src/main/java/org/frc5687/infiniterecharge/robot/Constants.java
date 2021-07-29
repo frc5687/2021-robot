@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpiutil.math.numbers.*;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -132,6 +131,10 @@ public class Constants {
         public static final double TICKS_TO_DEGREES = 0.00025;
     }
 
+    public static class Climber {
+        public static final double WINCH_SPEED = -0.5;
+    }
+
     public static class Shooter {
         public static final boolean LEFT_INVERTED = true;
         public static final boolean RIGHT_INVERTED = false;
@@ -152,15 +155,11 @@ public class Constants {
         public static final double TOLERANCE = 100.0;
         public static final long TIMEOUT = 10500; // millis
     }
+
     public static class Field {
-        /**
-         * Y
-         * ^
-         * |
-         * |
-         * o - - -> X
-         */
+        /** Y ^ | | o - - -> X */
         public static final double FULL_FIELD_X = 16.0;
+
         public static final double HALF_FIELD_X = FULL_FIELD_X / 2.0;
         public static final double FULL_FIELD_Y = 8.21055;
         public static final double TARGET_LINE_Y = 2.404364;
@@ -171,20 +170,24 @@ public class Constants {
                 new Pose2d(FULL_FIELD_X, TARGET_LINE_Y, new Rotation2d(0));
         public static final Pose2d EIGHT_BALL_TRENCH_STARTING_POSITION =
                 new Pose2d(START_LINE_X, MID_TRENCH_Y, new Rotation2d(0));
-
     }
+
     public static class AutoPath {
         public static class EightBallAuto {
             public static final Pose2d STARTING_POSE = Field.EIGHT_BALL_TRENCH_STARTING_POSITION;
             public static final List<Translation2d> waypoints =
                     Arrays.asList(
-                            new Translation2d(Field.START_LINE_X - Units.inchesToMeters(122.62), Field.MID_TRENCH_Y),
-                            new Translation2d(Field.START_LINE_X - Units.inchesToMeters(194.62), Field.MID_TRENCH_Y)
-                    );
-            public static final Pose2d END_POSE = new Pose2d(
-                 Field.START_LINE_X - Units.inchesToMeters(258.89),
-                    Field.MID_TRENCH_Y,
-                    new Rotation2d(0));
+                            new Translation2d(
+                                    Field.START_LINE_X - Units.inchesToMeters(122.62),
+                                    Field.MID_TRENCH_Y),
+                            new Translation2d(
+                                    Field.START_LINE_X - Units.inchesToMeters(194.62),
+                                    Field.MID_TRENCH_Y));
+            public static final Pose2d END_POSE =
+                    new Pose2d(
+                            Field.START_LINE_X - Units.inchesToMeters(258.89),
+                            Field.MID_TRENCH_Y,
+                            new Rotation2d(0));
         }
     }
 }

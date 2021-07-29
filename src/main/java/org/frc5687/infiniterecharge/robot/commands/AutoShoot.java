@@ -1,7 +1,7 @@
+/* (C)2021 */
 package org.frc5687.infiniterecharge.robot.commands;
 
 import org.frc5687.infiniterecharge.robot.Constants;
-import org.frc5687.infiniterecharge.robot.OI;
 import org.frc5687.infiniterecharge.robot.subsystems.Shooter;
 import org.frc5687.infiniterecharge.robot.subsystems.Spindexer;
 
@@ -10,10 +10,12 @@ public class AutoShoot extends Shoot {
     private Spindexer _spindexer;
     private long _delayMillis;
     private long _endMillis = 0;
+
     public AutoShoot(Shooter shooter, Spindexer spindexer) {
         super(shooter, spindexer);
         _spindexer = spindexer;
     }
+
     @Override
     public void initialize() {
         _delayMillis = System.currentTimeMillis() + Constants.Shooter.AUTO_SHOOT_DELAY;

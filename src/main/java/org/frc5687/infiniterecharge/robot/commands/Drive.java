@@ -1,14 +1,12 @@
 /* (C)5687-2021 */
 package org.frc5687.infiniterecharge.robot.commands;
 
+import static org.frc5687.infiniterecharge.robot.Constants.DriveTrain.*;
+
 import edu.wpi.first.wpilibj.SlewRateLimiter;
 import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import org.frc5687.infiniterecharge.robot.OI;
 import org.frc5687.infiniterecharge.robot.subsystems.DriveTrain;
-import org.frc5687.infiniterecharge.robot.util.Limelight;
-
-import static org.frc5687.infiniterecharge.robot.Constants.DriveTrain.*;
 
 public class Drive extends OutliersCommand {
 
@@ -43,8 +41,8 @@ public class Drive extends OutliersCommand {
 
         double rot =
                 (_driveTrain.autoAim() && _driveTrain.hasVisionTarget())
-                    ? _visionController.calculate(_driveTrain.getLimelightYaw())
-                    : -_oi.getRotationX() * MAX_ANG_VEL;
+                        ? _visionController.calculate(_driveTrain.getLimelightYaw())
+                        : -_oi.getRotationX() * MAX_ANG_VEL;
 
         _driveTrain.drive(vx, vy, rot, true);
     }

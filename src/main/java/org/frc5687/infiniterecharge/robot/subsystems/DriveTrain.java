@@ -43,7 +43,8 @@ public class DriveTrain extends OutliersSubsystem {
     private HolonomicDriveController _controller;
     private ProfiledPIDController _angleController;
 
-    public DriveTrain(OutliersContainer container, Limelight limelight, JetsonProxy proxy, OI oi, AHRS imu) {
+    public DriveTrain(
+            OutliersContainer container, Limelight limelight, JetsonProxy proxy, OI oi, AHRS imu) {
         super(container);
         _container = container;
         _limelight = limelight;
@@ -302,8 +303,10 @@ public class DriveTrain extends OutliersSubsystem {
 
     public double getDistanceToTarget() {
         return Math.sqrt(
-                Math.pow(getOdometryPose().getX() - Constants.Field.TARGET_POSITION.getX(),2) +
-                Math.pow(getOdometryPose().getY() - Constants.Field.TARGET_POSITION.getY(),2));
+                Math.pow(getOdometryPose().getX() - Constants.Field.TARGET_POSITION.getX(), 2)
+                        + Math.pow(
+                                getOdometryPose().getY() - Constants.Field.TARGET_POSITION.getY(),
+                                2));
     }
 
     public double getAngleToTarget() {

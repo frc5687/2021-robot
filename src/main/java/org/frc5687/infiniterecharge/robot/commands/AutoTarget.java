@@ -1,3 +1,4 @@
+/* (C)2021 */
 package org.frc5687.infiniterecharge.robot.commands;
 
 import org.frc5687.infiniterecharge.robot.subsystems.DriveTrain;
@@ -9,10 +10,8 @@ public class AutoTarget extends OutliersCommand {
     private DriveTrain _drivetrain;
     private Shooter _shooter;
     private Hood _hood;
-    public AutoTarget(
-            DriveTrain drivetrain,
-            Shooter shooter,
-            Hood hood) {
+
+    public AutoTarget(DriveTrain drivetrain, Shooter shooter, Hood hood) {
         _drivetrain = drivetrain;
         _shooter = shooter;
         _hood = hood;

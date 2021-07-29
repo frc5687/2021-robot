@@ -1,6 +1,7 @@
 /* (C)2021 */
 package org.frc5687.infiniterecharge.robot.commands;
 
+import org.frc5687.infiniterecharge.robot.Constants;
 import org.frc5687.infiniterecharge.robot.subsystems.Climber;
 
 public class Climb extends OutliersCommand {
@@ -13,12 +14,12 @@ public class Climb extends OutliersCommand {
 
     @Override
     public void initialize() {
-        _climber.raiseArm();
+
     }
 
     @Override
     public void execute() {
-        super.execute();
+        _climber.setWinchSpeed(Constants.Climber.WINCH_SPEED);
     }
 
     @Override

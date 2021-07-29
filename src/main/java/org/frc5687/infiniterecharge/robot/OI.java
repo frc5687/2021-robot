@@ -9,9 +9,7 @@ import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.util.function.BooleanSupplier;
-import org.frc5687.infiniterecharge.robot.commands.AutoIntake;
-import org.frc5687.infiniterecharge.robot.commands.Climb;
-import org.frc5687.infiniterecharge.robot.commands.IdleClimber;
+import org.frc5687.infiniterecharge.robot.commands.*;
 import org.frc5687.infiniterecharge.robot.subsystems.*;
 import org.frc5687.infiniterecharge.robot.util.AxisButton;
 import org.frc5687.infiniterecharge.robot.util.Gamepad;
@@ -90,13 +88,14 @@ public class OI extends OutliersProxy {
         BooleanSupplier limit = () -> DriverStation.getInstance().getMatchNumber() <= 30.0;
         _operatorYButton.whenPressed(
                 new ConditionalCommand(new Climb(climber), new IdleClimber(climber, this), limit));
-        //        _operatorRightTrigger.whenPressed(new Shoot(shooter, spindexer));
+        _operatorRightTrigger.whileHeld(new Shoot(shooter, spindexer));
         _operatorLeftTrigger.whileHeld(new AutoIntake(intake));
+        _driverRightTrigger.whileHeld(new AutoTarget(drivetrain, shooter, hood));
     }
 
     public double getDriveY() {
-        //        yIn = getSpeedFromAxis(_leftJoystick, _leftJoystick.getYChannel());
-        yIn = getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_Y.getNumber());
+        yIn = getSpeedFromAxis(_leftJoystick, _leftJoystick.getYChannel());
+        //        yIn = getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_Y.getNumber());
         yIn = Helpers.applyDeadband(yIn, DEADBAND);
 
         double yOut = yIn / (Math.sqrt(yIn * yIn + (xIn * xIn)) + 0.00001);
@@ -105,8 +104,8 @@ public class OI extends OutliersProxy {
     }
 
     public double getDriveX() {
-        //        xIn = -getSpeedFromAxis(_leftJoystick, _leftJoystick.getXChannel());
-        xIn = -getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_X.getNumber());
+        xIn = -getSpeedFromAxis(_leftJoystick, _leftJoystick.getXChannel());
+        //        xIn = -getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_X.getNumber());
         xIn = Helpers.applyDeadband(xIn, DEADBAND);
 
         double xOut = xIn / (Math.sqrt(yIn * yIn + (xIn * xIn)) + 0.00001);
@@ -130,10 +129,10 @@ public class OI extends OutliersProxy {
     //        return speed;
     //    }
     //
-    public double getHoodSpeed() {
-        double speed = -getSpeedFromAxis(_operatorGamepad, Gamepad.Axes.LEFT_Y.getNumber());
-        return speed;
-    }
+    //    public double getHoodSpeed() {
+    //        double speed = -getSpeedFromAxis(_operatorGamepad, Gamepad.Axes.LEFT_Y.getNumber());
+    //        return speed;
+    //    }
 
     public boolean raiseArm() {
         return _operatorAButton.get();
