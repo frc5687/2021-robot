@@ -1,4 +1,3 @@
-/* (C)2021 */
 package org.frc5687.infiniterecharge.robot.commands.auto;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -11,22 +10,29 @@ import org.frc5687.infiniterecharge.robot.Constants;
 import org.frc5687.infiniterecharge.robot.commands.*;
 import org.frc5687.infiniterecharge.robot.subsystems.*;
 
-public class EightBallAuto extends SequentialCommandGroup {
-    public EightBallAuto(
+public class TenBallAuto extends SequentialCommandGroup {
+    public TenBallAuto(
             DriveTrain driveTrain,
             Shooter shooter,
             Hood hood,
             Intake intake,
             Spindexer spindexer,
-            Trajectory trajectory,
-            Trajectory exit) {
+            Trajectory prtOne,
+            Trajectory prtTwo,
+            Trajectory prtThree,
+            Trajectory exit)
+    {
         addRequirements(driveTrain, shooter);
         addCommands(
+                new ParallelDeadlineGroup(
+                        new DriveTrajectory(driveTrain, prtOne, Rotation2d.fromDegrees(120)),
+                        new AutoIntake(intake)),
+                new DriveTrajectory(driveTrain, prtTwo, Rotation2d.fromDegrees(0)),
                 new ParallelDeadlineGroup(
                         new AutoShoot(shooter, spindexer),
                         new AutoTarget(driveTrain, shooter, hood)),
                 new ParallelDeadlineGroup(
-                        new DriveTrajectory(driveTrain, trajectory),
+                        new DriveTrajectory(driveTrain, prtThree, Rotation2d.fromDegrees(0)),
                         new AutoIntake(intake)),
                 new DriveTrajectory(driveTrain, exit, Rotation2d.fromDegrees(0)),
                 new ParallelDeadlineGroup(

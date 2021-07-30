@@ -1,18 +1,17 @@
-/* (C)2021 */
 package org.frc5687.infiniterecharge.robot.commands.auto;
 
-import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import org.frc5687.infiniterecharge.robot.Constants;
-import org.frc5687.infiniterecharge.robot.commands.*;
+import org.frc5687.infiniterecharge.robot.commands.AutoIntake;
+import org.frc5687.infiniterecharge.robot.commands.AutoShoot;
+import org.frc5687.infiniterecharge.robot.commands.AutoTarget;
+import org.frc5687.infiniterecharge.robot.commands.DriveTrajectory;
 import org.frc5687.infiniterecharge.robot.subsystems.*;
 
-public class EightBallAuto extends SequentialCommandGroup {
-    public EightBallAuto(
+public class StealBallAuto extends SequentialCommandGroup {
+    public StealBallAuto(
             DriveTrain driveTrain,
             Shooter shooter,
             Hood hood,
