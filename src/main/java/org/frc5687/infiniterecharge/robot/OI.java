@@ -5,6 +5,7 @@ import static org.frc5687.infiniterecharge.robot.Constants.DriveTrain.*;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -24,7 +25,7 @@ public class OI extends OutliersProxy {
 
     protected Button _driverRightStickButton;
 
-    private final JoystickButton _thumbButton;
+    private final JoystickButton _aimButton;
     private final JoystickButton _shootButton;
     private final JoystickButton _resetYawButton;
 
@@ -55,7 +56,7 @@ public class OI extends OutliersProxy {
         _driverRightStickButton =
                 new JoystickButton(_driverGamepad, Gamepad.Buttons.RIGHT_STICK.getNumber());
 
-        _thumbButton = new JoystickButton(_rightJoystick, 2);
+        _aimButton = new JoystickButton(_rightJoystick, 1);
         _shootButton = new JoystickButton(_leftJoystick, 1);
         _resetYawButton = new JoystickButton(_rightJoystick, 4);
 
@@ -84,13 +85,15 @@ public class OI extends OutliersProxy {
             Intake intake,
             Spindexer spindexer,
             Hood hood,
-            Climber climber) {
+            Climber climber,
+            Trajectory traj) {
         BooleanSupplier limit = () -> DriverStation.getInstance().getMatchNumber() <= 30.0;
         _operatorYButton.whenPressed(
                 new ConditionalCommand(new Climb(climber), new IdleClimber(climber, this), limit));
         _operatorRightTrigger.whileHeld(new Shoot(shooter, spindexer));
         _operatorLeftTrigger.whileHeld(new AutoIntake(intake));
-        _driverRightTrigger.whileHeld(new AutoTarget(drivetrain, shooter, hood));
+        _operatorAButton.whenPressed(new DriveTrajectory(drivetrain, traj));
+        _aimButton.whileHeld(new AutoTarget(drivetrain, shooter, hood));
     }
 
     public double getDriveY() {
@@ -100,6 +103,7 @@ public class OI extends OutliersProxy {
 
         double yOut = yIn / (Math.sqrt(yIn * yIn + (xIn * xIn)) + 0.00001);
         yOut = (yOut + (yIn * 2)) / 3.0;
+        metric("outputY", yOut);
         return yOut;
     }
 
@@ -110,11 +114,12 @@ public class OI extends OutliersProxy {
 
         double xOut = xIn / (Math.sqrt(yIn * yIn + (xIn * xIn)) + 0.00001);
         xOut = (xOut + (xIn * 2)) / 3.0;
+        metric("output", xOut);
         return xOut;
     }
 
     public double getRotationX() {
-        double speed = getSpeedFromAxis(_rightJoystick, _rightJoystick.getZChannel());
+        double speed = -getSpeedFromAxis(_rightJoystick, _rightJoystick.getZChannel());
         speed = Helpers.applyDeadband(speed, 0.2);
         return speed;
     }
@@ -129,10 +134,10 @@ public class OI extends OutliersProxy {
     //        return speed;
     //    }
     //
-    //    public double getHoodSpeed() {
-    //        double speed = -getSpeedFromAxis(_operatorGamepad, Gamepad.Axes.LEFT_Y.getNumber());
-    //        return speed;
-    //    }
+    public double getHoodSpeed() {
+        double speed = -getSpeedFromAxis(_operatorGamepad, Gamepad.Axes.LEFT_Y.getNumber());
+        return speed;
+    }
 
     public boolean raiseArm() {
         return _operatorAButton.get();

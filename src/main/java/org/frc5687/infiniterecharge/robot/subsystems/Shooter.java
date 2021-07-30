@@ -78,6 +78,7 @@ public class Shooter extends OutliersSubsystem {
     @Override
     public void updateDashboard() {
         metric("Velocity/Ticks", getVelocity());
+        metric("targetVel", isAtTargetVelocity());
         metric("Velocity/RPM", getRPM());
     }
 

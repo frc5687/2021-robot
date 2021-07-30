@@ -13,9 +13,7 @@ public class Climb extends OutliersCommand {
     }
 
     @Override
-    public void initialize() {
-
-    }
+    public void initialize() {}
 
     @Override
     public void execute() {

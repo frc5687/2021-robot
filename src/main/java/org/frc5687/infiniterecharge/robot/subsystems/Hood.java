@@ -47,21 +47,20 @@ public class Hood extends OutliersSubsystem {
 
     @Override
     public void periodic() {
-        if (isBottomHallTriggered()) {
-            _hoodController.setSelectedSensorPosition(MIN_ANGLE / TICKS_TO_DEGREES);
-        }
+        //        if (isBottomHallTriggered()) {
+        //            _hoodController.setSelectedSensorPosition(MIN_ANGLE / TICKS_TO_DEGREES);
+        //        }
         metric("Output", _hoodController.getMotorOutputPercent());
-        //                if ((getMotorOutput() <= 0.0) && isBottomHallTriggered()) {
-        //                    _hoodController.setSelectedSensorPosition(MIN_ANGLE /
-        // TICKS_TO_DEGREES);
-        //                    setSpeed(0);
-        //            _position = Constants.Hood.MIN_ANGLE /
-        //        }
-        //        if ((getMotorOutput() >= 0.0) && isTopHallTriggered()) {
-        //            setSpeed(0);
-        //            _hoodController.setSelectedSensorPosition((int) _position);
-        //            _position = Constants.Hood.MIN_ANGLE / Constants.Hood.TICKS_TO_DEGREES;
-        //        }
+        if ((getMotorOutput() <= 0.0) && isBottomHallTriggered()) {
+            _position = Constants.Hood.MIN_ANGLE / TICKS_TO_DEGREES;
+            _hoodController.setSelectedSensorPosition(_position);
+            setSpeed(0);
+        }
+        if ((getMotorOutput() >= 0.0) && isTopHallTriggered()) {
+            setSpeed(0);
+            _position = Constants.Hood.MAX_ANGLE / Constants.Hood.TICKS_TO_DEGREES;
+            _hoodController.setSelectedSensorPosition((int) _position);
+        }
     }
 
     @Override

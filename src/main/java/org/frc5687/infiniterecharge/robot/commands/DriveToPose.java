@@ -1,3 +1,4 @@
+/* (C)2021 */
 package org.frc5687.infiniterecharge.robot.commands;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -17,8 +18,7 @@ public class DriveToPose extends OutliersCommand {
     }
 
     @Override
-    public void initialize() {
-    }
+    public void initialize() {}
 
     @Override
     public void execute() {

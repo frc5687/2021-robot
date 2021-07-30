@@ -15,7 +15,7 @@ public class Shoot extends OutliersCommand {
     public Shoot(Shooter shooter, Spindexer spindexer) {
         _shooter = shooter;
         _spindexer = spindexer;
-        addRequirements(_spindexer, _shooter);
+        addRequirements(_spindexer);
     }
 
     @Override

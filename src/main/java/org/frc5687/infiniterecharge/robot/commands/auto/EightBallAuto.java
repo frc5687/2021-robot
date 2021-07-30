@@ -26,8 +26,10 @@ public class EightBallAuto extends SequentialCommandGroup {
                         new AutoTarget(driveTrain, shooter, hood)),
                 new ParallelDeadlineGroup(
                         new AutoIntake(intake),
-                        new DriveTrajectory(driveTrain, trajectory), new AutoIntake(intake)),
-                new DriveToPose(driveTrain,
+                        new DriveTrajectory(driveTrain, trajectory),
+                        new AutoIntake(intake)),
+                new DriveToPose(
+                        driveTrain,
                         new Pose2d(
                                 Constants.Field.START_LINE_X - Units.inchesToMeters(122.62),
                                 Constants.Field.MID_TRENCH_Y,
@@ -35,7 +37,6 @@ public class EightBallAuto extends SequentialCommandGroup {
                         new Rotation2d(0)),
                 new ParallelDeadlineGroup(
                         new AutoShoot(shooter, spindexer),
-                        new AutoTarget(driveTrain, shooter, hood))
-                );
+                        new AutoTarget(driveTrain, shooter, hood)));
     }
 }

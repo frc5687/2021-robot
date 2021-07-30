@@ -1,6 +1,8 @@
 /* (C)2021 */
 package org.frc5687.infiniterecharge.robot.commands;
 
+import edu.wpi.first.wpilibj2.command.Command;
+import org.frc5687.infiniterecharge.robot.Constants;
 import org.frc5687.infiniterecharge.robot.subsystems.DriveTrain;
 import org.frc5687.infiniterecharge.robot.subsystems.Hood;
 import org.frc5687.infiniterecharge.robot.subsystems.Shooter;
@@ -26,18 +28,23 @@ public class AutoTarget extends OutliersCommand {
     @Override
     public void execute() {
         super.execute();
-        _hood.setPosition(_hood.getHoodDesiredAngle(_drivetrain.getDistanceToTarget()));
-        _shooter.setVelocitySpeed(_shooter.getDistanceSetpoint(_drivetrain.getDistanceToTarget()));
+        _hood.setPosition(65);
+        _shooter.setVelocitySpeed(5000);
     }
 
     @Override
     public boolean isFinished() {
-        return super.isFinished();
+        return false;
     }
 
     @Override
     public void end(boolean interrupted) {
         super.end(interrupted);
         _drivetrain.setUseAutoAim(false);
+        _hood.setPosition(Constants.Hood.MIN_ANGLE);
+        Command hoodCommand = _hood.getDefaultCommand();
+        if (hoodCommand instanceof IdleHood) {
+            ((IdleHood) hoodCommand).setZeroing(true);
+        }
     }
 }

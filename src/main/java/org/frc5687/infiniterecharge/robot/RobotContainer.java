@@ -2,8 +2,16 @@
 package org.frc5687.infiniterecharge.robot;
 
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Transform2d;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import java.io.IOException;
+import java.nio.file.Path;
 import org.frc5687.infiniterecharge.robot.commands.*;
 import org.frc5687.infiniterecharge.robot.subsystems.*;
 import org.frc5687.infiniterecharge.robot.util.JetsonProxy;
@@ -36,22 +44,36 @@ public class RobotContainer extends OutliersContainer {
         _oi = new OI();
         _imu = new AHRS(SPI.Port.kMXP, (byte) 200);
         _limelight = new Limelight("limelight");
-        _proxy = new JetsonProxy(10);
 
         _intake = new Intake(this);
         _hood = new Hood(this);
-//                _spindexer = new Spindexer(this);
+        _spindexer = new Spindexer(this);
         _shooter = new Shooter(this);
         _climber = new Climber(this);
-        _driveTrain = new DriveTrain(this, _limelight, _proxy, _oi, _imu);
+        _driveTrain = new DriveTrain(this, _limelight, _oi, _imu);
 
         setDefaultCommand(_intake, new IdleIntake(_intake));
-        //                setDefaultCommand(_spindexer, new IdleSpindexer(_spindexer));
+        setDefaultCommand(_spindexer, new IdleSpindexer(_spindexer));
         setDefaultCommand(_hood, new IdleHood(_hood, _oi));
         setDefaultCommand(_shooter, new IdleShooter(_shooter, _oi));
         setDefaultCommand(_climber, new IdleClimber(_climber, _oi));
         setDefaultCommand(_driveTrain, new Drive(_driveTrain, _oi));
-        _oi.initializeButtons(_driveTrain, _shooter, _intake, _spindexer, _hood, _climber);
+
+        String trajectoryJSON = "output/EightBall.wpilib.json";
+        Trajectory trajectoryNew = new Trajectory();
+        try {
+            Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+            Trajectory trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+            Transform2d transform =
+                    new Pose2d(0, 0, new Rotation2d(Math.PI)).minus(trajectory.getInitialPose());
+            trajectoryNew = trajectory.transformBy(transform);
+            error("Trajectory init pose is " + trajectoryNew.getInitialPose().toString());
+            error("Trajectory successfully opened.");
+        } catch (IOException ex) {
+            error("Unable to open trajectory: " + trajectoryJSON + ex.getMessage());
+        }
+        _oi.initializeButtons(
+                _driveTrain, _shooter, _intake, _spindexer, _hood, _climber, trajectoryNew);
 
         _robot.addPeriodic(this::controllerPeriodic, 0.010, 0.005);
 

@@ -1,6 +1,7 @@
 /* (C)2021 */
 package org.frc5687.infiniterecharge.robot.commands;
 
+import org.frc5687.infiniterecharge.robot.Constants;
 import org.frc5687.infiniterecharge.robot.OI;
 import org.frc5687.infiniterecharge.robot.subsystems.Hood;
 
@@ -8,6 +9,8 @@ public class IdleHood extends OutliersCommand {
 
     private Hood _hood;
     private OI _oi;
+
+    private boolean _zeroing = false;
 
     public IdleHood(Hood hood, OI oi) {
         _hood = hood;
@@ -23,23 +26,20 @@ public class IdleHood extends OutliersCommand {
     @Override
     public void execute() {
         super.execute();
-        double speed = 0;
-        _hood.setSpeed(speed);
-        if (_hood.isBottomHallTriggered()) {
-            if (speed < 0) {
-                _hood.setSpeed(0);
-            } else if (speed > 0) {
-                _hood.setSpeed(speed);
-            }
-        } else if (_hood.isTopHallTriggered()) {
-            if (speed > 0) {
-                _hood.setSpeed(0);
-            } else if (speed < 0) {
-                _hood.setSpeed(speed);
+        if (_zeroing) {
+            _hood.setSpeed(Constants.Hood.ZEROING_SPEED);
+            if (_hood.isBottomHallTriggered()) {
+                _hood.setPosition(Constants.Hood.MIN_ANGLE);
+                _zeroing = false;
             }
         } else {
+            double speed = _oi.getHoodSpeed();
             _hood.setSpeed(speed);
         }
+    }
+
+    public void setZeroing(boolean value) {
+        _zeroing = value;
     }
 
     @Override

@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
+import java.awt.*;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -32,6 +33,7 @@ public class JetsonProxy {
 
     private long trackingMillis = System.currentTimeMillis();
     private boolean closeProxy_ = false;
+    private Pose2d initPose = new Pose2d();
 
     private JetsonListener _jetsonListener;
     private Timer _jetsonTimer;
@@ -51,8 +53,6 @@ public class JetsonProxy {
         listenerThread = new Thread(_jetsonListener);
         listenerThread.start();
     }
-
-    protected synchronized void collect() {}
 
     protected synchronized void setLatestFrame(Frame frame) {
         _latestFrame = frame;
@@ -98,9 +98,15 @@ public class JetsonProxy {
     public static class OutFrame {
         String data = "";
 
-        public OutFrame(SwerveModuleState[] moduleStates) {
+        public OutFrame(Pose2d initPose, SwerveModuleState[] moduleStates) {
             StringBuilder buffer = new StringBuilder();
             buffer.append(System.currentTimeMillis());
+            buffer.append(";");
+            buffer.append(initPose.getX());
+            buffer.append(";");
+            buffer.append(initPose.getY());
+            buffer.append(";");
+            buffer.append(initPose.getRotation().getRadians());
             for (SwerveModuleState state : moduleStates) {
                 buffer.append(";");
                 buffer.append(state.speedMetersPerSecond);
@@ -124,6 +130,14 @@ public class JetsonProxy {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setInitPose(Pose2d pose) {
+        initPose = pose;
+    }
+
+    public Pose2d getInitPose() {
+        return initPose;
     }
 
     public boolean isSocketNull() {

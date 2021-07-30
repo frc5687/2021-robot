@@ -116,6 +116,7 @@ public class Constants {
     public static class Hood {
         public static final boolean INVERTED = false;
         public static final boolean SENSOR_PHASE_INVERTED = false;
+        public static final double ZEROING_SPEED = -0.6;
 
         public static final double MAX_SPEED = 0.50;
         public static final int CRUISE_VELOCITY = 50000;
@@ -169,7 +170,7 @@ public class Constants {
         public static final Pose2d TARGET_POSITION =
                 new Pose2d(FULL_FIELD_X, TARGET_LINE_Y, new Rotation2d(0));
         public static final Pose2d EIGHT_BALL_TRENCH_STARTING_POSITION =
-                new Pose2d(START_LINE_X, MID_TRENCH_Y, new Rotation2d(0));
+                new Pose2d(START_LINE_X, MID_TRENCH_Y, new Rotation2d(Math.PI));
     }
 
     public static class AutoPath {
@@ -187,7 +188,7 @@ public class Constants {
                     new Pose2d(
                             Field.START_LINE_X - Units.inchesToMeters(258.89),
                             Field.MID_TRENCH_Y,
-                            new Rotation2d(0));
+                            new Rotation2d(Math.PI));
         }
     }
 }

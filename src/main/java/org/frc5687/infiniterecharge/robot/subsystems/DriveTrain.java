@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
@@ -18,7 +19,6 @@ import edu.wpi.first.wpilibj.trajectory.constraint.SwerveDriveKinematicsConstrai
 import org.frc5687.infiniterecharge.robot.Constants;
 import org.frc5687.infiniterecharge.robot.OI;
 import org.frc5687.infiniterecharge.robot.RobotMap;
-import org.frc5687.infiniterecharge.robot.util.JetsonProxy;
 import org.frc5687.infiniterecharge.robot.util.Limelight;
 import org.frc5687.infiniterecharge.robot.util.OutliersContainer;
 
@@ -32,7 +32,6 @@ public class DriveTrain extends OutliersSubsystem {
     private final SwerveDriveKinematics _kinematics;
     private final SwerveDriveOdometry _odomerty;
     private final Limelight _limelight;
-    private final JetsonProxy _proxy;
 
     private double _PIDAngle;
     private boolean _autoAim;
@@ -43,12 +42,12 @@ public class DriveTrain extends OutliersSubsystem {
     private HolonomicDriveController _controller;
     private ProfiledPIDController _angleController;
 
-    public DriveTrain(
-            OutliersContainer container, Limelight limelight, JetsonProxy proxy, OI oi, AHRS imu) {
+    private Field2d field;
+
+    public DriveTrain(OutliersContainer container, Limelight limelight, OI oi, AHRS imu) {
         super(container);
         _container = container;
         _limelight = limelight;
-        _proxy = proxy;
         _oi = oi;
         _imu = imu;
 
@@ -116,6 +115,7 @@ public class DriveTrain extends OutliersSubsystem {
                                 Constants.DriveTrain.PROFILE_CONSTRAINT_ACCEL));
         _angleController.enableContinuousInput(-Math.PI / 2.0, Math.PI / 2.0);
         _autoAim = false;
+        field = new Field2d();
     }
 
     // use for modules as controller is running at 200Hz.
@@ -128,22 +128,16 @@ public class DriveTrain extends OutliersSubsystem {
 
     @Override
     public void periodic() {
-        SwerveModuleState[] state = {
-            _frontLeft.getState(),
-            _frontRight.getState(),
-            _backLeft.getState(),
-            _backRight.getState()
-        };
-        if (!_proxy.isSocketNull()) {
-            _proxy.sendOutFrame(new JetsonProxy.OutFrame(state));
-        }
+        _odomerty.update(
+                getHeading(),
+                _frontLeft.getState(),
+                _frontRight.getState(),
+                _backLeft.getState(),
+                _backRight.getState());
+    }
 
-        //        _odomerty.update(
-        //                getHeading(),
-        //                _frontLeft.getState(),
-        //                _frontRight.getState(),
-        //                _backLeft.getState(),
-        //                _backRight.getState());
+    public void resetOdom(Pose2d pose) {
+        _odomerty.resetPosition(pose, getHeading());
     }
 
     @Override
@@ -152,7 +146,8 @@ public class DriveTrain extends OutliersSubsystem {
         metric("BL/Encoder Angle", _backLeft.getModuleAngle());
         metric("FL/Encoder Angle", _frontLeft.getModuleAngle());
         metric("FR/Encoder Angle", _frontRight.getModuleAngle());
-        metric("Proxy/Pose", _proxy.getLatestFrame().getEstimatedPose().toString());
+
+        metric("pose", _odomerty.getPoseMeters().toString());
 
         //        metric("BR/Predicted Angle", _backRight.getPredictedAzimuthAngle());
 
@@ -261,8 +256,7 @@ public class DriveTrain extends OutliersSubsystem {
     }
 
     public void trajectoryFollower(Trajectory.State goal, Rotation2d heading) {
-        ChassisSpeeds adjustedSpeeds =
-                _controller.calculate(_odomerty.getPoseMeters(), goal, heading);
+        ChassisSpeeds adjustedSpeeds = _controller.calculate(getOdometryPose(), goal, heading);
         SwerveModuleState[] moduleStates = _kinematics.toSwerveModuleStates(adjustedSpeeds);
         SwerveDriveKinematics.normalizeWheelSpeeds(moduleStates, Constants.DriveTrain.MAX_MPS);
         setFrontLeftModuleState(moduleStates[0]);
@@ -272,8 +266,7 @@ public class DriveTrain extends OutliersSubsystem {
     }
 
     public void poseFollower(Pose2d pose, Rotation2d heading) {
-        ChassisSpeeds adjustedSpeeds =
-                _controller.calculate(getOdometryPose(), pose, 0.0, heading);
+        ChassisSpeeds adjustedSpeeds = _controller.calculate(getOdometryPose(), pose, 0.0, heading);
         SwerveModuleState[] moduleStates = _kinematics.toSwerveModuleStates(adjustedSpeeds);
         SwerveDriveKinematics.normalizeWheelSpeeds(moduleStates, Constants.DriveTrain.MAX_MPS);
         setFrontLeftModuleState(moduleStates[0]);

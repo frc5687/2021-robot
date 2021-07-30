@@ -39,10 +39,12 @@ public class Drive extends OutliersCommand {
         double vx = _vxFilter.calculate(-_oi.getDriveY()) * MAX_MPS;
         double vy = _vyFilter.calculate(_oi.getDriveX()) * MAX_MPS;
 
+        metric("aim", _driveTrain.autoAim());
+        metric("hasTarget", _driveTrain.hasVisionTarget());
         double rot =
                 (_driveTrain.autoAim() && _driveTrain.hasVisionTarget())
                         ? _visionController.calculate(_driveTrain.getLimelightYaw())
-                        : -_oi.getRotationX() * MAX_ANG_VEL;
+                        : _oi.getRotationX() * MAX_ANG_VEL;
 
         _driveTrain.drive(vx, vy, rot, true);
     }
