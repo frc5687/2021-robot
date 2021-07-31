@@ -272,7 +272,7 @@ public class DiffSwerveModule {
     }
 
     public double getWheelVelocity() {
-        return -getWheelAngularVelocity()
+        return getWheelAngularVelocity()
                 * Constants.DifferentialSwerveModule.WHEEL_RADIUS; // Meters per sec.
     }
 

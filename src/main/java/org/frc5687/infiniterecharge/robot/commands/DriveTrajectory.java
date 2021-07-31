@@ -1,5 +1,6 @@
 /* (C)5687-2021 */
 package org.frc5687.infiniterecharge.robot.commands;
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
@@ -17,13 +18,17 @@ public class DriveTrajectory extends OutliersCommand {
         _timer = new Timer();
         addRequirements(_driveTrain);
     }
+
     public DriveTrajectory(DriveTrain driveTrain, Trajectory trajectory) {
         this(driveTrain);
         _trajectory = trajectory;
+        _driveTrain.startModules();
         _heading = new Rotation2d(0);
     }
+
     public DriveTrajectory(DriveTrain driveTrain, Trajectory trajectory, Rotation2d heading) {
         this(driveTrain, trajectory);
+        _trajectory = trajectory;
         _heading = heading;
     }
 

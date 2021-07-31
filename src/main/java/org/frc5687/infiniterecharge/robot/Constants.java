@@ -17,12 +17,11 @@ public class Constants {
     public static final double EPSILON = 0.001;
 
     public static class DriveTrain {
-
         public static final double WIDTH = 0.6223;
         public static final double LENGTH = 0.6223;
         public static final Translation2d FRONT_LEFT_POSITION =
                 new Translation2d(WIDTH / 2.0, LENGTH / 2.0);
-        public static final double FRONT_LEFT_ENCODER_OFFSET = -0.071; // radians
+        public static final double FRONT_LEFT_ENCODER_OFFSET = -0.071 + Math.PI; // radians
         public static final Translation2d FRONT_RIGHT_POSITION =
                 new Translation2d(WIDTH / 2.0, -LENGTH / 2.0);
         public static final double FRONT_RIGHT_ENCODER_OFFSET = -1.01; // radians
@@ -32,10 +31,11 @@ public class Constants {
         public static final Translation2d BACK_RIGHT_POSITION =
                 new Translation2d(-WIDTH / 2.0, -LENGTH / 2.0);
         public static final double BACK_LEFT_ENCODER_OFFSET = 0.585 + Math.PI; // radians
+        //        public static final double BACK_LEFT_ENCODER_OFFSET = 0.585 + Math.PI; // radians
 
         public static final double DEADBAND = 0.1;
 
-        public static final double MAX_MPS = 2.5816;
+        public static final double MAX_MPS = 3.5;
 
         public static final double VISION_kP = 0.2;
         public static final double VISION_kI = 0.0;
@@ -133,7 +133,7 @@ public class Constants {
     }
 
     public static class Climber {
-        public static final double WINCH_SPEED = -0.5;
+        public static final double WINCH_SPEED = -1.0;
     }
 
     public static class Shooter {
@@ -150,8 +150,8 @@ public class Constants {
         public static final double MAX_RPM = 6380 * GEAR_RATIO;
         public static final double TICKS_TO_ROTATIONS = 2048.0;
 
-        public static final long AUTO_SHOOT_DELAY = 5000;
-        public static final long AUTO_SHOOT_RUNON = 3000;
+        public static final long AUTO_SHOOT_DELAY = 4000;
+        public static final long AUTO_SHOOT_RUNON = 2000;
 
         public static final double TOLERANCE = 100.0;
         public static final long TIMEOUT = 10500; // millis
@@ -170,25 +170,19 @@ public class Constants {
         public static final Pose2d TARGET_POSITION =
                 new Pose2d(FULL_FIELD_X, TARGET_LINE_Y, new Rotation2d(0));
         public static final Pose2d EIGHT_BALL_TRENCH_STARTING_POSITION =
-                new Pose2d(START_LINE_X, MID_TRENCH_Y, new Rotation2d(Math.PI));
+                new Pose2d(12.8, 5.8, new Rotation2d(0));
     }
 
     public static class AutoPath {
         public static class EightBallAuto {
-            public static final Pose2d STARTING_POSE = Field.EIGHT_BALL_TRENCH_STARTING_POSITION;
-            public static final List<Translation2d> waypoints =
+            public static final List<Pose2d> waypoints =
                     Arrays.asList(
-                            new Translation2d(
-                                    Field.START_LINE_X - Units.inchesToMeters(122.62),
-                                    Field.MID_TRENCH_Y),
-                            new Translation2d(
-                                    Field.START_LINE_X - Units.inchesToMeters(194.62),
-                                    Field.MID_TRENCH_Y));
-            public static final Pose2d END_POSE =
-                    new Pose2d(
-                            Field.START_LINE_X - Units.inchesToMeters(258.89),
-                            Field.MID_TRENCH_Y,
-                            new Rotation2d(Math.PI));
+                            new Pose2d(12.8, 5.8, Rotation2d.fromDegrees(0)),
+                            new Pose2d(9.95, 7.5, Rotation2d.fromDegrees(0)));
         }
+    }
+
+    public static class OI {
+        public static final int KILL_ALL = 4;
     }
 }

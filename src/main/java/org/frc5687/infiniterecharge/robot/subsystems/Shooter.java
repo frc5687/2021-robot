@@ -17,7 +17,7 @@ public class Shooter extends OutliersSubsystem {
     private TalonFX _leftShooter;
     private TalonFX _rightShooter;
 
-    private double _rpm;
+    private double _rpm = 5000;
 
     public Shooter(OutliersContainer container) {
         super(container);
@@ -42,7 +42,7 @@ public class Shooter extends OutliersSubsystem {
 
         _rightShooter.configClosedloopRamp(4);
         _rightShooter.selectProfileSlot(0, 0);
-        _rpm = 0;
+        _rpm = 5000;
     }
 
     @Override
@@ -68,6 +68,14 @@ public class Shooter extends OutliersSubsystem {
         return _rightShooter.getSelectedSensorVelocity();
     }
 
+    public double getReference() {
+        return _rpm;
+    }
+
+    public void setReference(double rpm) {
+        _rpm = Helpers.limit(rpm, 0, MAX_RPM);
+    }
+
     public double getRPM() {
         return getVelocity()
                 / Constants.Shooter.TICKS_TO_ROTATIONS
@@ -80,10 +88,12 @@ public class Shooter extends OutliersSubsystem {
         metric("Velocity/Ticks", getVelocity());
         metric("targetVel", isAtTargetVelocity());
         metric("Velocity/RPM", getRPM());
+        metric("ref", getReference());
+        metric("is At vel", isAtTargetVelocity());
     }
 
     public boolean isAtTargetVelocity() {
-        return Math.abs(_rpm - getRPM()) < TOLERANCE;
+        return Math.abs(getReference() - getRPM()) < TOLERANCE;
     }
 
     public double getDistanceSetpoint(double distance) {

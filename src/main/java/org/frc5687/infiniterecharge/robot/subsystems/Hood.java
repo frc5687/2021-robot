@@ -86,6 +86,10 @@ public class Hood extends OutliersSubsystem {
         return _reference;
     }
 
+    public void setReference(double angle) {
+        _reference = Helpers.limit(angle, MIN_ANGLE, MAX_ANGLE);
+    }
+
     public double getMotorOutput() {
         return _hoodController.getMotorOutputPercent();
     }

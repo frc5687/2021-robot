@@ -10,11 +10,13 @@ public class DriveToPose extends OutliersCommand {
     private final DriveTrain _drivetrain;
     private final Pose2d _pose;
     private final Rotation2d _heading;
+    private final double _vel;
 
-    public DriveToPose(DriveTrain drivetrain, Pose2d pose, Rotation2d heading) {
+    public DriveToPose(DriveTrain drivetrain, Pose2d pose, Rotation2d heading, double vel) {
         _drivetrain = drivetrain;
         _pose = pose;
         _heading = heading;
+        _vel = vel;
     }
 
     @Override
@@ -23,7 +25,7 @@ public class DriveToPose extends OutliersCommand {
     @Override
     public void execute() {
         super.execute();
-        _drivetrain.poseFollower(_pose, _heading);
+        _drivetrain.poseFollower(_pose, _heading, _vel);
     }
 
     @Override

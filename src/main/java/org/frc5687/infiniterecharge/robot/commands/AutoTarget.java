@@ -3,6 +3,7 @@ package org.frc5687.infiniterecharge.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import org.frc5687.infiniterecharge.robot.Constants;
+import org.frc5687.infiniterecharge.robot.OI;
 import org.frc5687.infiniterecharge.robot.subsystems.DriveTrain;
 import org.frc5687.infiniterecharge.robot.subsystems.Hood;
 import org.frc5687.infiniterecharge.robot.subsystems.Shooter;
@@ -12,11 +13,26 @@ public class AutoTarget extends OutliersCommand {
     private DriveTrain _drivetrain;
     private Shooter _shooter;
     private Hood _hood;
+    private OI _oi;
+    private double _angle;
+    private double _rpm;
+    private boolean _override;
 
-    public AutoTarget(DriveTrain drivetrain, Shooter shooter, Hood hood) {
+    public AutoTarget(
+            DriveTrain drivetrain,
+            Shooter shooter,
+            Hood hood,
+            OI oi,
+            double angle,
+            double rpm,
+            boolean override) {
         _drivetrain = drivetrain;
         _shooter = shooter;
         _hood = hood;
+        _oi = oi;
+        _rpm = rpm;
+        _angle = angle;
+        _override = override;
         addRequirements(_shooter, _hood);
     }
 
@@ -28,13 +44,18 @@ public class AutoTarget extends OutliersCommand {
     @Override
     public void execute() {
         super.execute();
-        _hood.setPosition(65);
-        _shooter.setVelocitySpeed(5000);
+        if (_override) {
+            _hood.setPosition(_angle);
+            _shooter.setVelocitySpeed(_rpm);
+        } else {
+            _hood.setPosition(63);
+            _shooter.setVelocitySpeed(4500);
+        }
     }
 
     @Override
     public boolean isFinished() {
-        return false;
+        return _oi.isKillAllPressed();
     }
 
     @Override

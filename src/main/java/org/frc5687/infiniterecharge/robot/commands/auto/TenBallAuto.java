@@ -1,12 +1,11 @@
+/* (C)2021 */
 package org.frc5687.infiniterecharge.robot.commands.auto;
 
-import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import org.frc5687.infiniterecharge.robot.Constants;
+import org.frc5687.infiniterecharge.robot.OI;
 import org.frc5687.infiniterecharge.robot.commands.*;
 import org.frc5687.infiniterecharge.robot.subsystems.*;
 
@@ -20,8 +19,8 @@ public class TenBallAuto extends SequentialCommandGroup {
             Trajectory prtOne,
             Trajectory prtTwo,
             Trajectory prtThree,
-            Trajectory exit)
-    {
+            Trajectory exit,
+            OI oi) {
         addRequirements(driveTrain, shooter);
         addCommands(
                 new ParallelDeadlineGroup(
@@ -30,13 +29,13 @@ public class TenBallAuto extends SequentialCommandGroup {
                 new DriveTrajectory(driveTrain, prtTwo, Rotation2d.fromDegrees(0)),
                 new ParallelDeadlineGroup(
                         new AutoShoot(shooter, spindexer),
-                        new AutoTarget(driveTrain, shooter, hood)),
+                        new AutoTarget(driveTrain, shooter, hood, oi, 0, 0, false)),
                 new ParallelDeadlineGroup(
                         new DriveTrajectory(driveTrain, prtThree, Rotation2d.fromDegrees(0)),
                         new AutoIntake(intake)),
                 new DriveTrajectory(driveTrain, exit, Rotation2d.fromDegrees(0)),
                 new ParallelDeadlineGroup(
                         new AutoShoot(shooter, spindexer),
-                        new AutoTarget(driveTrain, shooter, hood)));
+                        new AutoTarget(driveTrain, shooter, hood, oi, 0, 0, false)));
     }
 }

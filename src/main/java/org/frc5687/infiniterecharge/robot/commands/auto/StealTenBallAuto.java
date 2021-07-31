@@ -9,19 +9,31 @@ import org.frc5687.infiniterecharge.robot.OI;
 import org.frc5687.infiniterecharge.robot.commands.*;
 import org.frc5687.infiniterecharge.robot.subsystems.*;
 
-public class StealBallAuto extends SequentialCommandGroup {
-    public StealBallAuto(
+public class StealTenBallAuto extends SequentialCommandGroup {
+    public StealTenBallAuto(
             DriveTrain driveTrain,
             Shooter shooter,
             Hood hood,
             Intake intake,
             Spindexer spindexer,
-            Trajectory trajectory,
+            Trajectory prt1,
+            Trajectory prt2,
+            Trajectory prt3,
             Trajectory exit,
             OI oi) {
+        addRequirements(driveTrain, shooter);
         addCommands(
                 new ParallelDeadlineGroup(
-                        new AutoIntake(intake), new DriveTrajectory(driveTrain, trajectory)),
+                        new AutoIntake(intake),
+                        new DriveTrajectory(driveTrain, prt1, Rotation2d.fromDegrees(0))),
+                new DriveTrajectory(driveTrain, prt2, Rotation2d.fromDegrees(0)),
+                new ParallelDeadlineGroup(
+                        new AutoShoot(shooter, spindexer),
+                        new AutoTarget(driveTrain, shooter, hood, oi, 0, 0, false)),
+                new ParallelDeadlineGroup(
+                        new DriveTrajectory(driveTrain, prt3, Rotation2d.fromDegrees(0)),
+                        new AutoIntake(intake)),
+                new AutoAlign(driveTrain, 0),
                 new DriveTrajectory(driveTrain, exit, Rotation2d.fromDegrees(0)),
                 new ParallelDeadlineGroup(
                         new AutoShoot(shooter, spindexer),

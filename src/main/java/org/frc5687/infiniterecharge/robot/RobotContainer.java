@@ -7,19 +7,16 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import java.io.IOException;
 import java.nio.file.Path;
-
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import org.frc5687.infiniterecharge.robot.commands.*;
-import org.frc5687.infiniterecharge.robot.commands.auto.StealBallAuto;
+import org.frc5687.infiniterecharge.robot.commands.auto.ShootAndGo;
 import org.frc5687.infiniterecharge.robot.subsystems.*;
-import org.frc5687.infiniterecharge.robot.util.AutoChooser;
 import org.frc5687.infiniterecharge.robot.util.JetsonProxy;
 import org.frc5687.infiniterecharge.robot.util.Limelight;
 import org.frc5687.infiniterecharge.robot.util.OutliersContainer;
@@ -29,7 +26,6 @@ public class RobotContainer extends OutliersContainer {
     private OI _oi;
     private AHRS _imu;
     private JetsonProxy _proxy;
-    private AutoChooser _autoChooser;
 
     private Robot _robot;
     private DriveTrain _driveTrain;
@@ -40,8 +36,10 @@ public class RobotContainer extends OutliersContainer {
     private Climber _climber;
     private Limelight _limelight;
 
-
     private int count = 0;
+    private Trajectory _stealTenPrt1;
+    private Trajectory _stealExit;
+    private Trajectory _go;
 
     public RobotContainer(Robot robot, IdentityMode identityMode) {
         super(identityMode);
@@ -51,44 +49,68 @@ public class RobotContainer extends OutliersContainer {
     public void init() {
         _oi = new OI();
         _imu = new AHRS(SPI.Port.kMXP, (byte) 200);
-        _autoChooser = new AutoChooser(getIdentityMode());
         _limelight = new Limelight("limelight");
 
-        //        _intake = new Intake(this);
-        //        _hood = new Hood(this);
-        //        _spindexer = new Spindexer(this);
-        //        _shooter = new Shooter(this);
-        //        _climber = new Climber(this);
-        //        _driveTrain = new DriveTrain(this, _limelight, _oi, _imu);
+        _intake = new Intake(this);
+        _hood = new Hood(this);
+        _spindexer = new Spindexer(this);
+        _shooter = new Shooter(this);
+        _climber = new Climber(this);
+        _driveTrain = new DriveTrain(this, _limelight, _oi, _imu);
+        //
+        setDefaultCommand(_intake, new IdleIntake(_intake));
+        setDefaultCommand(_spindexer, new IdleSpindexer(_spindexer));
+        setDefaultCommand(_hood, new IdleHood(_hood, _oi));
+        setDefaultCommand(_shooter, new IdleShooter(_shooter, _oi));
+        setDefaultCommand(_climber, new IdleClimber(_climber, _oi));
+        setDefaultCommand(_driveTrain, new Drive(_driveTrain, _oi));
+        //
 
-        //        setDefaultCommand(_intake, new IdleIntake(_intake));
-        //        setDefaultCommand(_spindexer, new IdleSpindexer(_spindexer));
-        //        setDefaultCommand(_hood, new IdleHood(_hood, _oi));
-        //        setDefaultCommand(_shooter, new IdleShooter(_shooter, _oi));
-        //        setDefaultCommand(_climber, new IdleClimber(_climber, _oi));
-        //        setDefaultCommand(_driveTrain, new Drive(_driveTrain, _oi));
+        Trajectory test = null;
+        var config = _driveTrain.getConfig();
+        config.setReversed(true);
+        test =
+                TrajectoryGenerator.generateTrajectory(
+                        Constants.AutoPath.EightBallAuto.waypoints, config);
 
         Trajectory eightBall = getTrajectory("output/EightBall.wpilib.json");
-        Trajectory stealTenBallPrt1 = getTrajectory("output/TenBallPrt1.wpilib.json");
-        Trajectory stealTenBallPrt2 = getTrajectory("output/TenBallPrt2.wpilib.json");
-        Trajectory stealTenBallPrt3  = getTrajectory("output/TenBallPrt3.wpilib.json");
-        Trajectory stealTenBallPrt4  = getTrajectory("output/TenBallPrt4.wpilib.json");
+        _stealTenPrt1 = getTrajectory("output/StealPathPrt1.wpilib.json");
+        Trajectory stealTenBallPrt2 = getTrajectory("output/StealPathPrt2.wpilib.json");
+        Trajectory stealTenBallPrt3 = getTrajectory("output/StealPathPrt3.wpilib.json");
+        Trajectory stealTenBallPrt4 = getTrajectory("output/StealPathPrt4.wpilib.json");
+        _stealExit = getTrajectory("output/StealExit.wpilib.json");
+        _go = getTrajectory("output/Go.wpilib.json");
         Trajectory exitTrench = getTrajectory("output/ExitTrench.wpilib.json");
 
-        Field2d field = new Field2d();
+        //        SmartDashboard.putData(field);
+        //        SmartDashboard.putString("test", "test");
+        //        field.getObject("traj").setTrajectory(stealTenBallPrt1);
+        //        field.getObject("traj1").setTrajectory(stealTenBallPrt2);
+        //        field.getObject("traj2").setTrajectory(stealTenBallPrt3);
+        _oi.initializeButtons(
+                _driveTrain,
+                _shooter,
+                _intake,
+                _spindexer,
+                _hood,
+                _climber,
+                _stealTenPrt1,
+                _stealExit,
+                stealTenBallPrt3,
+                stealTenBallPrt4);
+        _robot.addPeriodic(this::controllerPeriodic, 0.005, 0.005);
+        _driveTrain.resetOdom(_go.getInitialPose());
+        var field = new Field2d();
         SmartDashboard.putData(field);
-        SmartDashboard.putString("test", "test");
-        field.getObject("traj").setTrajectory(stealTenBallPrt1);
-        //        _oi.initializeButtons(
-        //                _driveTrain, _shooter, _intake, _spindexer, _hood, _climber,
-        // trajectoryNew);
-
-        _robot.addPeriodic(this::controllerPeriodic, 0.010, 0.005);
-
+        field.getObject("traj").setTrajectory(test);
         _imu.reset();
     }
 
-    public void periodic() {}
+    public void periodic() {
+        if (_oi.isKillAllPressed()) {
+            new KillAll(_driveTrain, _shooter, _spindexer, _hood, _climber).schedule();
+        }
+    }
 
     public void disabledPeriodic() {}
 
@@ -110,22 +132,11 @@ public class RobotContainer extends OutliersContainer {
     }
 
     public Command getAutonomousCommand() {
-        AutoChooser.Mode autoMode = _autoChooser.getSelectedMode();
-
-        switch (autoMode) {
-            case StealTenBall:
-                return wrapCommand(new StealBallAuto(
-                        _driveTrain,
-                        _shooter,
-                        _hood,
-                        _intake,
-                        _spindexer,
-                        getTrajectory("output/TenBallPrt1.wpilib.json"),
-                        getTrajectory("output/TenBallPrt2.wpilib.json")
-                ));
-            default:
-                return new ZeroHood(_hood);
-        }
+        //        return new StealBallAuto(
+        //                _driveTrain, _shooter, _hood, _intake, _spindexer, _stealTenPrt1,
+        // _stealExit, _oi);
+        return new ShootAndGo(_driveTrain, _shooter, _hood, _spindexer, _go, _oi);
+        //        return null;
     }
 
     private Trajectory getTrajectory(String trajectoryJSON) {
@@ -134,6 +145,7 @@ public class RobotContainer extends OutliersContainer {
             Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
             trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
             error("Trajectory init pose is " + trajectory.getInitialPose().toString());
+            //            trajectory = trajectory.transformBy(transform);
             error("Trajectory successfully opened.");
         } catch (IOException ex) {
             error("Unable to open trajectory: " + trajectoryJSON + ex.getMessage());
@@ -142,11 +154,9 @@ public class RobotContainer extends OutliersContainer {
     }
 
     private Command wrapCommand(Command command) {
-        return new SequentialCommandGroup(
-                new ZeroHood(_hood),
-                command
-        );
+        return new SequentialCommandGroup(new ZeroHood(_hood), command);
     }
+
     @Override
     public void updateDashboard() {
         super.updateDashboard();

@@ -6,16 +6,12 @@ import static org.frc5687.infiniterecharge.robot.Constants.DriveTrain.*;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.util.function.BooleanSupplier;
 import org.frc5687.infiniterecharge.robot.commands.*;
 import org.frc5687.infiniterecharge.robot.subsystems.*;
-import org.frc5687.infiniterecharge.robot.util.AxisButton;
-import org.frc5687.infiniterecharge.robot.util.Gamepad;
-import org.frc5687.infiniterecharge.robot.util.Helpers;
-import org.frc5687.infiniterecharge.robot.util.OutliersProxy;
+import org.frc5687.infiniterecharge.robot.util.*;
 
 public class OI extends OutliersProxy {
     protected Gamepad _driverGamepad;
@@ -42,6 +38,8 @@ public class OI extends OutliersProxy {
 
     private final Button _operatorRightTrigger;
     private final Button _operatorLeftTrigger;
+    private final Button _operatorRightYUp;
+    private final Button _operatorRightYDown;
 
     private double yIn = 0;
     private double xIn = 0;
@@ -73,6 +71,10 @@ public class OI extends OutliersProxy {
         _operatorXButton = new JoystickButton(_operatorGamepad, Gamepad.Buttons.X.getNumber());
         _operatorYButton = new JoystickButton(_operatorGamepad, Gamepad.Buttons.Y.getNumber());
 
+        _operatorRightYUp = new AxisButton(_operatorGamepad, Gamepad.Axes.RIGHT_Y.getNumber(), 0.2);
+        _operatorRightYDown =
+                new AxisButton(_operatorGamepad, Gamepad.Axes.RIGHT_Y.getNumber(), -0.2);
+
         _operatorRightTrigger =
                 new AxisButton(_operatorGamepad, Gamepad.Axes.RIGHT_TRIGGER.getNumber(), 0.2);
         _operatorLeftTrigger =
@@ -86,14 +88,27 @@ public class OI extends OutliersProxy {
             Spindexer spindexer,
             Hood hood,
             Climber climber,
-            Trajectory traj) {
+            Trajectory prt1,
+            Trajectory prt2,
+            Trajectory prt3,
+            Trajectory prt4) {
         BooleanSupplier limit = () -> DriverStation.getInstance().getMatchNumber() <= 30.0;
-        _operatorYButton.whenPressed(
-                new ConditionalCommand(new Climb(climber), new IdleClimber(climber, this), limit));
+        _operatorRightYUp.whileHeld(
+                //                new ConditionalCommand(
+                new Climb(climber));
+        //                        new IdleClimber(climber, this), limit));
+        _operatorRightYDown.whenPressed(
+                //                new ConditionalCommand(
+                new RaiseArm(climber)); // new IdleClimber(climber, this), limit));
+
         _operatorRightTrigger.whileHeld(new Shoot(shooter, spindexer));
         _operatorLeftTrigger.whileHeld(new AutoIntake(intake));
-        _operatorAButton.whenPressed(new DriveTrajectory(drivetrain, traj));
-        _aimButton.whileHeld(new AutoTarget(drivetrain, shooter, hood));
+        //        _operatorAButton.whenPressed(
+        //                new StealBallAuto(drivetrain, shooter, hood, intake, spindexer, prt1,
+        // prt2, this));
+        //        _operatorAButton.whenPressed(new SetShooterSetpoint(shooter, hood, 60, 4500));
+        //        _operatorYButton.whenPressed(new SetShooterSetpoint(shooter, hood, 63, 5000));
+        _aimButton.whileHeld(new AutoTarget(drivetrain, shooter, hood, this, 63, 5000, true));
     }
 
     public double getDriveY() {
@@ -103,7 +118,6 @@ public class OI extends OutliersProxy {
 
         double yOut = yIn / (Math.sqrt(yIn * yIn + (xIn * xIn)) + 0.00001);
         yOut = (yOut + (yIn * 2)) / 3.0;
-        metric("outputY", yOut);
         return yOut;
     }
 
@@ -114,7 +128,6 @@ public class OI extends OutliersProxy {
 
         double xOut = xIn / (Math.sqrt(yIn * yIn + (xIn * xIn)) + 0.00001);
         xOut = (xOut + (xIn * 2)) / 3.0;
-        metric("output", xOut);
         return xOut;
     }
 
@@ -128,23 +141,32 @@ public class OI extends OutliersProxy {
         return gamepad.getRawAxis(axisNumber);
     }
 
-    //    public double getWinchSpeed() {
-    //        double speed = getSpeedFromAxis(_operatorGamepad, Gamepad.Axes.LEFT_X.getNumber());
-    //        speed = Helpers.applyDeadband(speed, 0.1);
-    //        return speed;
-    //    }
-    //
+    public double getWinchSpeed() {
+        double speed = getSpeedFromAxis(_operatorGamepad, Gamepad.Axes.LEFT_X.getNumber());
+        speed = Helpers.applyDeadband(speed, 0.1);
+        return speed;
+    }
+
     public double getHoodSpeed() {
         double speed = -getSpeedFromAxis(_operatorGamepad, Gamepad.Axes.LEFT_Y.getNumber());
         return speed;
     }
 
-    public boolean raiseArm() {
-        return _operatorAButton.get();
-    }
+    //    public boolean raiseArm() {
+    //        return _operatorAButton.get();
+    //    }
 
     public boolean lowerArm() {
         return _operatorBButton.get();
+    }
+
+    public int getOperatorPOV() {
+        return POV.fromWPILIbAngle(0, _operatorGamepad.getPOV()).getDirectionValue();
+    }
+
+    public boolean isKillAllPressed() {
+        int operatorPOV = getOperatorPOV();
+        return operatorPOV == Constants.OI.KILL_ALL;
     }
 
     @Override

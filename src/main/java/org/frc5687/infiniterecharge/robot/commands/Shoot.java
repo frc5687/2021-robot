@@ -28,6 +28,7 @@ public class Shoot extends OutliersCommand {
     public void execute() {
         super.execute();
         if (_shooter.isAtTargetVelocity()) {
+            error("end time");
             _endTime = System.currentTimeMillis() + Constants.Shooter.TIMEOUT;
             _spindexer.setSpindexerSpeed(Constants.Spindexer.SPINDEXER_SPEED);
             _spindexer.setFeederSpeed(Constants.Spindexer.FEEDER_SPEED);

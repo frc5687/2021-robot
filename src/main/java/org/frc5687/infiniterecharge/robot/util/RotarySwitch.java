@@ -1,10 +1,9 @@
+/* (C)2021 */
 package org.frc5687.infiniterecharge.robot.util;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 
-/**
- * Created by Ben Bernard on 2/25/2017.
- */
+/** Created by Ben Bernard on 2/25/2017. */
 public class RotarySwitch {
 
     private int _positions;
@@ -15,24 +14,22 @@ public class RotarySwitch {
     private AnalogPotentiometer _pot;
 
     public RotarySwitch(int analogPort, double tolerance, double... values) {
-        _port= analogPort;
+        _port = analogPort;
         _positions = values.length;
         _tolerance = tolerance;
         _pot = new AnalogPotentiometer(_port);
 
         _values = new double[_positions];
 
-        for (int i = 0; i<values.length; i++) {
+        for (int i = 0; i < values.length; i++) {
             _values[i] = values[i];
         }
-
     }
-
 
     public int get() {
         double value = _pot.get();
         for (int i = 0; i < _positions; i++) {
-            if (Math.abs(value - _values[i])<_tolerance) {
+            if (Math.abs(value - _values[i]) < _tolerance) {
                 return i;
             }
         }
@@ -42,7 +39,4 @@ public class RotarySwitch {
     public double getRaw() {
         return _pot.get();
     }
-
-
-
 }
