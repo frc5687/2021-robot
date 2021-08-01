@@ -1,7 +1,8 @@
 /* (C)2021 */
-package org.frc5687.infiniterecharge.robot.commands;
+package org.frc5687.infiniterecharge.robot.commands.climber;
 
 import org.frc5687.infiniterecharge.robot.Constants;
+import org.frc5687.infiniterecharge.robot.commands.OutliersCommand;
 import org.frc5687.infiniterecharge.robot.subsystems.Climber;
 
 public class Climb extends OutliersCommand {
@@ -12,7 +13,6 @@ public class Climb extends OutliersCommand {
         addRequirements(_climber);
     }
 
-    @Override
     public void initialize() {}
 
     @Override

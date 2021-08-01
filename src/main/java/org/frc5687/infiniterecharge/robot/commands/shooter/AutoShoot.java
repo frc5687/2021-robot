@@ -1,7 +1,8 @@
 /* (C)2021 */
-package org.frc5687.infiniterecharge.robot.commands;
+package org.frc5687.infiniterecharge.robot.commands.shooter;
 
 import org.frc5687.infiniterecharge.robot.Constants;
+import org.frc5687.infiniterecharge.robot.subsystems.Hood;
 import org.frc5687.infiniterecharge.robot.subsystems.Shooter;
 import org.frc5687.infiniterecharge.robot.subsystems.Spindexer;
 
@@ -11,8 +12,8 @@ public class AutoShoot extends Shoot {
     private long _delayMillis;
     private long _endMillis = 0;
 
-    public AutoShoot(Shooter shooter, Spindexer spindexer) {
-        super(shooter, spindexer);
+    public AutoShoot(Shooter shooter, Spindexer spindexer, Hood hood) {
+        super(shooter, spindexer, hood);
         _spindexer = spindexer;
     }
 

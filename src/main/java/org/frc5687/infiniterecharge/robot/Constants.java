@@ -130,10 +130,12 @@ public class Constants {
         public static final double MIN_ANGLE = 25;
         public static final double MAX_ANGLE = 73;
         public static final double TICKS_TO_DEGREES = 0.00025;
+        public static final double TOLERANCE = 0.1;
     }
 
     public static class Climber {
         public static final double WINCH_SPEED = -1.0;
+        public static final double WINCH_RESET_SPEED = 1.0;
     }
 
     public static class Shooter {
@@ -152,6 +154,7 @@ public class Constants {
 
         public static final long AUTO_SHOOT_DELAY = 4000;
         public static final long AUTO_SHOOT_RUNON = 2000;
+        public static final double IDLE_VELOCITY = 3000;
 
         public static final double TOLERANCE = 100.0;
         public static final long TIMEOUT = 10500; // millis
@@ -174,11 +177,38 @@ public class Constants {
     }
 
     public static class AutoPath {
+        public static class MoveAndGo {
+            //            public static final List<Pose2d> waypoints =
+            //                    Arrays.asList(
+            //                            new Pose2d()
+            //                    )
+        }
+
         public static class EightBallAuto {
             public static final List<Pose2d> waypoints =
                     Arrays.asList(
-                            new Pose2d(12.8, 5.8, Rotation2d.fromDegrees(0)),
-                            new Pose2d(9.95, 7.5, Rotation2d.fromDegrees(0)));
+                            new Pose2d(13, 2.34, Rotation2d.fromDegrees(180)),
+                            new Pose2d(12, 2.34, Rotation2d.fromDegrees(180)));
+        }
+
+        public static class StealBallAuto {
+            public static final List<Pose2d> stealInitial =
+                    Arrays.asList(
+                            new Pose2d(12.8, 5.8, Rotation2d.fromDegrees(130)),
+                            new Pose2d(9.95, 7.5, Rotation2d.fromDegrees(180)));
+            public static final List<Pose2d> stealPartTwo =
+                    Arrays.asList(
+                            new Pose2d(9.95, 7.5, Rotation2d.fromDegrees(-70)),
+                            new Pose2d(10.5, 4.07, Rotation2d.fromDegrees(-100)));
+            public static final List<Pose2d> stealPartThree =
+                    Arrays.asList(
+                            new Pose2d(10.5, 4.07, Rotation2d.fromDegrees(-100)),
+                            new Pose2d(9.08, 3.4, Rotation2d.fromDegrees(-100)));
+            public static final List<Pose2d> stealEnd =
+                    Arrays.asList(
+                            new Pose2d(8.9, 3.6, Rotation2d.fromDegrees(45)),
+                            new Pose2d(11.2, 4.16, Rotation2d.fromDegrees(-10)),
+                            new Pose2d(12.5, 3.15, Rotation2d.fromDegrees(-10)));
         }
     }
 

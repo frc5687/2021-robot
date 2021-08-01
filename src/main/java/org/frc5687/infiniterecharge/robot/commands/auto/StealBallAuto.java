@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import org.frc5687.infiniterecharge.robot.OI;
 import org.frc5687.infiniterecharge.robot.commands.*;
+import org.frc5687.infiniterecharge.robot.commands.shooter.AutoShoot;
 import org.frc5687.infiniterecharge.robot.subsystems.*;
 
 public class StealBallAuto extends SequentialCommandGroup {
@@ -24,7 +25,7 @@ public class StealBallAuto extends SequentialCommandGroup {
                         new AutoIntake(intake), new DriveTrajectory(driveTrain, trajectory)),
                 new DriveTrajectory(driveTrain, exit, Rotation2d.fromDegrees(0)),
                 new ParallelDeadlineGroup(
-                        new AutoShoot(shooter, spindexer),
+                        new AutoShoot(shooter, spindexer, hood),
                         new AutoTarget(driveTrain, shooter, hood, oi, 0, 0, false)));
     }
 }

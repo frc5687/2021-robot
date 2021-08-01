@@ -18,9 +18,11 @@ public class KillAll extends OutliersCommand {
             Hood hood,
             Climber climber) {
         _driveTrain = driveTrain;
+        _spindexer = spindexer;
         _shooter = shooter;
         _hood = hood;
         _climber = climber;
+        addRequirements(_driveTrain, _spindexer, _shooter, _hood, _climber);
     }
 
     @Override
@@ -29,6 +31,7 @@ public class KillAll extends OutliersCommand {
         super.initialize();
         _finished = true;
         _driveTrain.startModules();
+        _spindexer.setSpindexerSpeed(0);
         _shooter.setVelocitySpeed(0);
         _hood.setSpeed(0);
         _climber.setWinchSpeed(0);

@@ -57,9 +57,9 @@ public class Hood extends OutliersSubsystem {
             setSpeed(0);
         }
         if ((getMotorOutput() >= 0.0) && isTopHallTriggered()) {
-            setSpeed(0);
             _position = Constants.Hood.MAX_ANGLE / Constants.Hood.TICKS_TO_DEGREES;
             _hoodController.setSelectedSensorPosition((int) _position);
+            setSpeed(0);
         }
     }
 
@@ -102,16 +102,16 @@ public class Hood extends OutliersSubsystem {
         return _hoodController.isMotionProfileFinished();
     }
 
+    public boolean isAtReference() {
+        return Math.abs(getReference() - getPositionDegrees()) < Constants.Hood.TOLERANCE;
+    }
+
     public void zeroSensors() {
         if (isBottomHallTriggered()) {
             _position = Constants.Hood.MIN_ANGLE / Constants.Hood.TICKS_TO_DEGREES;
             _reference = Constants.Hood.MIN_ANGLE;
         }
         _hoodController.setSelectedSensorPosition((int) _position);
-    }
-
-    public double getHoodDesiredAngle(double distance) {
-        return (11.285 * Math.log(distance)) + 3.0224;
     }
 
     public boolean isBottomHallTriggered() {

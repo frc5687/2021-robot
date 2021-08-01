@@ -1,6 +1,7 @@
 /* (C)2021 */
-package org.frc5687.infiniterecharge.robot.commands;
+package org.frc5687.infiniterecharge.robot.commands.shooter;
 
+import org.frc5687.infiniterecharge.robot.commands.OutliersCommand;
 import org.frc5687.infiniterecharge.robot.subsystems.Hood;
 import org.frc5687.infiniterecharge.robot.subsystems.Shooter;
 
@@ -26,11 +27,9 @@ public class SetShooterSetpoint extends OutliersCommand {
 
     @Override
     public boolean isFinished() {
-        return super.isFinished();
+        return (_shooter.getReference() == _shooterRPM) && (_hood.getReference() == _hoodAngle);
     }
 
     @Override
-    public void end(boolean interrupted) {
-        super.end(interrupted);
-    }
+    public void end(boolean interrupted) {}
 }

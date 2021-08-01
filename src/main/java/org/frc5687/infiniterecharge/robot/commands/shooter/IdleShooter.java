@@ -1,7 +1,8 @@
 /* (C)2021 */
-package org.frc5687.infiniterecharge.robot.commands;
+package org.frc5687.infiniterecharge.robot.commands.shooter;
 
 import org.frc5687.infiniterecharge.robot.OI;
+import org.frc5687.infiniterecharge.robot.commands.OutliersCommand;
 import org.frc5687.infiniterecharge.robot.subsystems.Shooter;
 
 public class IdleShooter extends OutliersCommand {
@@ -18,15 +19,11 @@ public class IdleShooter extends OutliersCommand {
     @Override
     public void initialize() {
         super.initialize();
+        _shooter.setVelocitySpeed(_shooter.getReference());
     }
 
     @Override
-    public void execute() {
-        super.execute();
-        // 4100 good
-        //        _shooter.setVelocitySpeed(5500);
-        _shooter.setVelocitySpeed(0);
-    }
+    public void execute() {}
 
     @Override
     public boolean isFinished() {

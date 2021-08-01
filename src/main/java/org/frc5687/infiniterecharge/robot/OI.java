@@ -3,13 +3,17 @@ package org.frc5687.infiniterecharge.robot;
 
 import static org.frc5687.infiniterecharge.robot.Constants.DriveTrain.*;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import java.util.function.BooleanSupplier;
 import org.frc5687.infiniterecharge.robot.commands.*;
+import org.frc5687.infiniterecharge.robot.commands.climber.Climb;
+import org.frc5687.infiniterecharge.robot.commands.climber.LowerArm;
+import org.frc5687.infiniterecharge.robot.commands.climber.RaiseArm;
+import org.frc5687.infiniterecharge.robot.commands.climber.ResetWinch;
+import org.frc5687.infiniterecharge.robot.commands.shooter.SetShooterSetpoint;
+import org.frc5687.infiniterecharge.robot.commands.shooter.Shoot;
 import org.frc5687.infiniterecharge.robot.subsystems.*;
 import org.frc5687.infiniterecharge.robot.util.*;
 
@@ -40,6 +44,8 @@ public class OI extends OutliersProxy {
     private final Button _operatorLeftTrigger;
     private final Button _operatorRightYUp;
     private final Button _operatorRightYDown;
+    private final Button _operatorLeftYUp;
+    private final Button _operatorLeftYDown;
 
     private double yIn = 0;
     private double xIn = 0;
@@ -71,10 +77,15 @@ public class OI extends OutliersProxy {
         _operatorXButton = new JoystickButton(_operatorGamepad, Gamepad.Buttons.X.getNumber());
         _operatorYButton = new JoystickButton(_operatorGamepad, Gamepad.Buttons.Y.getNumber());
 
-        _operatorRightYUp = new AxisButton(_operatorGamepad, Gamepad.Axes.RIGHT_Y.getNumber(), 0.2);
-        _operatorRightYDown =
-                new AxisButton(_operatorGamepad, Gamepad.Axes.RIGHT_Y.getNumber(), -0.2);
+        _operatorRightYUp =
+                new AxisButton(_operatorGamepad, Gamepad.Axes.RIGHT_Y.getNumber(), -0.4);
 
+        _operatorRightYDown =
+                new AxisButton(_operatorGamepad, Gamepad.Axes.RIGHT_Y.getNumber(), 0.4);
+
+        _operatorLeftYUp = new AxisButton(_operatorGamepad, Gamepad.Axes.LEFT_Y.getNumber(), -0.4);
+
+        _operatorLeftYDown = new AxisButton(_operatorGamepad, Gamepad.Axes.LEFT_Y.getNumber(), 0.4);
         _operatorRightTrigger =
                 new AxisButton(_operatorGamepad, Gamepad.Axes.RIGHT_TRIGGER.getNumber(), 0.2);
         _operatorLeftTrigger =
@@ -92,23 +103,20 @@ public class OI extends OutliersProxy {
             Trajectory prt2,
             Trajectory prt3,
             Trajectory prt4) {
-        BooleanSupplier limit = () -> DriverStation.getInstance().getMatchNumber() <= 30.0;
-        _operatorRightYUp.whileHeld(
-                //                new ConditionalCommand(
-                new Climb(climber));
-        //                        new IdleClimber(climber, this), limit));
-        _operatorRightYDown.whenPressed(
-                //                new ConditionalCommand(
-                new RaiseArm(climber)); // new IdleClimber(climber, this), limit));
-
-        _operatorRightTrigger.whileHeld(new Shoot(shooter, spindexer));
+        _operatorRightTrigger.whileHeld(new Shoot(shooter, spindexer, hood));
         _operatorLeftTrigger.whileHeld(new AutoIntake(intake));
         //        _operatorAButton.whenPressed(
         //                new StealBallAuto(drivetrain, shooter, hood, intake, spindexer, prt1,
         // prt2, this));
-        //        _operatorAButton.whenPressed(new SetShooterSetpoint(shooter, hood, 60, 4500));
-        //        _operatorYButton.whenPressed(new SetShooterSetpoint(shooter, hood, 63, 5000));
-        _aimButton.whileHeld(new AutoTarget(drivetrain, shooter, hood, this, 63, 5000, true));
+        _operatorAButton.whenPressed(new SetShooterSetpoint(shooter, hood, 64, 4500));
+        _operatorYButton.whenPressed(new SetShooterSetpoint(shooter, hood, 66, 5000));
+        _aimButton.whileHeld(new AutoTarget(drivetrain, shooter, hood, this, 63, 5000, false));
+
+        // Climber Stuff:
+        _operatorRightYUp.whenPressed(new RaiseArm(climber, shooter));
+        _operatorRightYDown.whenPressed(new LowerArm(climber));
+        _operatorLeftYUp.whileHeld(new ResetWinch(climber));
+        _operatorLeftYDown.whileHeld(new Climb(climber));
     }
 
     public double getDriveY() {
@@ -139,25 +147,6 @@ public class OI extends OutliersProxy {
 
     protected double getSpeedFromAxis(Joystick gamepad, int axisNumber) {
         return gamepad.getRawAxis(axisNumber);
-    }
-
-    public double getWinchSpeed() {
-        double speed = getSpeedFromAxis(_operatorGamepad, Gamepad.Axes.LEFT_X.getNumber());
-        speed = Helpers.applyDeadband(speed, 0.1);
-        return speed;
-    }
-
-    public double getHoodSpeed() {
-        double speed = -getSpeedFromAxis(_operatorGamepad, Gamepad.Axes.LEFT_Y.getNumber());
-        return speed;
-    }
-
-    //    public boolean raiseArm() {
-    //        return _operatorAButton.get();
-    //    }
-
-    public boolean lowerArm() {
-        return _operatorBButton.get();
     }
 
     public int getOperatorPOV() {

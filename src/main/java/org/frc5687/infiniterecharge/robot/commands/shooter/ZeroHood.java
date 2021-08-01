@@ -1,6 +1,7 @@
 /* (C)2021 */
-package org.frc5687.infiniterecharge.robot.commands;
+package org.frc5687.infiniterecharge.robot.commands.shooter;
 
+import org.frc5687.infiniterecharge.robot.commands.OutliersCommand;
 import org.frc5687.infiniterecharge.robot.subsystems.Hood;
 
 public class ZeroHood extends OutliersCommand {
@@ -20,7 +21,7 @@ public class ZeroHood extends OutliersCommand {
     @Override
     public void execute() {
         if (!_hood.isBottomHallTriggered()) {
-            _hood.setSpeed(-0.4);
+            _hood.setSpeed(-0.5);
         } else {
             _hood.zeroSensors();
         }

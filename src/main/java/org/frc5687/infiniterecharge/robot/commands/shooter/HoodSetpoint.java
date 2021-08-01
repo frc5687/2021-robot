@@ -1,6 +1,7 @@
 /* (C)2021 */
-package org.frc5687.infiniterecharge.robot.commands;
+package org.frc5687.infiniterecharge.robot.commands.shooter;
 
+import org.frc5687.infiniterecharge.robot.commands.OutliersCommand;
 import org.frc5687.infiniterecharge.robot.subsystems.Hood;
 
 public class HoodSetpoint extends OutliersCommand {

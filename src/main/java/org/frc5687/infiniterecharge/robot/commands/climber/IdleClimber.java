@@ -1,7 +1,8 @@
 /* (C)2021 */
-package org.frc5687.infiniterecharge.robot.commands;
+package org.frc5687.infiniterecharge.robot.commands.climber;
 
 import org.frc5687.infiniterecharge.robot.OI;
+import org.frc5687.infiniterecharge.robot.commands.OutliersCommand;
 import org.frc5687.infiniterecharge.robot.subsystems.Climber;
 
 public class IdleClimber extends OutliersCommand {
@@ -20,14 +21,7 @@ public class IdleClimber extends OutliersCommand {
 
     @Override
     public void execute() {
-        double speed = _oi.getWinchSpeed();
-        _climber.setWinchSpeed(speed);
-        //        if (_oi.raiseArm()) {
-        //            _climber.raiseArm();
-        //        }
-        if (_oi.lowerArm()) {
-            _climber.lowerArm();
-        }
+        _climber.setWinchSpeed(0);
     }
 
     @Override

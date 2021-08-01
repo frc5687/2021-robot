@@ -1,8 +1,9 @@
 /* (C)2021 */
-package org.frc5687.infiniterecharge.robot.commands;
+package org.frc5687.infiniterecharge.robot.commands.shooter;
 
 import org.frc5687.infiniterecharge.robot.Constants;
 import org.frc5687.infiniterecharge.robot.OI;
+import org.frc5687.infiniterecharge.robot.commands.OutliersCommand;
 import org.frc5687.infiniterecharge.robot.subsystems.Hood;
 
 public class IdleHood extends OutliersCommand {
@@ -33,8 +34,7 @@ public class IdleHood extends OutliersCommand {
                 _zeroing = false;
             }
         } else {
-            double speed = _oi.getHoodSpeed();
-            _hood.setSpeed(speed);
+            _hood.setSpeed(0);
         }
     }
 
