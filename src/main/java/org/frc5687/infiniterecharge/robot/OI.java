@@ -12,7 +12,6 @@ import org.frc5687.infiniterecharge.robot.commands.climber.Climb;
 import org.frc5687.infiniterecharge.robot.commands.climber.LowerArm;
 import org.frc5687.infiniterecharge.robot.commands.climber.RaiseArm;
 import org.frc5687.infiniterecharge.robot.commands.climber.ResetWinch;
-import org.frc5687.infiniterecharge.robot.commands.shooter.SetShooterSetpoint;
 import org.frc5687.infiniterecharge.robot.commands.shooter.Shoot;
 import org.frc5687.infiniterecharge.robot.subsystems.*;
 import org.frc5687.infiniterecharge.robot.util.*;
@@ -108,9 +107,9 @@ public class OI extends OutliersProxy {
         //        _operatorAButton.whenPressed(
         //                new StealBallAuto(drivetrain, shooter, hood, intake, spindexer, prt1,
         // prt2, this));
-        _operatorAButton.whenPressed(new SetShooterSetpoint(shooter, hood, 64, 4500));
-        _operatorYButton.whenPressed(new SetShooterSetpoint(shooter, hood, 66, 5000));
-        _aimButton.whileHeld(new AutoTarget(drivetrain, shooter, hood, this, 63, 5000, false));
+        //        _operatorAButton.whenPressed(new SetShooterSetpoint(shooter, hood, 64, 4500));
+        //        _operatorYButton.whenPressed(new SetShooterSetpoint(shooter, hood, 66, 5000));
+        _aimButton.whileHeld(new AutoTarget(drivetrain, shooter, hood, this, 65, 5000, true));
 
         // Climber Stuff:
         _operatorRightYUp.whenPressed(new RaiseArm(climber, shooter));

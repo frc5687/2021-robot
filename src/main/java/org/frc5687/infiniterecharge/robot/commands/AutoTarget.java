@@ -68,6 +68,7 @@ public class AutoTarget extends OutliersCommand {
         super.end(interrupted);
         _drivetrain.setUseAutoAim(false);
         _hood.setPosition(Constants.Hood.MIN_ANGLE);
+        //        _shooter.setVelocitySpeed(0);
         _shooter.setVelocitySpeed(Constants.Shooter.IDLE_VELOCITY);
         Command hoodCommand = _hood.getDefaultCommand();
         if (hoodCommand instanceof IdleHood) {
