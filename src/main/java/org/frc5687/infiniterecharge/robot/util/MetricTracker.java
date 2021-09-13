@@ -1,4 +1,4 @@
-/* (C)2021 */
+/* (C)5687-2021 */
 package org.frc5687.infiniterecharge.robot.util;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,6 +28,7 @@ public class MetricTracker {
 
     private boolean _paused = false;
     private boolean _bufferOverflowed = false;
+    private long _startTime = System.currentTimeMillis();
 
     private String _instrumentedClassName;
     /**
@@ -205,7 +206,7 @@ public class MetricTracker {
             }
             _bufferOverflowed = false;
         }
-        _metricBuffer[_in][0] = System.currentTimeMillis();
+        _metricBuffer[_in][0] = (_startTime - System.currentTimeMillis()) / 1000.0;
         for (int index = 0; index < _metricCount; index++) {
             _metricBuffer[_in][index + 1] = null;
         }

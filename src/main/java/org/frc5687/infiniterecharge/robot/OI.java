@@ -1,95 +1,161 @@
-/* (C)2020-2021 */
+/* (C)5687-2021 */
 package org.frc5687.infiniterecharge.robot;
 
-import static org.frc5687.infiniterecharge.robot.util.Helpers.applyDeadband;
+import static org.frc5687.infiniterecharge.robot.Constants.DriveTrain.*;
+import static org.frc5687.infiniterecharge.robot.Constants.EPSILON;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import java.util.ArrayList;
-import org.frc5687.infiniterecharge.robot.commands.DriveTrajectory;
-import org.frc5687.infiniterecharge.robot.subsystems.DriveTrain;
-import org.frc5687.infiniterecharge.robot.util.Gamepad;
-import org.frc5687.infiniterecharge.robot.util.OutliersProxy;
-import org.frc5687.infiniterecharge.robot.util.POV;
+import org.frc5687.infiniterecharge.robot.commands.*;
+import org.frc5687.infiniterecharge.robot.commands.climber.Climb;
+import org.frc5687.infiniterecharge.robot.commands.climber.LowerArm;
+import org.frc5687.infiniterecharge.robot.commands.climber.RaiseArm;
+import org.frc5687.infiniterecharge.robot.commands.climber.ResetWinch;
+import org.frc5687.infiniterecharge.robot.commands.shooter.Shoot;
+import org.frc5687.infiniterecharge.robot.subsystems.*;
+import org.frc5687.infiniterecharge.robot.util.*;
 
 public class OI extends OutliersProxy {
     protected Gamepad _driverGamepad;
+    protected Gamepad _operatorGamepad;
+    protected Joystick _leftJoystick;
+    protected Joystick _rightJoystick;
+
     protected Button _driverRightStickButton;
 
-    private Button _driverAButton;
-    private Button _driverBButton;
-    private Button _driverXButton;
-    private Button _driverYButton;
+    private final JoystickButton _aimButton;
+    private final JoystickButton _shootButton;
+    private final JoystickButton _resetYawButton;
+
+    private final Button _driverAButton;
+    private final Button _driverBButton;
+    private final Button _driverXButton;
+    private final Button _driverYButton;
+    private final Button _driverRightTrigger;
+
+    private final Button _operatorAButton;
+    private final Button _operatorBButton;
+    private final Button _operatorXButton;
+    private final Button _operatorYButton;
+
+    private final Button _operatorRightTrigger;
+    private final Button _operatorLeftTrigger;
+    private final Button _operatorRightYUp;
+    private final Button _operatorRightYDown;
+    private final Button _operatorLeftYUp;
+    private final Button _operatorLeftYDown;
+
+    private double yIn = 0;
+    private double xIn = 0;
 
     public OI() {
         _driverGamepad = new Gamepad(0);
+        _operatorGamepad = new Gamepad(3);
+
+        _leftJoystick = new Joystick(1);
+        _rightJoystick = new Joystick(2);
 
         _driverRightStickButton =
                 new JoystickButton(_driverGamepad, Gamepad.Buttons.RIGHT_STICK.getNumber());
+
+        _aimButton = new JoystickButton(_rightJoystick, 1);
+        _shootButton = new JoystickButton(_leftJoystick, 1);
+        _resetYawButton = new JoystickButton(_rightJoystick, 4);
 
         _driverAButton = new JoystickButton(_driverGamepad, Gamepad.Buttons.A.getNumber());
         _driverBButton = new JoystickButton(_driverGamepad, Gamepad.Buttons.B.getNumber());
         _driverYButton = new JoystickButton(_driverGamepad, Gamepad.Buttons.Y.getNumber());
         _driverXButton = new JoystickButton(_driverGamepad, Gamepad.Buttons.X.getNumber());
+
+        _driverRightTrigger =
+                new AxisButton(_driverGamepad, Gamepad.Axes.RIGHT_TRIGGER.getNumber(), 0.2);
+
+        _operatorAButton = new JoystickButton(_operatorGamepad, Gamepad.Buttons.A.getNumber());
+        _operatorBButton = new JoystickButton(_operatorGamepad, Gamepad.Buttons.B.getNumber());
+        _operatorXButton = new JoystickButton(_operatorGamepad, Gamepad.Buttons.X.getNumber());
+        _operatorYButton = new JoystickButton(_operatorGamepad, Gamepad.Buttons.Y.getNumber());
+
+        _operatorRightYUp =
+                new AxisButton(_operatorGamepad, Gamepad.Axes.RIGHT_Y.getNumber(), -0.4);
+
+        _operatorRightYDown =
+                new AxisButton(_operatorGamepad, Gamepad.Axes.RIGHT_Y.getNumber(), 0.4);
+
+        _operatorLeftYUp = new AxisButton(_operatorGamepad, Gamepad.Axes.LEFT_Y.getNumber(), -0.4);
+
+        _operatorLeftYDown = new AxisButton(_operatorGamepad, Gamepad.Axes.LEFT_Y.getNumber(), 0.4);
+        _operatorRightTrigger =
+                new AxisButton(_operatorGamepad, Gamepad.Axes.RIGHT_TRIGGER.getNumber(), 0.2);
+        _operatorLeftTrigger =
+                new AxisButton(_operatorGamepad, Gamepad.Axes.LEFT_TRIGGER.getNumber(), 0.2);
     }
 
-    public void initializeButtons(DriveTrain driveTrain, Trajectory trajectory) {
-        var waypoints = new ArrayList<Translation2d>();
-        var angleTest = new ArrayList<Translation2d>();
-        waypoints.add(new Translation2d(1, -1));
-        //                waypoints.add(new Translation2d(2, 0));
-        _driverAButton.whenPressed(
-                new DriveTrajectory(
-                        driveTrain,
-                        driveTrain.getOdometryPose(),
-                        waypoints,
-                        new Pose2d(0, 0, new Rotation2d(0))));
-        _driverBButton.whenPressed(new DriveTrajectory(driveTrain, trajectory));
-        _driverXButton.whenPressed(
-                new DriveTrajectory(
-                        driveTrain,
-                        driveTrain.getOdometryPose(),
-                        angleTest,
-                        new Pose2d(
-                                driveTrain.getOdometryPose().getX(),
-                                driveTrain.getOdometryPose().getY(),
-                                new Rotation2d(Math.PI / 2))));
-        //        _driverBButton.whenPressed(null);
+    public void initializeButtons(
+            DriveTrain drivetrain,
+            Shooter shooter,
+            Intake intake,
+            Spindexer spindexer,
+            Hood hood,
+            Climber climber,
+            Trajectory prt1,
+            Trajectory prt2,
+            Trajectory prt3,
+            Trajectory prt4) {
+        _operatorRightTrigger.whileHeld(new Shoot(shooter, spindexer, hood));
+        _operatorLeftTrigger.whileHeld(new AutoIntake(intake));
+        //        _operatorAButton.whenPressed(
+        //                new StealBallAuto(drivetrain, shooter, hood, intake, spindexer, prt1,
+        // prt2, this));
+        //        _operatorAButton.whenPressed(new SetShooterSetpoint(shooter, hood, 64, 4500));
+        //        _operatorYButton.whenPressed(new SetShooterSetpoint(shooter, hood, 66, 5000));
+        _aimButton.whileHeld(new AutoTarget(drivetrain, shooter, hood, this, 65, 5000, true));
+
+        // Climber Stuff:
+        _operatorRightYUp.whenPressed(new RaiseArm(climber, shooter));
+        _operatorRightYDown.whenPressed(new LowerArm(climber));
+        _operatorLeftYUp.whileHeld(new ResetWinch(climber));
+        _operatorLeftYDown.whileHeld(new Climb(climber));
     }
 
     public double getDriveY() {
-        double speed = -getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_Y.getNumber());
-        speed = applyDeadband(speed, Constants.DriveTrain.DEADBAND);
-        return speed;
+        yIn = getSpeedFromAxis(_leftJoystick, _leftJoystick.getYChannel());
+        //        yIn = getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_Y.getNumber());
+        yIn = Helpers.applyDeadband(yIn, DEADBAND);
+
+        double yOut = yIn / (Math.sqrt(yIn * yIn + (xIn * xIn)) + EPSILON);
+        yOut = (yOut + (yIn * 2)) / 3.0;
+        return yOut;
     }
 
     public double getDriveX() {
-        double speed = getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_X.getNumber());
-        speed = applyDeadband(speed, Constants.DriveTrain.DEADBAND);
-        return speed;
+        xIn = -getSpeedFromAxis(_leftJoystick, _leftJoystick.getXChannel());
+        //        xIn = -getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_X.getNumber());
+        xIn = Helpers.applyDeadband(xIn, DEADBAND);
+
+        double xOut = xIn / (Math.sqrt(yIn * yIn + (xIn * xIn)) + EPSILON);
+        xOut = (xOut + (xIn * 2)) / 3.0;
+        return xOut;
     }
 
     public double getRotationX() {
-        double speed = getSpeedFromAxis(_driverGamepad, Gamepad.Axes.RIGHT_X.getNumber());
-        speed = applyDeadband(speed, Constants.DriveTrain.DEADBAND);
+        double speed = -getSpeedFromAxis(_rightJoystick, _rightJoystick.getZChannel());
+        speed = Helpers.applyDeadband(speed, 0.2);
         return speed;
-    }
-
-    public int getDriverPOV() {
-        return POV.fromWPILIbAngle(0, _driverGamepad.getPOV()).getDirectionValue();
-    }
-
-    public boolean holdAngle() {
-        return _driverRightStickButton.get();
     }
 
     protected double getSpeedFromAxis(Joystick gamepad, int axisNumber) {
         return gamepad.getRawAxis(axisNumber);
+    }
+
+    public int getOperatorPOV() {
+        return POV.fromWPILIbAngle(0, _operatorGamepad.getPOV()).getDirectionValue();
+    }
+
+    public boolean isKillAllPressed() {
+        int operatorPOV = getOperatorPOV();
+        return operatorPOV == Constants.OI.KILL_ALL;
     }
 
     @Override

@@ -1,4 +1,4 @@
-/* (C)2020-2021 */
+/* (C)5687-2021 */
 package org.frc5687.infiniterecharge.robot;
 
 import edu.wpi.first.wpilibj.*;
@@ -33,10 +33,6 @@ public class Robot extends OutliersRobot implements ILoggingSource {
 
     private Command _autoCommand;
 
-    private edu.wpi.first.wpilibj.Timer _timer;
-    private double _prevTime;
-    private double _time;
-
     /**
      * This function is setRollerSpeed when the robot is first started up and should be used for any
      * initialization code.
@@ -52,12 +48,10 @@ public class Robot extends OutliersRobot implements ILoggingSource {
         info("Robot " + _name + " running in " + _identityMode.toString() + " mode");
 
         _robotContainer = new RobotContainer(this, _identityMode);
-        _timer = new Timer();
         _robotContainer.init();
 
         // Periodically flushes metrics (might be good to configure enable/disable via USB config
         // file)
-        _time = _timer.get();
         new Notifier(MetricTracker::flushAll).startPeriodic(Constants.METRIC_FLUSH_PERIOD);
     }
 
@@ -86,6 +80,7 @@ public class Robot extends OutliersRobot implements ILoggingSource {
     @Override
     public void autonomousInit() {
         _fmsConnected = DriverStation.getInstance().isFMSAttached();
+        _autoCommand = _robotContainer.getAutonomousCommand();
         _robotContainer.autonomousInit();
         if (_autoCommand != null) {
             _autoCommand.schedule();
@@ -112,7 +107,7 @@ public class Robot extends OutliersRobot implements ILoggingSource {
         // Example of starting a new row of metrics for all instrumented objects.
         // MetricTracker.newMetricRowAll();
         MetricTracker.newMetricRowAll();
-        //        _robotContainer.periodic();
+        _robotContainer.periodic();
         CommandScheduler.getInstance().run();
         update();
         updateDashboard();
