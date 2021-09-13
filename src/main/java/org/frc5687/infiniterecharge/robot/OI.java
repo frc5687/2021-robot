@@ -2,6 +2,7 @@
 package org.frc5687.infiniterecharge.robot;
 
 import static org.frc5687.infiniterecharge.robot.Constants.DriveTrain.*;
+import static org.frc5687.infiniterecharge.robot.Constants.EPSILON;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
@@ -123,7 +124,7 @@ public class OI extends OutliersProxy {
         //        yIn = getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_Y.getNumber());
         yIn = Helpers.applyDeadband(yIn, DEADBAND);
 
-        double yOut = yIn / (Math.sqrt(yIn * yIn + (xIn * xIn)) + 0.00001);
+        double yOut = yIn / (Math.sqrt(yIn * yIn + (xIn * xIn)) + EPSILON);
         yOut = (yOut + (yIn * 2)) / 3.0;
         return yOut;
     }
@@ -133,7 +134,7 @@ public class OI extends OutliersProxy {
         //        xIn = -getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_X.getNumber());
         xIn = Helpers.applyDeadband(xIn, DEADBAND);
 
-        double xOut = xIn / (Math.sqrt(yIn * yIn + (xIn * xIn)) + 0.00001);
+        double xOut = xIn / (Math.sqrt(yIn * yIn + (xIn * xIn)) + EPSILON);
         xOut = (xOut + (xIn * 2)) / 3.0;
         return xOut;
     }
