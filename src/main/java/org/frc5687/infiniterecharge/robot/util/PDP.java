@@ -8,7 +8,7 @@ public class PDP extends PowerDistributionPanel {
     private double[] cache;
     private Thread _thread;
     private PDPCacheUpdater _pdpCacheUpdater;
-
+    MetricTracker _metrics;
     public PDP() {
         super();
         cache = new double[16];
@@ -46,6 +46,7 @@ public class PDP extends PowerDistributionPanel {
         SmartDashboard.putNumber("PDP/Current/13", getCurrent(13));
         SmartDashboard.putNumber("PDP/Current/14", getCurrent(14));
         SmartDashboard.putNumber("PDP/Current/15", getCurrent(15));
+        _metrics.put("PDPMetircsSet", null);
     }
 
     public boolean excessiveCurrent(int channel, double threshold) {

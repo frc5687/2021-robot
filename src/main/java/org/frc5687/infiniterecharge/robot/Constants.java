@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.util.Units;
-import edu.wpi.first.wpiutil.math.numbers.*;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -104,12 +104,12 @@ public class Constants {
         public static boolean FEEDER_INVERTED = false;
         public static final double SPINDEXER_IDLE_SPEED = -0.0;
         public static final double FEEDER_IDLE_SPEED = -0.25;
-        public static final double SPINDEXER_SPEED = 0.75;
+        public static final double SPINDEXER_SPEED = 1.0; // was 0.75 but I'm insane sooo...
         public static final double FEEDER_SPEED = 1.0;
     }
 
     public static class Intake {
-        public static final double INTAKE_SPEED = 1.0;
+        public static final double INTAKE_SPEED = 0.75;
         public static boolean INVERTED = true;
     }
 

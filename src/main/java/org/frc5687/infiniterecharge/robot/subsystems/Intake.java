@@ -6,12 +6,14 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import org.frc5687.infiniterecharge.robot.Constants;
 import org.frc5687.infiniterecharge.robot.RobotMap;
+import org.frc5687.infiniterecharge.robot.util.MetricTracker;
 import org.frc5687.infiniterecharge.robot.util.OutliersContainer;
 
 public class Intake extends OutliersSubsystem {
 
     private CANSparkMax _roller;
     private DoubleSolenoid _solenoid;
+    private MetricTracker _metric;
 
     public Intake(OutliersContainer container) {
         super(container);
@@ -32,15 +34,21 @@ public class Intake extends OutliersSubsystem {
     public void periodic() {}
 
     public void setRollerSpeed(double pow) {
+        //Sets intake roller speed
+        //Invoked form AutoIntake
         _roller.set(pow);
+        _metric.put("Intake Power", pow);
     }
+
 
     public void raiseIntake() {
         _solenoid.set(DoubleSolenoid.Value.kForward);
+        _metric.put("Intake Raised", true);
     }
 
     public void lowerIntake() {
         _solenoid.set(DoubleSolenoid.Value.kReverse);
+        _metric.put("Intake Raised", false);
     }
 
     public boolean isRaised() {

@@ -1,6 +1,7 @@
 /* (C)5687-2021 */
 package org.frc5687.infiniterecharge.robot;
 
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -8,6 +9,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+
+import org.frc5687.infiniterecharge.robot.subsystems.Lights;
 import org.frc5687.infiniterecharge.robot.util.*;
 
 /**
@@ -24,7 +27,7 @@ public class Robot extends OutliersRobot implements ILoggingSource {
     private RioLogger.LogLevel _fileLogLevel = RioLogger.LogLevel.warn;
 
     private int _updateTick = 0;
-
+    private Lights  blinkensL;
     private String _name;
 
     private RobotContainer _robotContainer;
@@ -40,10 +43,23 @@ public class Robot extends OutliersRobot implements ILoggingSource {
     @Override
     public void robotInit() {
         loadConfigFromUSB();
+        //Blinkens on PWM 9
+        AddressableLED blinkens = new AddressableLED(9);
         RioLogger.getInstance().init(_fileLogLevel, _dsLogLevel);
         LiveWindow.disableAllTelemetry();
         DriverStation.getInstance().silenceJoystickConnectionWarning(true);
-
+        //How many lighs on strand
+        AddressableLEDBuffer blinkensBuffer = new AddressableLEDBuffer(60);
+        blinkens.setLength(blinkensBuffer.getLength());
+        blinkens.setData(blinkensBuffer);
+        //Let's make some light
+        blinkens.start();
+        /*for (var i = 0; i < blinkensBuffer.getLength(); i++) {
+            // Sets the specified LED to the RGB values for red
+            blinkensBuffer.setRGB(i, 255, 0, 0);
+         }
+         */
+        blinkensL.Promo();
         metric("Identity", _identityMode.toString());
         info("Robot " + _name + " running in " + _identityMode.toString() + " mode");
 
