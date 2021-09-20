@@ -4,6 +4,7 @@ package org.frc5687.infiniterecharge.robot.commands.climber;
 import org.frc5687.infiniterecharge.robot.commands.OutliersCommand;
 import org.frc5687.infiniterecharge.robot.subsystems.Climber;
 import org.frc5687.infiniterecharge.robot.subsystems.Shooter;
+import org.frc5687.infiniterecharge.robot.subsystems.Climber.Position;
 
 public class RaiseArm extends OutliersCommand {
     private Climber _climber;
@@ -20,6 +21,10 @@ public class RaiseArm extends OutliersCommand {
         super.initialize();
         _climber.raiseArm();
         _shooter.setVelocitySpeed(0);
+    }
+
+    public Position climberPos(){
+        return _climber.getArmPosition();
     }
 
     @Override

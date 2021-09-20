@@ -6,6 +6,7 @@ import static org.frc5687.infiniterecharge.robot.Constants.EPSILON;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import org.frc5687.infiniterecharge.robot.commands.*;
@@ -46,7 +47,6 @@ public class OI extends OutliersProxy {
     private final Button _operatorRightYDown;
     private final Button _operatorLeftYUp;
     private final Button _operatorLeftYDown;
-
     private double yIn = 0;
     private double xIn = 0;
 
@@ -84,7 +84,6 @@ public class OI extends OutliersProxy {
                 new AxisButton(_operatorGamepad, Gamepad.Axes.RIGHT_Y.getNumber(), 0.4);
 
         _operatorLeftYUp = new AxisButton(_operatorGamepad, Gamepad.Axes.LEFT_Y.getNumber(), -0.4);
-
         _operatorLeftYDown = new AxisButton(_operatorGamepad, Gamepad.Axes.LEFT_Y.getNumber(), 0.4);
         _operatorRightTrigger =
                 new AxisButton(_operatorGamepad, Gamepad.Axes.RIGHT_TRIGGER.getNumber(), 0.2);
@@ -105,13 +104,8 @@ public class OI extends OutliersProxy {
             Trajectory prt4) {
         _operatorRightTrigger.whileHeld(new Shoot(shooter, spindexer, hood));
         _operatorLeftTrigger.whileHeld(new AutoIntake(intake));
-        //        _operatorAButton.whenPressed(
-        //                new StealBallAuto(drivetrain, shooter, hood, intake, spindexer, prt1,
-        // prt2, this));
-        //        _operatorAButton.whenPressed(new SetShooterSetpoint(shooter, hood, 64, 4500));
-        //        _operatorYButton.whenPressed(new SetShooterSetpoint(shooter, hood, 66, 5000));
         _aimButton.whileHeld(new AutoTarget(drivetrain, shooter, hood, this, 65, 5000, true));
-
+        _operatorAButton.whenPressed(new Lights(255, 255, 255));
         // Climber Stuff:
         _operatorRightYUp.whenPressed(new RaiseArm(climber, shooter));
         _operatorRightYDown.whenPressed(new LowerArm(climber));

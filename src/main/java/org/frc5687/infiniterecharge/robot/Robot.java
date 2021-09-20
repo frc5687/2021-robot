@@ -1,7 +1,6 @@
 /* (C)5687-2021 */
 package org.frc5687.infiniterecharge.robot;
 
-import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -10,7 +9,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
-import org.frc5687.infiniterecharge.robot.subsystems.Lights;
+import org.frc5687.infiniterecharge.robot.commands.Lights;
 import org.frc5687.infiniterecharge.robot.util.*;
 
 /**
@@ -20,7 +19,7 @@ import org.frc5687.infiniterecharge.robot.util.*;
  * project.
  */
 public class Robot extends OutliersRobot implements ILoggingSource {
-
+    private Limelight limeLight;
     public static OutliersContainer.IdentityMode _identityMode =
             OutliersContainer.IdentityMode.competition;
     private RioLogger.LogLevel _dsLogLevel = RioLogger.LogLevel.warn;
@@ -43,6 +42,7 @@ public class Robot extends OutliersRobot implements ILoggingSource {
     @Override
     public void robotInit() {
         loadConfigFromUSB();
+        limeLight.enableLEDS(); //Working test
         //Blinkens on PWM 9
         AddressableLED blinkens = new AddressableLED(9);
         RioLogger.getInstance().init(_fileLogLevel, _dsLogLevel);
@@ -69,6 +69,7 @@ public class Robot extends OutliersRobot implements ILoggingSource {
         // Periodically flushes metrics (might be good to configure enable/disable via USB config
         // file)
         new Notifier(MetricTracker::flushAll).startPeriodic(Constants.METRIC_FLUSH_PERIOD);
+        limeLight.disableLEDS(); //So I don't get blinded
     }
 
     /**

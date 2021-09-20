@@ -33,6 +33,10 @@ public class DriveToPose extends OutliersCommand {
         return _drivetrain.isAtPose(_pose);
     }
 
+    public void hold(){
+        
+    }
+
     @Override
     public void end(boolean interrupted) {
         super.end(interrupted);

@@ -109,7 +109,7 @@ public class Constants {
     }
 
     public static class Intake {
-        public static final double INTAKE_SPEED = 0.75;
+        public static final double INTAKE_SPEED = 0.75; //Should stop it eating it's self
         public static boolean INVERTED = true;
     }
 

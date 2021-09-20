@@ -15,6 +15,21 @@ public class Limelight {
         _camera = new PhotonCamera(cameraName);
         _table = NetworkTableInstance.getDefault().getTable("photonvision").getSubTable(cameraName);
     }
+    public void disableLEDS(){
+        //turns off LEDS
+        _camera.setLED(LEDMode.kOff);
+    }
+
+    public void enableLEDS(){
+        //turns on LEDS
+        _camera.setLED(LEDMode.kOn);
+    }
+
+    public void blinkLEDS(){
+        //Blink LEDS
+        //Not even sure if this works
+        _camera.setLED(LEDMode.kBlink);
+    }
 
     public LEDMode getLEDS(){
         return _camera.getLEDMode();
@@ -32,3 +47,4 @@ public class Limelight {
         return _camera.getLatestResult().hasTargets();
     }
 }
+//Kilroy Was Here
