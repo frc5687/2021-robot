@@ -9,11 +9,12 @@ public class Lights {
     private AddressableLEDBuffer blinken; 
     private AddressableLED blinkenAddress;
     private MetricTracker metric;
+    private String status;
 
     public Lights(){
         for (var i = 0; i < blinken.getLength(); i++) {
             // Sets the specified LED to the RGB values for red
-            blinken.setRGB(i, 255, 0, 0);
+            blinken.setRGB(i, 255, 0, 0); //Not a primary color(spelled like Murica for Ian, please add in egale call) Ian!!
          }
          blinkenAddress.setData(blinken);
     }
@@ -24,9 +25,11 @@ public class Lights {
             blinken.setRGB(i, 255, 255, 255);
          }
          blinkenAddress.setData(blinken);
+         status = "white";
     }
 
     public void COPS(){
+        status = "COPS";
         for (var i = 0; i < blinken.getLength(); i++) {
             // Sets the specified LED to the RGB values for red
             blinken.setRGB(i, 255, 0, 0); //Red
@@ -42,6 +45,7 @@ public class Lights {
 
     
     public void Promo(){
+        status = "Promo";
         for (var i = 0; i < blinken.getLength(); i++) {
             // Sets the specified LED to the RGB values for red
             blinken.setRGB(i, 255, 215, 0);
@@ -56,10 +60,15 @@ public class Lights {
     }
 
     public void green(){
+        status = "green";
         for (var i = 0; i < blinken.getLength(); i++) {
             // Sets the specified LED to the RGB values for red
             blinken.setRGB(i, 255, 0, 0);
          }
          blinkenAddress.setData(blinken);
+    }
+
+    public void updateStatus(){
+        metric.put("Blinken Status", status);
     }
 }

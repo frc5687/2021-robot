@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class Gamepad extends Joystick {
     /** Enumeration for the various analog axes */
+    MetricTracker _metric;
     public static enum Axes {
         LEFT_X(0),
         LEFT_Y(1),
@@ -74,6 +75,8 @@ public class Gamepad extends Joystick {
      * @return double the analog value for the axis
      */
     public double getRawAxis(Axes axis) {
+        //Puts raw joystick to log
+        _metric.put("Joystick Raw", super.getRawAxis((axis.getNumber())));
         return super.getRawAxis(axis.getNumber());
     }
 
@@ -84,6 +87,10 @@ public class Gamepad extends Joystick {
      * @return bool true if the button is pressed
      */
     public boolean getRawButton(Buttons button) {
+        //Puts raw buttons to log
+        _metric.put("Button Raw", super.getRawButton(button.getNumber()));
         return super.getRawButton(button.getNumber());
     }
 }
+
+//Kilroy Was Here
