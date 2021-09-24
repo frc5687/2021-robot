@@ -17,6 +17,7 @@ import org.frc5687.infiniterecharge.robot.commands.climber.ResetWinch;
 import org.frc5687.infiniterecharge.robot.commands.shooter.Shoot;
 import org.frc5687.infiniterecharge.robot.subsystems.*;
 import org.frc5687.infiniterecharge.robot.util.*;
+import org.frc5687.infiniterecharge.robot.util.Limelight;
 
 public class OI extends OutliersProxy {
     protected Gamepad _driverGamepad;
@@ -105,8 +106,13 @@ public class OI extends OutliersProxy {
         _operatorRightTrigger.whileHeld(new Shoot(shooter, spindexer, hood));
         _operatorLeftTrigger.whileHeld(new AutoIntake(intake));
         _aimButton.whileHeld(new AutoTarget(drivetrain, shooter, hood, this, 65, 5000, true));
-        _operatorAButton.whenPressed(new Lights(255, 255, 255));
         // Climber Stuff:
+        //X Box controller
+        _operatorAButton.whenPressed(new RaiseArm(climber, shooter));
+        _operatorBButton.whenPressed(new LowerArm(climber));
+        _operatorYButton.whenPressed(new ResetWinch(climber));
+        _operatorXButton.whenPressed(new Climb(climber));
+        //DPad
         _operatorRightYUp.whenPressed(new RaiseArm(climber, shooter));
         _operatorRightYDown.whenPressed(new LowerArm(climber));
         _operatorLeftYUp.whileHeld(new ResetWinch(climber));

@@ -36,8 +36,8 @@ public class Intake extends OutliersSubsystem {
     public void setRollerSpeed(double pow) {
         //Sets intake roller speed
         //Invoked form AutoIntake
-        _roller.set(pow);
-        _metric.put("Intake Power", pow);
+       //_roller.set(pow);
+       //_metric.put("Intake Power", pow);
     }
 
 

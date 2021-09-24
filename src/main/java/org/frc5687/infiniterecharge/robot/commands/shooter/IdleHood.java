@@ -5,11 +5,13 @@ import org.frc5687.infiniterecharge.robot.Constants;
 import org.frc5687.infiniterecharge.robot.OI;
 import org.frc5687.infiniterecharge.robot.commands.OutliersCommand;
 import org.frc5687.infiniterecharge.robot.subsystems.Hood;
+import org.frc5687.infiniterecharge.robot.util.Limelight;
 
 public class IdleHood extends OutliersCommand {
 
     private Hood _hood;
     private OI _oi;
+    private Limelight limeLight;
 
     private boolean _zeroing = false;
 
@@ -30,6 +32,7 @@ public class IdleHood extends OutliersCommand {
         if (_zeroing) {
             _hood.setSpeed(Constants.Hood.ZEROING_SPEED);
             if (_hood.isBottomHallTriggered()) {
+                limeLight.enableLEDS();
                 _hood.setPosition(Constants.Hood.MIN_ANGLE);
                 _zeroing = false;
             }

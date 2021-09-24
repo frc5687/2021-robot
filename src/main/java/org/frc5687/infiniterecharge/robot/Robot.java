@@ -8,8 +8,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-
-import org.frc5687.infiniterecharge.robot.commands.Lights;
 import org.frc5687.infiniterecharge.robot.util.*;
 
 /**
@@ -19,14 +17,12 @@ import org.frc5687.infiniterecharge.robot.util.*;
  * project.
  */
 public class Robot extends OutliersRobot implements ILoggingSource {
-    private Limelight limeLight;
     public static OutliersContainer.IdentityMode _identityMode =
             OutliersContainer.IdentityMode.competition;
     private RioLogger.LogLevel _dsLogLevel = RioLogger.LogLevel.warn;
     private RioLogger.LogLevel _fileLogLevel = RioLogger.LogLevel.warn;
 
     private int _updateTick = 0;
-    private Lights  blinkensL;
     private String _name;
 
     private RobotContainer _robotContainer;
@@ -41,25 +37,16 @@ public class Robot extends OutliersRobot implements ILoggingSource {
      */
     @Override
     public void robotInit() {
-        loadConfigFromUSB();
-        limeLight.enableLEDS(); //Working test
-        //Blinkens on PWM 9
-        AddressableLED blinkens = new AddressableLED(9);
+        try{
+            loadConfigFromUSB();
+        }
+        catch(Exception e){
+
+        }
         RioLogger.getInstance().init(_fileLogLevel, _dsLogLevel);
         LiveWindow.disableAllTelemetry();
         DriverStation.getInstance().silenceJoystickConnectionWarning(true);
-        //How many lighs on strand
-        AddressableLEDBuffer blinkensBuffer = new AddressableLEDBuffer(60);
-        blinkens.setLength(blinkensBuffer.getLength());
-        blinkens.setData(blinkensBuffer);
-        //Let's make some light
-        blinkens.start();
-        /*for (var i = 0; i < blinkensBuffer.getLength(); i++) {
-            // Sets the specified LED to the RGB values for red
-            blinkensBuffer.setRGB(i, 255, 0, 0);
-         }
-         */
-        blinkensL.Promo();
+        
         metric("Identity", _identityMode.toString());
         info("Robot " + _name + " running in " + _identityMode.toString() + " mode");
 
@@ -69,7 +56,7 @@ public class Robot extends OutliersRobot implements ILoggingSource {
         // Periodically flushes metrics (might be good to configure enable/disable via USB config
         // file)
         new Notifier(MetricTracker::flushAll).startPeriodic(Constants.METRIC_FLUSH_PERIOD);
-        limeLight.disableLEDS(); //So I don't get blinded
+
     }
 
     /**
@@ -107,8 +94,6 @@ public class Robot extends OutliersRobot implements ILoggingSource {
     public void teleopInit() {
         _fmsConnected = DriverStation.getInstance().isFMSAttached();
         _robotContainer.teleopInit();
-
-        // _limelight.disableLEDs();
     }
 
     /** This function is called periodically during autonomous. */
@@ -138,11 +123,9 @@ public class Robot extends OutliersRobot implements ILoggingSource {
 
     @Override
     public void disabledInit() {
-        // _limelight.disableLEDs();
         RioLogger.getInstance().forceSync();
         RioLogger.getInstance().close();
         _robotContainer.disabledInit();
-        //        MetricTracker.flushAll();
     }
 
     @Override
