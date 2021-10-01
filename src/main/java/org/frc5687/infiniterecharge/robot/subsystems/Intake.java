@@ -28,6 +28,7 @@ public class Intake extends OutliersSubsystem {
         _roller.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus0, 100);
         _roller.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus2, 1000);
         _roller.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1, 1000);
+        _solenoid.set(DoubleSolenoid.Value.kReverse); //Stops intake for droping
     }
 
     @Override
@@ -36,7 +37,7 @@ public class Intake extends OutliersSubsystem {
     public void setRollerSpeed(double pow) {
         //Sets intake roller speed
         //Invoked form AutoIntake
-       //_roller.set(pow);
+        _roller.set(pow);
        //_metric.put("Intake Power", pow);
     }
 
