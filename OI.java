@@ -70,7 +70,7 @@ public class OI extends OutliersProxy {
                 new JoystickButton(_driverGamepad, Gamepad.Buttons.RIGHT_STICK.getNumber());
 
         _aimButton = new JoystickButton(_rightJoystick, 1);
-        _shootButton = new JoystickButton(_raceWheel, 1);
+        _shootButton = new JoystickButton(_raceWheel, 8);
         _resetYawButton = new JoystickButton(_rightJoystick, 4);
 
         _driverAButton = new JoystickButton(_driverGamepad, Gamepad.Buttons.A.getNumber());
