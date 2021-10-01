@@ -49,23 +49,28 @@ public class OI extends OutliersProxy {
     private final Button _operatorRightYDown;
     private final Button _operatorLeftYUp;
     private final Button _operatorLeftYDown;
+
+    private final Button _raceWheelLeftTrigger;
+    private final Button _raceWheelRightTrigger;
+    private final Button _raceWheelHorn;
+
     private double yIn = 0;
     private double xIn = 0;
 
     public OI() {
-        _driverGamepad = new Gamepad(0);
+        _driverGamepad = new Gamepad(4);
         _operatorGamepad = new Gamepad(3);
 
-        _leftJoystick = new Joystick(1);
-        _rightJoystick = new Joystick(2);
+        _leftJoystick = new Joystick(1); //Translation
+        _rightJoystick = new Joystick(2); //Rotation
 
-        _raceWheel = new Joystick(4);
+        _raceWheel = new Joystick(0);
 
         _driverRightStickButton =
                 new JoystickButton(_driverGamepad, Gamepad.Buttons.RIGHT_STICK.getNumber());
 
         _aimButton = new JoystickButton(_rightJoystick, 1);
-        _shootButton = new JoystickButton(_leftJoystick, 1);
+        _shootButton = new JoystickButton(_raceWheel, 1);
         _resetYawButton = new JoystickButton(_rightJoystick, 4);
 
         _driverAButton = new JoystickButton(_driverGamepad, Gamepad.Buttons.A.getNumber());
@@ -93,6 +98,13 @@ public class OI extends OutliersProxy {
                 new AxisButton(_operatorGamepad, Gamepad.Axes.RIGHT_TRIGGER.getNumber(), 0.2);
         _operatorLeftTrigger =
                 new AxisButton(_operatorGamepad, Gamepad.Axes.LEFT_TRIGGER.getNumber(), 0.2);
+
+        _raceWheelLeftTrigger = 
+                new JoystickButton(_raceWheel, 7); // Not sure what threshold does, but this adds the left and right trigger of the Wheel.
+        _raceWheelRightTrigger = 
+                new JoystickButton(_raceWheel, 8);
+        _raceWheelHorn =
+                new JoystickButton(_raceWheel, 9);
     }
 
     public void initializeButtons(
@@ -122,7 +134,7 @@ public class OI extends OutliersProxy {
         _operatorLeftYDown.whileHeld(new Climb(climber));
     }
 
-    public double getDriveY() {
+	public double getDriveY() {
         yIn = getSpeedFromAxis(_leftJoystick, _leftJoystick.getYChannel());
         //        yIn = getSpeedFromAxis(_driverGamepad, Gamepad.Axes.LEFT_Y.getNumber());
         yIn = Helpers.applyDeadband(yIn, DEADBAND);
@@ -143,13 +155,13 @@ public class OI extends OutliersProxy {
     }
 
     public double getRotationX() {
-        double speed = -getSpeedFromAxis(_raceWheel, _raceWheel.getZChannel());
-        speed = Helpers.applyDeadband(speed, 0.2);
+        double speed = -getSpeedFromAxis(_raceWheel, _raceWheel.getXChannel());
+        speed = Helpers.applyDeadband(speed, 0); // The racewheel already has a built-in deadband.
         return speed;
     }
 
-    protected double getSpeedFromAxis(Joystick gamepad, int axisNumber) {
-        return gamepad.getRawAxis(axisNumber);
+    protected double getSpeedFromAxis(Joystick _raceWheel, int axisNumber) {
+        return _raceWheel.getRawAxis(axisNumber);
     }
 
     public int getOperatorPOV() {
