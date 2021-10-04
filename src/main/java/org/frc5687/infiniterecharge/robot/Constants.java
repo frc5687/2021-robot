@@ -34,7 +34,7 @@ public class Constants {
         //        public static final double BACK_LEFT_ENCODER_OFFSET = 0.585 + Math.PI; // radians
 
         public static final double DEADBAND = 0.1;
-
+        public static final double WHEEL_SPEED = 2; //Race Wheel turning speed
         public static final double MAX_MPS = 3.5;
 
         public static final double VISION_kP = 0.2;
@@ -48,7 +48,6 @@ public class Constants {
         public static final double ANGLE_kP = 3.5;
         public static final double ANGLE_kI = 0.0;
         public static final double ANGLE_kD = 0.0;
-
         public static final double kP = 1.5;
         public static final double kI = 0.0;
         public static final double kD = 0.5;
@@ -102,9 +101,9 @@ public class Constants {
         public static boolean SPINDEXER_INVERTED = false;
 
         public static boolean FEEDER_INVERTED = false;
-        public static final double SPINDEXER_IDLE_SPEED = -0.0;
+        public static final double SPINDEXER_IDLE_SPEED = -0.25;
         public static final double FEEDER_IDLE_SPEED = -0.25;
-        public static final double SPINDEXER_SPEED = 1.0; // was 0.75 but I'm insane sooo...
+        public static final double SPINDEXER_SPEED = 0.75; // was 0.75 but I'm insane sooo...
         public static final double FEEDER_SPEED = 1.0;
     }
 
