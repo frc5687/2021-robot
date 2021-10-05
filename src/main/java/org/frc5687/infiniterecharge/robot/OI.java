@@ -13,6 +13,7 @@ import org.frc5687.infiniterecharge.robot.commands.*;
 import org.frc5687.infiniterecharge.robot.commands.climber.Climb;
 import org.frc5687.infiniterecharge.robot.commands.climber.LowerArm;
 import org.frc5687.infiniterecharge.robot.commands.climber.RaiseArm;
+import org.frc5687.infiniterecharge.robot.commands.climber.ResetWinch;
 import org.frc5687.infiniterecharge.robot.commands.shooter.Shoot;
 import org.frc5687.infiniterecharge.robot.subsystems.*;
 import org.frc5687.infiniterecharge.robot.util.*;
@@ -31,11 +32,11 @@ public class OI extends OutliersProxy {
         private JoystickButton intakeBTN; //Drop intake
         private JoystickButton climbUPBTN; //Raise Arm
         private JoystickButton climbDOWNBTN; //Lower Arm
-        private JoystickButton climbWinchReset; //Reset winch
+        private JoystickButton winchReset; //Reset winch
         private JoystickButton climb; //Climb
 
-        private double xIn;
-        private double yIn;
+        private double xIn; //Joystick X values
+        private double yIn; //Joystick Y values
         
 
     public OI() {
@@ -46,7 +47,7 @@ public class OI extends OutliersProxy {
             */
             raceWheel = new Joystick(0);
             translation = new Joystick(2);
-            operator = new XboxController(3);
+            operator = new XboxController(4); //Was 3
             /**
              * In the ()
              * 1: The object that's being maped to
@@ -58,7 +59,7 @@ public class OI extends OutliersProxy {
             intakeBTN = new JoystickButton(operator, 1); //A
             climbUPBTN = new JoystickButton(operator, 12); //Left Trigger
             climbDOWNBTN = new JoystickButton(operator, 11); //Right Trigger  
-            climbWinchReset = new JoystickButton(operator, 2); //B
+            winchReset = new JoystickButton(operator, 2); //B
             climb = new JoystickButton(operator, 3); //X
     }
 
@@ -76,15 +77,16 @@ public class OI extends OutliersProxy {
                     /*Binds buttons */
                     shootBTN.whenHeld(new Shoot(shooter, spindexer, hood));
 
-                    //aimBTN.whenHeld(new Aim) to lazy to fix this
-                    aimBTN.whenHeld(new AutoTarget(drivetrain, shooter, hood, this, 65, 5000, true)); //We need to figure out what the heck these values after "hood" do
+                    //We need to figure out what the heck these values after "hood" do
+                    aimBTN.whenHeld(new AutoTarget(drivetrain, shooter, hood, this, 65, 5000, true)); 
 
                     /*Climber stuff*/
                     climbUPBTN.whenPressed(new RaiseArm(climber, shooter));
                     climbDOWNBTN.whenPressed(new LowerArm(climber));
+                    winchReset.whenPressed(new ResetWinch(climber));
                     climb.whenPressed(new Climb(climber));
                     /*Intake */
-                    intakeBTN.whenPressed(new AutoIntake(intake));
+                    intakeBTN.whenHeld(new AutoIntake(intake));
                     //#endregion
             }
 
@@ -107,10 +109,9 @@ public class OI extends OutliersProxy {
                 return xOut;
             }
 
-        //TODO Make turning faster
             public double getRotationX() {
                 double speed = -getSpeedFromAxis(raceWheel, raceWheel.getXChannel());
-                speed = speed * Constants.DriveTrain.WHEEL_SPEED; //To make turning faster
+                speed = speed * Constants.DriveTrain.WHEEL_SPEED; //To make turning faster.
                 speed = Helpers.applyDeadband(speed, 0); // The racewheel already has a built-in deadband.
                 return speed;
             }

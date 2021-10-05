@@ -38,24 +38,35 @@ public class Intake extends OutliersSubsystem {
         _roller.set(pow);
     }
 
+    public void intakeOff(){
+        //Turn intake off
+        _solenoid.set(DoubleSolenoid.Value.kOff);
+    }
 
     public void raiseIntake() {
+        //Raise intake
         _solenoid.set(DoubleSolenoid.Value.kForward);
     }
 
     public void lowerIntake() {
+        //Lower intake
         _solenoid.set(DoubleSolenoid.Value.kReverse);
     }
 
     public boolean isRaised() {
+        //Is the intake up?
+        //Returns true if solenoid is forward
         return _solenoid.get() == DoubleSolenoid.Value.kForward;
     }
 
     public boolean isLowered() {
+        //Is the intake lowered
+        //Returns true if solenoid is reversed
         return _solenoid.get() == DoubleSolenoid.Value.kReverse;
     }
 
     public Intake.Position getPosition() {
+        //Get the in takes position
         DoubleSolenoid.Value current = _solenoid.get();
         if (current == Intake.Position.HIGH.getSolenoidValue()) {
             return Intake.Position.HIGH;

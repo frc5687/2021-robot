@@ -20,7 +20,7 @@ public class IdleIntake extends OutliersCommand {
 
     @Override
     public void execute() {
-        _intake.setRollerSpeed(0);
+        _intake.raiseIntake(); //Make sure the intake is up
     }
 
     @Override
