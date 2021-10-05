@@ -24,6 +24,7 @@ public class Climber extends OutliersSubsystem {
         _winch.setIdleMode(CANSparkMax.IdleMode.kBrake);
         _winchEncoder = _winch.getEncoder();
         _arm = new DoubleSolenoid(RobotMap.PCM.ARM_HIGH, RobotMap.PCM.ARM_LOW);
+        _arm.set(DoubleSolenoid.Value.kReverse); // Stops arm going up
     }
 
     @Override
@@ -44,6 +45,11 @@ public class Climber extends OutliersSubsystem {
 
     public void lowerArm() {
         _arm.set(DoubleSolenoid.Value.kReverse);
+    }
+
+    public void offArm(){
+        //Turn arm off
+        _arm.set(DoubleSolenoid.Value.kOff);
     }
 
     public double getWinchPosition() {

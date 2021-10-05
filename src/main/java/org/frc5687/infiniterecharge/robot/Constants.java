@@ -34,8 +34,8 @@ public class Constants {
         //        public static final double BACK_LEFT_ENCODER_OFFSET = 0.585 + Math.PI; // radians
 
         public static final double DEADBAND = 0.1;
-
-        public static final double MAX_MPS = 3.5;
+        public static final double WHEEL_SPEED = 2; //Race Wheel turning speed
+        public static final double MAX_MPS = 3.5; //Speed of the swerves
 
         public static final double VISION_kP = 0.2;
         public static final double VISION_kI = 0.0;
@@ -48,7 +48,6 @@ public class Constants {
         public static final double ANGLE_kP = 3.5;
         public static final double ANGLE_kI = 0.0;
         public static final double ANGLE_kD = 0.0;
-
         public static final double kP = 1.5;
         public static final double kI = 0.0;
         public static final double kD = 0.5;
@@ -86,7 +85,7 @@ public class Constants {
         public static final double Q_AZIMUTH = 0.08; // radians
         public static final double Q_WHEEL_ANG_VELOCITY = 5; // radians per sec
         // This is for Kalman filter which isn't used for azimuth angle due to angle wrapping.
-        // Model noise are assuming that our model isn't as accurate as our sensors.
+        // Model noise are assuming that our model isn't as accurate as our senlrs.
         public static final double MODEL_AZIMUTH_ANGLE_NOISE = .1; // radians
         public static final double MODEL_AZIMUTH_ANG_VELOCITY_NOISE = 5.0; // radians per sec
         public static final double MODEL_WHEEL_ANG_VELOCITY_NOISE = 5.0; // radians per sec
@@ -102,9 +101,9 @@ public class Constants {
         public static boolean SPINDEXER_INVERTED = false;
 
         public static boolean FEEDER_INVERTED = false;
-        public static final double SPINDEXER_IDLE_SPEED = -0.0;
+        public static final double SPINDEXER_IDLE_SPEED = -0.25;
         public static final double FEEDER_IDLE_SPEED = -0.25;
-        public static final double SPINDEXER_SPEED = 1.0; // was 0.75 but I'm insane sooo...
+        public static final double SPINDEXER_SPEED = 0.75; // was 0.75 but I'm insane sooo...
         public static final double FEEDER_SPEED = 1.0;
     }
 

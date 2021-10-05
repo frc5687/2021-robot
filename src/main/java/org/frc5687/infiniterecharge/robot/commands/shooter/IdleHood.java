@@ -11,7 +11,6 @@ public class IdleHood extends OutliersCommand {
 
     private Hood _hood;
     private OI _oi;
-    private Limelight limeLight;
 
     private boolean _zeroing = false;
 
@@ -32,12 +31,9 @@ public class IdleHood extends OutliersCommand {
         if (_zeroing) {
             _hood.setSpeed(Constants.Hood.ZEROING_SPEED);
             if (_hood.isBottomHallTriggered()) {
-                limeLight.enableLEDS();
                 _hood.setPosition(Constants.Hood.MIN_ANGLE);
                 _zeroing = false;
             }
-        } else {
-            _hood.setSpeed(0);
         }
     }
 
