@@ -32,4 +32,4 @@ XBox Climber Down - Right Trigger (Press)
 
 XBox Climber Winch Reset - B (Hold)
 
-XBox Climber Climb - X
+XBox Climber Climb - X (Pressed)
