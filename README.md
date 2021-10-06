@@ -16,12 +16,20 @@ ____________________________________________________________
 
 #OI
 
-RaceWheel - For turning the robot \n
-Joystick - For translation \n
-RaceWheel one BTN - Shoot (Hold) \n
-RaceWheel two BTN - Aim (Hold) \n
-XBox A - For intake (Press) \n
-XBox Climber Up - Left Trigger (Press) \n
-XBox Climber Down - Right Trigger (Press) \n
-XBox Climber Winch Reset - B (Hold) \n
-XBox Climber Climb - X \n
+RaceWheel - For turning the robot
+
+Joystick - For translation
+
+RaceWheel one BTN - Shoot (Hold)
+
+RaceWheel two BTN - Aim (Hold)
+
+XBox A - For intake (Press)
+
+XBox Climber Up - Left Trigger (Press)
+
+XBox Climber Down - Right Trigger (Press)
+
+XBox Climber Winch Reset - B (Hold)
+
+XBox Climber Climb - X
