@@ -7,7 +7,7 @@ ___________________________________________________
 
 # This is the swerve drive robot with the Maverick movment system
 
-Maverick alows for automatic movement of the robot for point to point. 
+Maverick allows for automatic movement of the robot for point to point. 
 
 Maverick v.0.1
 
