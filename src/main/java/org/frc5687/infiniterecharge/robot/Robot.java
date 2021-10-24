@@ -41,7 +41,7 @@ public class Robot extends OutliersRobot implements ILoggingSource {
             loadConfigFromUSB();
         }
         catch(Exception e){
-            error(e.getMessage());
+
         }
         RioLogger.getInstance().init(_fileLogLevel, _dsLogLevel);
         LiveWindow.disableAllTelemetry();
@@ -102,7 +102,8 @@ public class Robot extends OutliersRobot implements ILoggingSource {
 
     /** This function is called periodically during operator control. */
     @Override
-    public void teleopPeriodic() {}
+    public void teleopPeriodic() {
+    }
 
     private void ourPeriodic() {
 

@@ -22,6 +22,7 @@ public class Climb extends OutliersCommand {
 
     @Override
     public boolean isFinished() {
+        //The values are switched LOWERED means up
         return _climber.getArmPosition() == Climber.Position.RAISED;
     }
 }

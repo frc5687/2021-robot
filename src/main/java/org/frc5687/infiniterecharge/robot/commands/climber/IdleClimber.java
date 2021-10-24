@@ -22,6 +22,8 @@ public class IdleClimber extends OutliersCommand {
     @Override
     public void execute() {
         _climber.setWinchSpeed(0);
+        //Down is up and up is down
+        _climber.raiseArm();
     }
 
     @Override

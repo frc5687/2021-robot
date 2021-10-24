@@ -11,7 +11,7 @@ import org.frc5687.infiniterecharge.robot.util.RioLogger;
 public abstract class OutliersSubsystem extends SubsystemBase implements ILoggingSource {
     private MetricTracker _metricTracker;
 
-    public OutliersSubsystem(OutliersContainer container) {
+    public OutliersSubsystem(OutliersContainer container){
         container.registerSubSystem(this);
     }
 

@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.util.Units;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,6 +16,7 @@ public class Constants {
     public static final double EPSILON = 0.00001;
 
     public static class DriveTrain {
+        public static Pose2d robotPose;
         public static final double WIDTH = 0.6223;
         public static final double LENGTH = 0.6223;
         public static final Translation2d FRONT_LEFT_POSITION =
@@ -24,7 +24,7 @@ public class Constants {
         public static final double FRONT_LEFT_ENCODER_OFFSET = -0.071 + Math.PI; // radians
         public static final Translation2d FRONT_RIGHT_POSITION =
                 new Translation2d(WIDTH / 2.0, -LENGTH / 2.0);
-        public static final double FRONT_RIGHT_ENCODER_OFFSET = -1.01; // radians
+        public static final double FRONT_RIGHT_ENCODER_OFFSET = Math.PI; // radians
         public static final Translation2d BACK_LEFT_POSITION =
                 new Translation2d(-WIDTH / 2.0, LENGTH / 2.0);
         public static final double BACK_RIGHT_ENCODER_OFFSET = -0.122; // radians
@@ -35,7 +35,7 @@ public class Constants {
 
         public static final double DEADBAND = 0.1;
         public static final double WHEEL_SPEED = 2; //Race Wheel turning speed
-        public static final double MAX_MPS = 3.5; //Speed of the swerves
+        public static double MAX_MPS = 3.5; //Speed of the swerves
 
         public static final double VISION_kP = 0.2;
         public static final double VISION_kI = 0.0;
@@ -108,7 +108,7 @@ public class Constants {
     }
 
     public static class Intake {
-        public static final double INTAKE_SPEED = 0.75; //Should stop it eating it's self
+        public static final double INTAKE_SPEED = 1.00; //Should stop it eating it's self
         public static boolean INVERTED = true;
     }
 
@@ -138,8 +138,8 @@ public class Constants {
     }
 
     public static class Shooter {
-        public static final boolean LEFT_INVERTED = true;
-        public static final boolean RIGHT_INVERTED = false;
+        public static final boolean LEFT_INVERTED = false;
+        public static final boolean RIGHT_INVERTED = true;
 
         public static final double kP = 0.4;
         public static final double kI = 0.0025;
@@ -173,6 +173,16 @@ public class Constants {
                 new Pose2d(FULL_FIELD_X, TARGET_LINE_Y, new Rotation2d(0));
         public static final Pose2d EIGHT_BALL_TRENCH_STARTING_POSITION =
                 new Pose2d(12.8, 5.8, new Rotation2d(0));
+    }
+
+    public static class Maverick{
+        public static short numberOfWaypoints = 4; 
+        public static double[] waypointsX = {12.10, 0.0, 0.0, 0.0};
+        public static double[] waypointsY = {3.67, 0.0, 0.0, 0.0};
+        public static double[] rotations = {2.0, 0.0, 0.0, 0.0};
+        public static double[] tolerences = {0.0, 0.0, 0.0, 0.0};
+        public static double[] speeds = {3.5, 3.5, 3.5, 3.5, 3.5};
+        public static boolean[] afterburner = {false, false, false, false};
     }
 
     public static class AutoPath {

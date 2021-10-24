@@ -5,10 +5,8 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfKeyPoint;
 import org.opencv.core.Scalar;  
 import org.opencv.features2d.FastFeatureDetector;
-import org.opencv.features2d.Feature2D;
 import org.opencv.features2d.Features2d;
 import org.opencv.videoio.VideoCapture;
-
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.MjpegServer;

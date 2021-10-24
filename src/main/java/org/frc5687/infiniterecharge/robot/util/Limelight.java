@@ -3,7 +3,6 @@ package org.frc5687.infiniterecharge.robot.util;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-
 import org.photonvision.LEDMode;
 import org.photonvision.PhotonCamera;
 

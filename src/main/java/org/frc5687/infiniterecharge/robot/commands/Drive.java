@@ -2,7 +2,6 @@
 package org.frc5687.infiniterecharge.robot.commands;
 
 import static org.frc5687.infiniterecharge.robot.Constants.DriveTrain.*;
-
 import edu.wpi.first.wpilibj.SlewRateLimiter;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import org.frc5687.infiniterecharge.robot.OI;
@@ -14,13 +13,12 @@ public class Drive extends OutliersCommand {
     private final SlewRateLimiter _vxFilter;
     private final SlewRateLimiter _vyFilter;
     private final PIDController _visionController;
-
     private final OI _oi;
 
     public Drive(DriveTrain driveTrain, OI oi) {
         _driveTrain = driveTrain;
         _oi = oi;
-        _vxFilter = new SlewRateLimiter(3.0);
+        _vxFilter = new SlewRateLimiter(3.0); //Add to constent 
         _vyFilter = new SlewRateLimiter(3.0);
         _visionController = new PIDController(VISION_kP, VISION_kI, VISION_kD);
         addRequirements(_driveTrain);

@@ -21,6 +21,7 @@ import org.frc5687.infiniterecharge.robot.Constants;
 import org.frc5687.infiniterecharge.robot.OI;
 import org.frc5687.infiniterecharge.robot.RobotMap;
 import org.frc5687.infiniterecharge.robot.util.Limelight;
+import org.frc5687.infiniterecharge.robot.util.MetricTracker;
 import org.frc5687.infiniterecharge.robot.util.OutliersContainer;
 
 public class DriveTrain extends OutliersSubsystem {
@@ -28,14 +29,16 @@ public class DriveTrain extends OutliersSubsystem {
     private final DiffSwerveModule _frontLeft;
     private final DiffSwerveModule _backRight;
     private final DiffSwerveModule _backLeft;
-
     private final OutliersContainer _container;
     private final SwerveDriveKinematics _kinematics;
     private final SwerveDriveOdometry _odomerty;
     private final Limelight _limelight;
 
+
+
     private double _PIDAngle;
     private boolean _autoAim;
+    private MetricTracker metric;
 
     private AHRS _imu;
     private OI _oi;
@@ -167,6 +170,21 @@ public class DriveTrain extends OutliersSubsystem {
         _frontRight.setIdealState(state);
     }
 
+    public double getVelocityX(){
+        //Get the X veloctiy of the robot
+        return _imu.getVelocityX();
+    }
+
+    public double getVelocityY(){
+        //Get the Y velocity of the robot
+        return _imu.getVelocityY();
+    }
+
+    public double getVelocityZ(){
+        //Get the Z velocity of the robot
+        return _imu.getVelocityZ();
+    }
+
     public void setFrontLeftModuleState(SwerveModuleState state) {
         _frontLeft.setIdealState(state);
     }
@@ -179,6 +197,7 @@ public class DriveTrain extends OutliersSubsystem {
         _backRight.setIdealState(state);
     }
 
+
     public double getYaw() {
         return _imu.getYaw();
     }
@@ -186,6 +205,21 @@ public class DriveTrain extends OutliersSubsystem {
     // yaw is negative to follow wpi coordinate system.
     public Rotation2d getHeading() {
         return Rotation2d.fromDegrees(-getYaw());
+    }
+
+    public void resetNavX(){
+        //Completly reset the navX
+        System.out.print("NavX reset");
+        _imu.reset();
+    }
+
+    public void updateNavX(){
+        metric.put("Yaw", _imu.getYaw());
+        metric.put("Angle", _imu.getAngle());
+        metric.put("Raw X", _imu.getRawAccelX());
+        metric.put("Raw Y", _imu.getRawAccelY());
+        metric.put("Raw Z", _imu.getRawAccelZ());
+        metric.put("Temp in C", _imu.getTempC());
     }
 
     public void resetYaw() {
@@ -280,6 +314,16 @@ public class DriveTrain extends OutliersSubsystem {
         setFrontRightModuleState(moduleStates[1]);
         setBackLeftModuleState(moduleStates[2]);
         setBackRightModuleState(moduleStates[3]);
+    }
+
+    public boolean MaverickDone(Pose2d destnation){
+        //Maverick's version of the function below (Beause Maverick is needy like me)
+        Pose2d cPose =  _odomerty.getPoseMeters();
+        if(cPose == destnation){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public boolean isAtPose(Pose2d pose) {

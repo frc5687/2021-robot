@@ -28,7 +28,7 @@ public class ShootAndGo extends SequentialCommandGroup {
                 new InstantCommand(shooter::setShooterFromReference, shooter),
                 new ParallelDeadlineGroup(
                         new AutoShoot(shooter, spindexer, hood),
-                        new AutoTarget(driveTrain, shooter, hood, oi, 54, 4500, true)),
+                        new AutoTarget(driveTrain, shooter, hood, oi, 64, 5000, true)), //new AutoTarget(driveTrain, shooter, hood, oi, 54, 4500, true)),
                 new DriveTrajectory(driveTrain, traj, driveTrain.getHeading()));
     }
 }
