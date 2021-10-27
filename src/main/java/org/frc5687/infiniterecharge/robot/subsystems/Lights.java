@@ -1,7 +1,6 @@
 package org.frc5687.infiniterecharge.robot.subsystems;
 
 import org.frc5687.infiniterecharge.robot.util.MetricTracker;
-
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 

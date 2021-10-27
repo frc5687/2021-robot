@@ -5,7 +5,6 @@ import org.frc5687.infiniterecharge.robot.Constants;
 import org.frc5687.infiniterecharge.robot.OI;
 import org.frc5687.infiniterecharge.robot.commands.OutliersCommand;
 import org.frc5687.infiniterecharge.robot.subsystems.Hood;
-import org.frc5687.infiniterecharge.robot.util.Limelight;
 
 public class IdleHood extends OutliersCommand {
 

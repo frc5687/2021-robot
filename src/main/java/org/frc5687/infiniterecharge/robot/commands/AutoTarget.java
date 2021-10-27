@@ -43,7 +43,7 @@ public class AutoTarget extends OutliersCommand {
 
     @Override
     public void initialize() {
-        _drivetrain.setUseAutoAim(true);
+        _drivetrain.setUseAutoAim(true);      
     }
 
     @Override
@@ -66,9 +66,11 @@ public class AutoTarget extends OutliersCommand {
     @Override
     public void end(boolean interrupted) {
         super.end(interrupted);
+        //Dissable auto aim
         _drivetrain.setUseAutoAim(false);
+        //Put the hood back down
         _hood.setPosition(Constants.Hood.MIN_ANGLE);
-        //        _shooter.setVelocitySpeed(0);
+        //Spin down the shooter
         _shooter.setVelocitySpeed(Constants.Shooter.IDLE_VELOCITY);
         Command hoodCommand = _hood.getDefaultCommand();
         if (hoodCommand instanceof IdleHood) {

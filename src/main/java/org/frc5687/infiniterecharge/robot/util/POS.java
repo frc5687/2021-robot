@@ -1,7 +1,6 @@
 package org.frc5687.infiniterecharge.robot.util;
 
 import edu.wpi.first.wpilibj.controller.RamseteController;
-import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 
 public class POS {

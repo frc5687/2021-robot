@@ -11,8 +11,7 @@ import org.frc5687.infiniterecharge.robot.commands.shooter.AutoShoot;
 import org.frc5687.infiniterecharge.robot.subsystems.*;
 
 public class StealBallAuto extends SequentialCommandGroup {
-    public StealBallAuto(
-            DriveTrain driveTrain,
+    public StealBallAuto(DriveTrain driveTrain,
             Shooter shooter,
             Hood hood,
             Intake intake,
@@ -21,11 +20,8 @@ public class StealBallAuto extends SequentialCommandGroup {
             Trajectory exit,
             OI oi) {
         addCommands(
-                new ParallelDeadlineGroup(
-                        new AutoIntake(intake), new DriveTrajectory(driveTrain, trajectory)),
+                new ParallelDeadlineGroup(new AutoIntake(intake), new DriveTrajectory(driveTrain, trajectory)),
                 new DriveTrajectory(driveTrain, exit, Rotation2d.fromDegrees(0)),
-                new ParallelDeadlineGroup(
-                        new AutoShoot(shooter, spindexer, hood),
-                        new AutoTarget(driveTrain, shooter, hood, oi, 0, 0, false)));
+                new ParallelDeadlineGroup(new AutoShoot(shooter, spindexer, hood), new AutoTarget(driveTrain, shooter, hood, oi, 0, 0, false)));
     }
 }

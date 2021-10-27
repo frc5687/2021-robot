@@ -27,7 +27,6 @@ public class DiffSwerveModule {
     private final LinearSystemLoop<N3, N2, N3> _swerveControlLoop;
     private Matrix<N3, N1> _reference; // same thing as a set point.
     private Matrix<N2, N1> _u;
-
     private final double _encoderOffset;
     private boolean _running;
 
@@ -409,24 +408,16 @@ public class DiffSwerveModule {
      * @param Gw is the Gear Ratio of the wheel.
      * @return LinearSystem of state space model.
      */
-    private static LinearSystem<N3, N2, N3> createDifferentialSwerveModule(
-            DCMotor motor, double Js, double Jw, double Gs, double Gw) {
+    private static LinearSystem<N3, N2, N3> createDifferentialSwerveModule(DCMotor motor, double Js, double Jw, double Gs, double Gw) {
         var Cs = -((Gs * motor.KtNMPerAmp) / (motor.KvRadPerSecPerVolt * motor.rOhms * Js));
         var Cw = -((Gw * motor.KtNMPerAmp) / (motor.KvRadPerSecPerVolt * motor.rOhms * Jw));
         var Vs = 0.5 * ((Gs * motor.KtNMPerAmp) / (motor.rOhms * Js));
         var Vw = 0.5 * ((Gw * motor.KtNMPerAmp) / (motor.rOhms * Jw));
 
-        var A =
-                Matrix.mat(Nat.N3(), Nat.N3())
-                        .fill(0.0, 1.0, 0.0, 0.0, Gs * Cs, 0.0, 0.0, 0.0, Gw * Cw);
+        var A = Matrix.mat(Nat.N3(), Nat.N3()).fill(0.0, 1.0, 0.0, 0.0, Gs * Cs, 0.0, 0.0, 0.0, Gw * Cw);
         var B = Matrix.mat(Nat.N3(), Nat.N2()).fill(0.0, 0.0, Vs, Vs, Vw, -Vw);
         var C = Matrix.mat(Nat.N3(), Nat.N3()).fill(1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0);
-        var D =
-                Matrix.mat(Nat.N3(), Nat.N2())
-                        .fill(
-                                0.0, 0.0,
-                                0.0, 0.0,
-                                0.0, 0.0);
+        var D = Matrix.mat(Nat.N3(), Nat.N2()).fill(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
         return new LinearSystem<>(A, B, C, D);
     }
 }

@@ -69,13 +69,10 @@ public class RobotContainer extends OutliersContainer {
         setDefaultCommand(_climber, new IdleClimber(_climber, _oi));
         setDefaultCommand(_driveTrain, new Drive(_driveTrain, _oi));
         //
-
         Trajectory test = null;
         var config = _driveTrain.getConfig();
         config.setReversed(true);
-        test =
-                TrajectoryGenerator.generateTrajectory(
-                        Constants.AutoPath.EightBallAuto.waypoints, config);
+        test = TrajectoryGenerator.generateTrajectory(Constants.AutoPath.EightBallAuto.waypoints, config);
 
         Trajectory eightBall = getTrajectory("output/EightBall.wpilib.json");
         _stealTenPrt1 = getTrajectory("output/StealPathPrt1.wpilib.json");

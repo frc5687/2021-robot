@@ -2,7 +2,6 @@
 package org.frc5687.infiniterecharge.robot.subsystems;
 
 import static org.frc5687.infiniterecharge.robot.Constants.Shooter.*;
-
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
@@ -16,7 +15,6 @@ public class Shooter extends OutliersSubsystem {
 
     private TalonFX _leftShooter;
     private TalonFX _rightShooter;
-
     private double _rpm;
 
     public Shooter(OutliersContainer container) {

@@ -2,12 +2,14 @@
 package org.frc5687.infiniterecharge.robot;
 
 import static org.frc5687.infiniterecharge.robot.Constants.DriveTrain.*;
+
+import javax.sound.sampled.LineEvent;
+
 import static org.frc5687.infiniterecharge.robot.Constants.EPSILON;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import org.frc5687.infiniterecharge.robot.commands.*;
 import org.frc5687.infiniterecharge.robot.commands.climber.Climb;
@@ -19,25 +21,38 @@ import org.frc5687.infiniterecharge.robot.subsystems.*;
 import org.frc5687.infiniterecharge.robot.util.*;
 
 public class OI extends OutliersProxy {
-        //This is the fun raceing wheel thing
-        private Joystick raceWheel;
-        //Translation Joystick
-        private Joystick translation;
-        //Operator Xbox controller
-        private XboxController operator;
-        //For aiming the robot
-        private JoystickButton aimBTN; //Auto aim robot
-        private JoystickButton shootBTN; //Shoot balls
-        //XBox button
-        private JoystickButton intakeBTN; //Drop intake
-        private JoystickButton climbUPBTN; //Raise Arm
-        private JoystickButton climbDOWNBTN; //Lower Arm
-        private JoystickButton winchReset; //Reset winch
-        private JoystickButton climb; //Climb
-
-        private double xIn; //Joystick X values
-        private double yIn; //Joystick Y values
-        
+    
+    //This is the fun raceing wheel thing
+    private Joystick raceWheel;
+    //Translation Joystick
+    private Joystick translation;
+    //Operator Xbox controller
+    private XboxController operator;
+    //For aiming the robot
+    private JoystickButton aimBTN;
+    //Shoot
+    private JoystickButton shootBTN;
+    //XBox buttons
+    //Drop intake
+    private JoystickButton intakeBTN;
+    //Raise Arm
+    private JoystickButton climbUPBTN;
+    //Lower Arm
+    private JoystickButton climbDOWNBTN;
+    //Reset winch
+    private JoystickButton winchReset;
+    //Climb
+    private JoystickButton climb;
+    //Maverick
+    private JoystickButton Maverick;
+    //Reset navX
+    private JoystickButton resetNavX;
+    //Joystick X values
+    private double xIn;
+    //Joystick Y values
+    private double yIn;
+    //Limelight
+    private Limelight limeLight;
 
     public OI() {
             /**
@@ -45,7 +60,7 @@ public class OI extends OutliersProxy {
             *We need to figure out if each time the USBs...
             *are plugged in the port numbers change
             */
-            raceWheel = new Joystick(0);
+            raceWheel = new Joystick(1); //This hap-hazard port aloction is going to get someone killed 
             translation = new Joystick(2);
             operator = new XboxController(4); //Was 3
             /**
@@ -53,14 +68,17 @@ public class OI extends OutliersProxy {
              * 1: The object that's being maped to
              * 2: The index of the button being mapped
              */
-            aimBTN = new JoystickButton(raceWheel, 1);
-            shootBTN = new JoystickButton(raceWheel, 2);
+            aimBTN = new JoystickButton(raceWheel, 6);
+            shootBTN = new JoystickButton(raceWheel, 4);
             //Xbox buttons even though it's using the joystick class :)
-            intakeBTN = new JoystickButton(operator, 1); //A
-            climbUPBTN = new JoystickButton(operator, 12); //Left Trigger
-            climbDOWNBTN = new JoystickButton(operator, 11); //Right Trigger  
-            winchReset = new JoystickButton(operator, 2); //B
-            climb = new JoystickButton(operator, 3); //X
+            intakeBTN = new JoystickButton(raceWheel, 1); //A
+            climbDOWNBTN = new JoystickButton(translation, 8); //Left Trigger
+            climbUPBTN = new JoystickButton(raceWheel, 3); //Right Trigger  
+            winchReset = new JoystickButton(operator, 10); //
+            climb = new JoystickButton(translation, 9); //X/
+            Maverick = new JoystickButton(translation, 4);
+            resetNavX = new JoystickButton(translation, 5);
+            //POV down
     }
 
     public void initializeButtons(DriveTrain drivetrain,
@@ -68,7 +86,7 @@ public class OI extends OutliersProxy {
             Intake intake,
             Spindexer spindexer,
             Hood hood,
-            Climber climber,
+            Climber climber,  
             Trajectory prt1,
             Trajectory prt2,
             Trajectory prt3,
@@ -78,16 +96,18 @@ public class OI extends OutliersProxy {
                     shootBTN.whenHeld(new Shoot(shooter, spindexer, hood));
 
                     //We need to figure out what the heck these values after "hood" do
-                    aimBTN.whenHeld(new AutoTarget(drivetrain, shooter, hood, this, 65, 5000, true)); 
+                    aimBTN.whenHeld(new AutoTarget(drivetrain, shooter, hood, this, 50, 5000, true)); 
 
                     /*Climber stuff*/
                     climbUPBTN.whenPressed(new RaiseArm(climber, shooter));
                     climbDOWNBTN.whenPressed(new LowerArm(climber));
-                    winchReset.whenHeld(new ResetWinch(climber));
-                    climb.whenPressed(new Climb(climber));
-                    //Intake
-                    intakeBTN.whenPressed(new AutoIntake(intake));
+                    winchReset.whenPressed(new ResetWinch(climber));
+                    climb.whenHeld(new Climb(climber));
+                    /*Intake */
+                    intakeBTN.whenHeld(new AutoIntake(intake));
+                    Maverick.whenHeld(new Maverick(drivetrain));
                     //#endregion
+                    resetNavX.whenPressed(new ReNavX(drivetrain));
             }
 
             public double getDriveY() {
@@ -112,7 +132,7 @@ public class OI extends OutliersProxy {
             public double getRotationX() {
                 double speed = -getSpeedFromAxis(raceWheel, raceWheel.getXChannel());
                 speed = speed * Constants.DriveTrain.WHEEL_SPEED; //To make turning faster.
-                speed = Helpers.applyDeadband(speed, 0); // The racewheel already has a built-in deadband.
+                speed = Helpers.applyDeadband(speed, DEADBAND); // The racewheel already has a built-in deadband.
                 return speed;
             }
         

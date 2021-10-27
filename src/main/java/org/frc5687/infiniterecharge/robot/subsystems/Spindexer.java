@@ -17,22 +17,19 @@ public class Spindexer extends OutliersSubsystem {
 
     public Spindexer(OutliersContainer container) {
         super(container);
-        _spindexer =
-                new CANSparkMax(
-                        RobotMap.CAN.SPARKMAX.SPINDEXER, CANSparkMaxLowLevel.MotorType.kBrushless);
+        //Spark Max for the spindexer
+        _spindexer = new CANSparkMax(RobotMap.CAN.SPARKMAX.SPINDEXER, CANSparkMaxLowLevel.MotorType.kBrushless);
         _spindexerEncoder = _spindexer.getEncoder();
-
-        _feeder =
-                new CANSparkMax(
-                        RobotMap.CAN.SPARKMAX.FEEDER, CANSparkMaxLowLevel.MotorType.kBrushless);
+        //Sparx Max for feeder
+        _feeder = new CANSparkMax(RobotMap.CAN.SPARKMAX.FEEDER, CANSparkMaxLowLevel.MotorType.kBrushless);
         _feederEncoder = _feeder.getEncoder();
-
+        //Invert spindexer and feeder
         _spindexer.setInverted(Constants.Spindexer.SPINDEXER_INVERTED);
         _feeder.setInverted(Constants.Spindexer.FEEDER_INVERTED);
-
+        //Set coast modes
         _spindexer.setIdleMode(CANSparkMax.IdleMode.kCoast);
         _feeder.setIdleMode(CANSparkMax.IdleMode.kCoast);
-
+        //Sets statuses for spindexer and feeder
         _spindexer.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus0, 100);
         _spindexer.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1, 1000);
         _spindexer.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus2, 1000);
@@ -49,10 +46,12 @@ public class Spindexer extends OutliersSubsystem {
 
     // Sets speed of motor -1 to 1.
     public void setSpindexerSpeed(double speed) {
+        //Set spindexer feed
         _spindexer.set(speed);
     }
 
     public void setFeederSpeed(double speed) {
+        //Set feeder speed
         _feeder.set(speed);
     }
 
@@ -62,15 +61,18 @@ public class Spindexer extends OutliersSubsystem {
      * @return Angular Velocity in RPM
      */
     public double getSpindexerVelocity() {
+        //The spindexers velocity
         return _spindexerEncoder.getVelocity();
     }
 
     public double getFeederVelocity() {
+        //The feeders velocity
         return _feederEncoder.getVelocity();
     }
 
-    // Not implemented yet
+    // Not implemented yet, but yet it's been implemented...  
     public double getSpindexerAngle() {
+        //Spindexers angle what ever that means
         return _spindexerEncoder.getPosition();
     }
 

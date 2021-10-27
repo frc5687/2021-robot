@@ -9,31 +9,32 @@ public class RobotMap {
      * across types. Thus, you cannot have two SparkMax controllers with Id 0, but you can have a
      * SparkMax with Id 0 and a TalonSRX with Id 0.
      */
+    
     public static class CAN {
 
         public static class TALONSRX {
-            public static final int HOOD = 11;
+            public static final int HOOD = 10;
         }
 
         public static class SPARKMAX {
-            public static final int SPINDEXER = 1;
-            public static final int FEEDER = 2;
-            public static final int INTAKE = 5;
-            public static final int WINCH = 3; // TODO: find real value.
+            public static final int SPINDEXER = 21; //C
+            public static final int FEEDER = 24; //C
+            public static final int INTAKE = 26; //C
+            public static final int WINCH = 22; //C
         }
 
         public static class TALONFX {
-            public static final int BL_RIGHT_FALCON = 3; // real 3
-            public static final int BL_LEFT_FALCON = 4; // real 4
-            public static final int BR_RIGHT_FALCON = 1;
-            public static final int BR_LEFT_FALCON = 2;
-            public static final int FL_RIGHT_FALCON = 5; // real 5
-            public static final int FL_LEFT_FALCON = 6; // real 6
-            public static final int FR_RIGHT_FALCON = 7;
-            public static final int FR_LEFT_FALCON = 8;
+            public static final int FR_RIGHT_FALCON = 12;
+            public static final int FR_LEFT_FALCON = 2;
+            public static final int BL_RIGHT_FALCON = 3;
+            public static final int BL_LEFT_FALCON = 4;
+            public static final int BR_RIGHT_FALCON = 7;
+            public static final int BR_LEFT_FALCON = 8;
+            public static final int FL_RIGHT_FALCON = 6;
+            public static final int FL_LEFT_FALCON = 5;
 
-            public static final int LEFT_SHOOTER = 9;
-            public static final int RIGHT_SHOOTER = 10;
+            public static final int LEFT_SHOOTER = 1;
+            public static final int RIGHT_SHOOTER = 9;
         }
     }
 
