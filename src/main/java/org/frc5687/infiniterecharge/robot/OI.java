@@ -69,7 +69,7 @@ public class OI extends OutliersProxy {
              * 2: The index of the button being mapped
              */
             aimBTN = new JoystickButton(raceWheel, 6);
-            shootBTN = new JoystickButton(raceWheel, 4);
+            shootBTN = new JoystickButton(translation, 1);
             //Xbox buttons even though it's using the joystick class :)
             intakeBTN = new JoystickButton(raceWheel, 1); //A
             climbDOWNBTN = new JoystickButton(translation, 8); //Left Trigger
@@ -96,7 +96,7 @@ public class OI extends OutliersProxy {
                     shootBTN.whenHeld(new Shoot(shooter, spindexer, hood));
 
                     //We need to figure out what the heck these values after "hood" do
-                    aimBTN.whenHeld(new AutoTarget(drivetrain, shooter, hood, this, 50, 5000, true)); 
+                    aimBTN.whenHeld(new AutoTarget(drivetrain, shooter, hood, this, 60, 5000, true)); 
 
                     /*Climber stuff*/
                     climbUPBTN.whenPressed(new RaiseArm(climber, shooter));
