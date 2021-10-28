@@ -95,8 +95,10 @@ public class OI extends OutliersProxy {
                     /*Binds buttons */
                     shootBTN.whenHeld(new Shoot(shooter, spindexer, hood));
 
-                    //We need to figure out what the heck these values after "hood" do
-                    aimBTN.whenHeld(new AutoTarget(drivetrain, shooter, hood, this, 50, 5000, true)); 
+                    // Auto target takes in 3 subsystems: drivetrain, shooter, hood, as well as OI.
+                    // the two value arguments is the hood angle reference and flywheel rpm reference. These are only set
+                    // if the last argument "override" is set to true. all this information can be inferred by the AutoTarget command class.
+                    aimBTN.whenHeld(new AutoTarget(drivetrain, shooter, hood, this, 65, 5000, true));
 
                     /*Climber stuff*/
                     climbUPBTN.whenPressed(new RaiseArm(climber, shooter));
@@ -107,7 +109,7 @@ public class OI extends OutliersProxy {
                     intakeBTN.whenHeld(new AutoIntake(intake));
                     Maverick.whenHeld(new Maverick(drivetrain));
                     //#endregion
-                    resetNavX.whenPressed(new ReNavX(drivetrain));
+                    resetNavX.whenPressed(drivetrain::resetYaw);
             }
 
             public double getDriveY() {

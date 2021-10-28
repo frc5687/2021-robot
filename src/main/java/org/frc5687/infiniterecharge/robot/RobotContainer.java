@@ -67,6 +67,7 @@ public class RobotContainer extends OutliersContainer {
         setDefaultCommand(_hood, new IdleHood(_hood, _oi));
         setDefaultCommand(_shooter, new IdleShooter(_shooter, _oi));
         setDefaultCommand(_climber, new IdleClimber(_climber, _oi));
+        error("Starting driving");
         setDefaultCommand(_driveTrain, new Drive(_driveTrain, _oi));
         //
         Trajectory test = null;

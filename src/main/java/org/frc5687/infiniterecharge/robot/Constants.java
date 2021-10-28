@@ -37,6 +37,9 @@ public class Constants {
         public static final double WHEEL_SPEED = 2; //Race Wheel turning speed
         public static double MAX_MPS = 3.5; //Speed of the swerves
 
+        public static double SENSITIVITY_VX = 0.9;
+        public static double SENSITIVITY_VY = 0.9;
+
         public static final double VISION_kP = 0.2;
         public static final double VISION_kI = 0.0;
         public static final double VISION_kD = 0.005;
