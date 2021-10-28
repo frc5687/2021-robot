@@ -69,7 +69,7 @@ public class OI extends OutliersProxy {
              * 2: The index of the button being mapped
              */
             aimBTN = new JoystickButton(raceWheel, 6);
-            shootBTN = new JoystickButton(translation, 1);
+            shootBTN = new JoystickButton(raceWheel, 4);
             //Xbox buttons even though it's using the joystick class :)
             intakeBTN = new JoystickButton(raceWheel, 1); //A
             climbDOWNBTN = new JoystickButton(translation, 8); //Left Trigger
@@ -95,10 +95,8 @@ public class OI extends OutliersProxy {
                     /*Binds buttons */
                     shootBTN.whenHeld(new Shoot(shooter, spindexer, hood));
 
-                    // Auto target takes in 3 subsystems: drivetrain, shooter, hood, as well as OI.
-                    // the two value arguments is the hood angle reference and flywheel rpm reference. These are only set
-                    // if the last argument "override" is set to true. all this information can be inferred by the AutoTarget command class.
-                    aimBTN.whenHeld(new AutoTarget(drivetrain, shooter, hood, this, 65, 5000, true));
+                    //We need to figure out what the heck these values after "hood" do
+                    aimBTN.whenHeld(new AutoTarget(drivetrain, shooter, hood, this, 50, 5000, true)); 
 
                     /*Climber stuff*/
                     climbUPBTN.whenPressed(new RaiseArm(climber, shooter));
@@ -109,7 +107,7 @@ public class OI extends OutliersProxy {
                     intakeBTN.whenHeld(new AutoIntake(intake));
                     Maverick.whenHeld(new Maverick(drivetrain));
                     //#endregion
-                    resetNavX.whenPressed(drivetrain::resetYaw);
+                    resetNavX.whenPressed(new ReNavX(drivetrain));
             }
 
             public double getDriveY() {
