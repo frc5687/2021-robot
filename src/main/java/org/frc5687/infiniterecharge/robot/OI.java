@@ -109,6 +109,7 @@ public class OI extends OutliersProxy {
                     intakeBTN.whenHeld(new AutoIntake(intake));
                     Maverick.whenHeld(new Maverick(drivetrain));
                     //#endregion
+                    // Use lambda expression to call resetYaw function from drivetrain instead of calling an entire class.
                     resetNavX.whenPressed(drivetrain::resetYaw);
             }
 
