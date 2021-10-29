@@ -144,7 +144,7 @@ public class OI extends OutliersProxy {
             public double getRotationX() {
                 double speed = -getSpeedFromAxis(raceWheel, raceWheel.getXChannel());
                 speed = speed * Constants.DriveTrain.WHEEL_SPEED; //To make turning faster.
-                speed = Helpers.applyDeadband(speed, DEADBAND); // The racewheel already has a built-in deadband.
+                speed = Helpers.applyDeadband(speed, RACE_WHEEL_DEADBAND); // The racewheel already has a built-in deadband.
                 return speed;
             }
         

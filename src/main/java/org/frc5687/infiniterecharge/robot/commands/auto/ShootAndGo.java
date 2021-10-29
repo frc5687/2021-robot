@@ -1,6 +1,7 @@
 /* (C)2021 */
 package org.frc5687.infiniterecharge.robot.commands.auto;
 
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
@@ -25,9 +26,11 @@ public class ShootAndGo extends SequentialCommandGroup {
             OI oi) {
         addCommands(
 //                new SetShooterSetpoint(shooter, hood, 64, 4500), //new SetShooterSetpoint(shooter, hood, 54, 4500),
-                new InstantCommand(shooter::setShooterFromReference, shooter),
+//                new InstantCommand(shooter::setShooterFromReference, shooter),
                 new ParallelDeadlineGroup(
                         new AutoShoot(shooter, spindexer, hood),
-                        new AutoTarget(driveTrain, shooter, hood, oi, 50, 5000, true))); // used to be angle of 70 rpm 4500
+                        new AutoTarget(driveTrain, shooter, hood, oi, 57, 4000, true)),// used to be angle of 70 rpm 4500
+                new DriveTrajectory(driveTrain, traj, Rotation2d.fromDegrees(0.0)));
+
     }
 }

@@ -4,6 +4,8 @@ package org.frc5687.infiniterecharge.robot.commands;
 import static org.frc5687.infiniterecharge.robot.Constants.DriveTrain.*;
 import edu.wpi.first.wpilibj.SlewRateLimiter;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.frc5687.infiniterecharge.robot.OI;
 import org.frc5687.infiniterecharge.robot.subsystems.DriveTrain;
 import org.frc5687.infiniterecharge.robot.util.Helpers;
@@ -16,13 +18,13 @@ public class Drive extends OutliersCommand {
     private final PIDController _visionController;
     private final OI _oi;
 
+
     public Drive(DriveTrain driveTrain, OI oi) {
         _driveTrain = driveTrain;
         _oi = oi;
         _vxFilter = new SlewRateLimiter(3.0); //Add to constent 
         _vyFilter = new SlewRateLimiter(3.0);
         _visionController = new PIDController(VISION_kP, VISION_kI, VISION_kD);
-        error("Staring driving");
         addRequirements(_driveTrain);
     }
 
@@ -46,7 +48,7 @@ public class Drive extends OutliersCommand {
         double rot =
                 (_driveTrain.autoAim() && _driveTrain.hasVisionTarget())
                         ? _visionController.calculate(_driveTrain.getLimelightYaw())
-                        : _oi.getRotationX() * (_driveTrain.getManualAim() ? (MAX_ANG_VEL / 4.0) : MAX_ANG_VEL);
+                        : _oi.getRotationX() * (_driveTrain.getManualAim() ? (MAX_ANG_VEL / 4.0) : (MAX_ANG_VEL / 2.0));
 
         _driveTrain.drive(vx, vy, rot, true);
     }

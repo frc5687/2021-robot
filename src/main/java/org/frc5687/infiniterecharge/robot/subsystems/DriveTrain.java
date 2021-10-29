@@ -34,8 +34,6 @@ public class DriveTrain extends OutliersSubsystem {
     private final SwerveDriveOdometry _odomerty;
     private final Limelight _limelight;
 
-
-
     private double _PIDAngle;
     private boolean _autoAim;
     private MetricTracker metric;
@@ -46,7 +44,7 @@ public class DriveTrain extends OutliersSubsystem {
     private HolonomicDriveController _controller;
     private ProfiledPIDController _angleController;
 
-    private Field2d field;
+    private Field2d _field;
 
     private boolean _manualAim = false;
 
@@ -121,8 +119,8 @@ public class DriveTrain extends OutliersSubsystem {
                                 Constants.DriveTrain.PROFILE_CONSTRAINT_ACCEL));
         _angleController.enableContinuousInput(-Math.PI / 2.0, Math.PI / 2.0);
         _autoAim = false;
-        field = new Field2d();
-        SmartDashboard.putData(field);
+        _field = new Field2d();
+        SmartDashboard.putData(_field);
         startModules();
     }
 
@@ -136,7 +134,7 @@ public class DriveTrain extends OutliersSubsystem {
 
     @Override
     public void periodic() {
-        field.setRobotPose(_odomerty.getPoseMeters());
+        _field.setRobotPose(_odomerty.getPoseMeters());
         _odomerty.update(
                 getHeading(),
                 _frontLeft.getState(),
@@ -155,6 +153,11 @@ public class DriveTrain extends OutliersSubsystem {
         metric("BL/Encoder Angle", _backLeft.getModuleAngle());
         metric("FL/Encoder Angle", _frontLeft.getModuleAngle());
         metric("FR/Encoder Angle", _frontRight.getModuleAngle());
+
+        metric("BR/Wheel Vel", _backRight.getWheelVelocity());
+        metric("BL/Wheel Vel", _backLeft.getWheelVelocity());
+        metric("FR/Wheel Vel", _frontRight.getWheelVelocity());
+        metric("FL/Wheel Vel", _frontLeft.getWheelVelocity());
 
         //        metric("BR/Predicted Angle", _backRight.getPredictedAzimuthAngle());
 
