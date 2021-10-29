@@ -34,6 +34,7 @@ public class Constants {
         //        public static final double BACK_LEFT_ENCODER_OFFSET = 0.585 + Math.PI; // radians
 
         public static final double DEADBAND = 0.2;
+        public static final double RACE_WHEEL_DEADBAND = 0.1;
         public static final double WHEEL_SPEED = 2; //Race Wheel turning speed
         public static double MAX_MPS = 3.5; //Speed of the swerves
 
@@ -101,10 +102,11 @@ public class Constants {
     }
 
     public static class Spindexer {
-        public static boolean SPINDEXER_INVERTED = false;
 
+        public static boolean SPINDEXER_INVERTED = false;
         public static boolean FEEDER_INVERTED = false;
         public static final double SPINDEXER_IDLE_SPEED = -0.25;
+        public static final double SHIMMY = 0.25;
         public static final double FEEDER_IDLE_SPEED = -0.25;
         public static final double SPINDEXER_SPEED = 0.75; // was 0.75 but I'm insane sooo...
         public static final double FEEDER_SPEED = 1.0;

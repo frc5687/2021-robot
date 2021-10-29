@@ -1,16 +1,13 @@
-/* (C)2021 */
 package org.frc5687.infiniterecharge.robot.commands;
 
 import org.frc5687.infiniterecharge.robot.Constants;
 import org.frc5687.infiniterecharge.robot.subsystems.Spindexer;
 
-public class IdleSpindexer extends OutliersCommand {
-
+public class ClearSpindexer extends OutliersCommand {
     private Spindexer _spindexer;
 
-    public IdleSpindexer(Spindexer spindexer) {
+    public ClearSpindexer(Spindexer spindexer) {
         _spindexer = spindexer;
-        addRequirements(_spindexer);
     }
 
     @Override
@@ -20,12 +17,12 @@ public class IdleSpindexer extends OutliersCommand {
 
     @Override
     public void execute() {
-        _spindexer.setSpindexerSpeed(Constants.Spindexer.SPINDEXER_IDLE_SPEED);
-        _spindexer.setFeederSpeed(Constants.Spindexer.FEEDER_IDLE_SPEED);
+        super.execute();
+        _spindexer.setSpindexerSpeed(Constants.Spindexer.SHIMMY);
     }
 
     @Override
-    public void end(boolean interrupted) {
-        super.end(interrupted);
+    public boolean isFinished() {
+        return super.isFinished();
     }
 }

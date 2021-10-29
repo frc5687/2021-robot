@@ -34,6 +34,8 @@ public class OI extends OutliersProxy {
     private JoystickButton manualAim;
     //Shoot
     private JoystickButton shootBTN;
+
+    private JoystickButton shimmyBTM;
     //XBox buttons
     //Drop intake
     private JoystickButton intakeBTN;
@@ -73,6 +75,7 @@ public class OI extends OutliersProxy {
             aimBTN = new JoystickButton(raceWheel, 5);
             manualAim = new JoystickButton(raceWheel, 1);
             shootBTN = new JoystickButton(translation, 1);
+            shimmyBTM = new JoystickButton(raceWheel, 10);
             //Xbox buttons even though it's using the joystick class :)
             intakeBTN = new JoystickButton(raceWheel, 6); //A
             climbDOWNBTN = new JoystickButton(translation, 8); //Left Trigger
@@ -115,6 +118,8 @@ public class OI extends OutliersProxy {
                     //#endregion
                     // Use lambda expression to call resetYaw function from drivetrain instead of calling an entire class.
                     resetNavX.whenPressed(drivetrain::resetYaw);
+
+                    shimmyBTM.whenPressed(new ClearSpindexer(spindexer));
             }
 
             public double getDriveY() {
