@@ -24,7 +24,7 @@ public class ShootAndGo extends SequentialCommandGroup {
             Trajectory traj,
             OI oi) {
         addCommands(
-                new SetShooterSetpoint(shooter, hood, 64, 4500), //new SetShooterSetpoint(shooter, hood, 54, 4500),
+//                new SetShooterSetpoint(shooter, hood, 64, 4500), //new SetShooterSetpoint(shooter, hood, 54, 4500),
                 new InstantCommand(shooter::setShooterFromReference, shooter),
                 new ParallelDeadlineGroup(
                         new AutoShoot(shooter, spindexer, hood),

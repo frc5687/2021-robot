@@ -30,6 +30,8 @@ public class OI extends OutliersProxy {
     private XboxController operator;
     //For aiming the robot
     private JoystickButton aimBTN;
+
+    private JoystickButton manualAim;
     //Shoot
     private JoystickButton shootBTN;
     //XBox buttons
@@ -68,13 +70,14 @@ public class OI extends OutliersProxy {
              * 1: The object that's being maped to
              * 2: The index of the button being mapped
              */
-            aimBTN = new JoystickButton(raceWheel, 6);
+            aimBTN = new JoystickButton(raceWheel, 5);
+            manualAim = new JoystickButton(raceWheel, 1);
             shootBTN = new JoystickButton(translation, 1);
             //Xbox buttons even though it's using the joystick class :)
-            intakeBTN = new JoystickButton(raceWheel, 1); //A
+            intakeBTN = new JoystickButton(raceWheel, 6); //A
             climbDOWNBTN = new JoystickButton(translation, 8); //Left Trigger
             climbUPBTN = new JoystickButton(raceWheel, 3); //Right Trigger  
-            winchReset = new JoystickButton(operator, 10); //
+            winchReset = new JoystickButton(operator, 8); //
             climb = new JoystickButton(translation, 9); //X/
             Maverick = new JoystickButton(translation, 4);
             resetNavX = new JoystickButton(translation, 5);
@@ -99,6 +102,7 @@ public class OI extends OutliersProxy {
                     // the two value arguments is the hood angle reference and flywheel rpm reference. These are only set
                     // if the last argument "override" is set to true. all this information can be inferred by the AutoTarget command class.
                     aimBTN.whenHeld(new AutoTarget(drivetrain, shooter, hood, this, 65, 5000, true));
+                    manualAim.whenHeld(new ManualTarget(drivetrain, shooter, hood, this, 65, 5000, true));
 
                     /*Climber stuff*/
                     climbUPBTN.whenPressed(new RaiseArm(climber, shooter));

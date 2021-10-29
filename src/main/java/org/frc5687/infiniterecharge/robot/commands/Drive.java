@@ -46,7 +46,7 @@ public class Drive extends OutliersCommand {
         double rot =
                 (_driveTrain.autoAim() && _driveTrain.hasVisionTarget())
                         ? _visionController.calculate(_driveTrain.getLimelightYaw())
-                        : _oi.getRotationX() * MAX_ANG_VEL;
+                        : _oi.getRotationX() * (_driveTrain.getManualAim() ? (MAX_ANG_VEL / 4.0) : MAX_ANG_VEL);
 
         _driveTrain.drive(vx, vy, rot, true);
     }

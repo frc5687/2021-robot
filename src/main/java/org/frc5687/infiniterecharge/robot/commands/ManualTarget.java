@@ -9,7 +9,7 @@ import org.frc5687.infiniterecharge.robot.subsystems.DriveTrain;
 import org.frc5687.infiniterecharge.robot.subsystems.Hood;
 import org.frc5687.infiniterecharge.robot.subsystems.Shooter;
 
-public class AutoTarget extends OutliersCommand {
+public class ManualTarget extends OutliersCommand {
 
     private DriveTrain _drivetrain;
     private Shooter _shooter;
@@ -19,7 +19,7 @@ public class AutoTarget extends OutliersCommand {
     private double _rpm;
     private boolean _override;
 
-    public AutoTarget(DriveTrain drivetrain, Shooter shooter, Hood hood, OI oi) {
+    public ManualTarget(DriveTrain drivetrain, Shooter shooter, Hood hood, OI oi) {
         _drivetrain = drivetrain;
         _shooter = shooter;
         _hood = hood;
@@ -27,7 +27,7 @@ public class AutoTarget extends OutliersCommand {
         addRequirements(_shooter, _hood);
     }
 
-    public AutoTarget(
+    public ManualTarget(
             DriveTrain drivetrain,
             Shooter shooter,
             Hood hood,
@@ -43,8 +43,7 @@ public class AutoTarget extends OutliersCommand {
 
     @Override
     public void initialize() {
-        _drivetrain.setManualAim(false);
-        _drivetrain.setUseAutoAim(true);      
+        _drivetrain.setManualAim(true);
     }
 
     @Override
@@ -67,8 +66,8 @@ public class AutoTarget extends OutliersCommand {
     @Override
     public void end(boolean interrupted) {
         super.end(interrupted);
-        //Dissable auto aim
-        _drivetrain.setUseAutoAim(false);
+        //Disable manual
+        _drivetrain.setManualAim(false);
         //Put the hood back down
         _hood.setPosition(Constants.Hood.MIN_ANGLE);
         //Spin down the shooter

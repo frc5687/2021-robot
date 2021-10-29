@@ -48,6 +48,8 @@ public class DriveTrain extends OutliersSubsystem {
 
     private Field2d field;
 
+    private boolean _manualAim = false;
+
     public DriveTrain(OutliersContainer container, Limelight limelight, OI oi, AHRS imu) {
         super(container);
         _container = container;
@@ -343,6 +345,14 @@ public class DriveTrain extends OutliersSubsystem {
         }
         error("No target yaw");
         return 0;
+    }
+
+    public void setManualAim(boolean override) {
+        _manualAim = override;
+    }
+
+    public boolean getManualAim() {
+        return _manualAim;
     }
 
 
