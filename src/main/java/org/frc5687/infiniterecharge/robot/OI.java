@@ -119,7 +119,7 @@ public class OI extends OutliersProxy {
                     // Use lambda expression to call resetYaw function from drivetrain instead of calling an entire class.
                     resetNavX.whenPressed(drivetrain::resetYaw);
 
-                    shimmyBTM.whenPressed(new ClearSpindexer(spindexer));
+                    shimmyBTM.whenHeld(new ClearSpindexer(spindexer));
             }
 
             public double getDriveY() {
