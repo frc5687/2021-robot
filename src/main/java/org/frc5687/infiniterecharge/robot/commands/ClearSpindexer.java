@@ -19,7 +19,6 @@ public class ClearSpindexer extends OutliersCommand {
     public void execute() {
         super.execute();
         _spindexer.setSpindexerSpeed(Constants.Spindexer.SHIMMY);
-        _spindexer.setFeederSpeed(Constants.Spindexer.FEEDER_SHIMMY);
     }
 
     @Override
