@@ -28,7 +28,7 @@ public class ShootAndGo extends SequentialCommandGroup {
 //                new InstantCommand(shooter::setShooterFromReference, shooter),
                 new ParallelDeadlineGroup(
                         new AutoShoot(shooter, spindexer, hood),
-                        new AutoTarget(driveTrain, shooter, hood, oi, 57, 4000, true)),// used to be angle of 70 rpm 4500
+                        new AutoTarget(driveTrain, shooter, hood, oi, 60, 4000, true)),// used to be angle of 70 rpm 4500
                 new ZeroHood(hood),
                 new DriveTrajectory(driveTrain, traj, Rotation2d.fromDegrees(0.0)));
 
