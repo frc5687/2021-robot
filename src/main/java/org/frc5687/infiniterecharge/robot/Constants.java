@@ -108,7 +108,6 @@ public class Constants {
         public static final double SPINDEXER_IDLE_SPEED = -0.25;
         public static final double SHIMMY = 0.25;
         public static final double FEEDER_IDLE_SPEED = -0.25;
-        public static final double FEEDER_SHIMMY = 0.00;
         public static final double SPINDEXER_SPEED = 0.75; // was 0.75 but I'm insane sooo...
         public static final double FEEDER_SPEED = 1.0;
     }
