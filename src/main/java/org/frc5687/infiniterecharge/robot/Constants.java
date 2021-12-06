@@ -182,7 +182,7 @@ public class Constants {
     }
 
     public static class Maverick{
-        public static short numberOfWaypoints = 4; 
+        public static short numberOfWaypoints = 1; // Dropped down from four so Maverick doesn't over run.
         public static double[] waypointsX = {12.10, 0.0, 0.0, 0.0};
         public static double[] waypointsY = {3.67, 0.0, 0.0, 0.0};
         public static double[] rotations = {2.0, 0.0, 0.0, 0.0};

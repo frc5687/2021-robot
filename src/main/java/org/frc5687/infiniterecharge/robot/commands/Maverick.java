@@ -66,9 +66,9 @@ public class Maverick extends OutliersCommand{
 
     public void wayPointMove(){
         //Iterate through all of the waypoints
-        metric("MAVERICK", "Running");
-        for(int i = 0; i < Constants.Maverick.numberOfWaypoints; i++){
-            metric("MAVERICK", "At waypoint: " + i);
+        metric("MAVERICK", "Running"); 
+        for(int i = 0; i <= Constants.Maverick.numberOfWaypoints; i++){
+            metric("MAVERICK_Points", "At waypoint: " + i);
             //Create translations and rotations based off of the Maverick presets
             Translation2d move = new Translation2d(Constants.Maverick.waypointsX[i], Constants.Maverick.waypointsY[i]);
             Rotation2d rotation = new Rotation2d(Constants.Maverick.rotations[i]);
@@ -90,16 +90,19 @@ public class Maverick extends OutliersCommand{
 
     @Override public void execute(){
         super.execute();
-        metric("MAVERICK", "Executeing");
-        wayPointMove();
     }
     
     @Override
     public boolean isFinished(){
         super.isFinished();
         //Is the robot at it's end position
-        metric("MAVERICK", "Finished");
-        return driveTrain.MaverickDone(destnation);
+        if(driveTrain.MaverickDone(destnation)){
+            metric("MAVERICK", "Still working");
+            return true;
+        }else{
+            metric("MAVERICK", "Finished");
+            return false;
+        }
     }
 
     @Override

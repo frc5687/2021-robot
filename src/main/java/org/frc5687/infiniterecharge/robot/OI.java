@@ -64,8 +64,8 @@ public class OI extends OutliersProxy {
             *We need to figure out if each time the USBs...
             *are plugged in the port numbers change
             */
-            raceWheel = new Joystick(1); //This hap-hazard port aloction is going to get someone killed 
-            translation = new Joystick(2);
+            raceWheel = new Joystick(2); //This hap-hazard port aloction is going to get someone killed 
+            translation = new Joystick(5);
             operator = new XboxController(4); //Was 3
             /**
              * In the ()
@@ -74,10 +74,10 @@ public class OI extends OutliersProxy {
              */
             aimBTN = new JoystickButton(raceWheel, 5);
             manualAim = new JoystickButton(raceWheel, 1);
-            shootBTN = new JoystickButton(translation, 1);
+            shootBTN = new JoystickButton(raceWheel, 1);
             shimmyBTM = new JoystickButton(raceWheel, 10);
             //Xbox buttons even though it's using the joystick class :)
-            intakeBTN = new JoystickButton(raceWheel, 6); //A
+            intakeBTN = new JoystickButton(translation, 1); //A
             climbDOWNBTN = new JoystickButton(translation, 8); //Left Trigger
             climbUPBTN = new JoystickButton(raceWheel, 3); //Right Trigger  
             winchReset = new JoystickButton(operator, 8); //
