@@ -87,5 +87,10 @@ public class Limelight {
         //Does the limelight have a target
         return _camera.getLatestResult().hasTargets();
     }
+
+  //  public Pose2d getPose(){
+        //Returns the 2d pose of the robot using the limelight
+
+  //  }
 }
 //Kilroy Was Here
