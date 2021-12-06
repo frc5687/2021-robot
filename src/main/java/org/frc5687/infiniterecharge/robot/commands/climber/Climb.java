@@ -13,7 +13,9 @@ public class Climb extends OutliersCommand {
         addRequirements(_climber);
     }
 
-    public void initialize() {}
+    public void initialize() {
+//        _climber.lowerArm();
+    }
 
     @Override
     public void execute() {
@@ -23,6 +25,7 @@ public class Climb extends OutliersCommand {
     @Override
     public boolean isFinished() {
         //The values are switched LOWERED means up
-        return _climber.getArmPosition() == Climber.Position.RAISED;
+//        return _climber.getArmPosition() == Climber.Position.RAISED;
+        return false;
     }
 }

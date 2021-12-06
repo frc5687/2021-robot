@@ -62,7 +62,11 @@ public class Limelight {
 
     public double getTargetYaw() {
         //Gets the realitive yaw of the target
-        return _camera.getLatestResult().getBestTarget().getYaw();
+        if (_camera.hasTargets()) {
+            return _camera.getLatestResult().getBestTarget().getYaw();
+        } else {
+            return 0.0;
+        }
     }
 
     public double getArea(){
