@@ -76,7 +76,7 @@ public class Maverick extends OutliersCommand{
             //Update the speeds with the realivent Maverick speed
             Constants.DriveTrain.MAX_MPS = Constants.Maverick.speeds[i];
             //Move the robot
-            driveTrain.poseFollower(destnation, rotation, 3.5);
+            driveTrain.poseFollower(destnation, rotation, Constants.Maverick.LINEAR_REFERENCE);
         }
         metric("MAVERICK", "Move(s) Complete");
     }
