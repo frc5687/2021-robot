@@ -2,11 +2,7 @@
 package org.frc5687.infiniterecharge.robot;
 
 import static org.frc5687.infiniterecharge.robot.Constants.DriveTrain.*;
-
-import javax.sound.sampled.LineEvent;
-
 import static org.frc5687.infiniterecharge.robot.Constants.EPSILON;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
